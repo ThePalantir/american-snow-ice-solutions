@@ -1,98 +1,63 @@
-# vinext-starter
+# American Snow & Ice Solutions
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+Premium multi-page website for American Snow & Ice Solutions, built with the standard Next.js App Router and ready for Vercel's GitHub-connected preview workflow.
 
-## Prerequisites
+## Requirements
 
-- Node.js `>=22.13.0`
+- Node.js 22.13 or newer
+- npm
 
-## Quick Start
+## Local development
 
 ```bash
 npm install
 npm run dev
+```
+
+Open the local address printed by Next.js, normally `http://localhost:3000`.
+
+## Validation
+
+```bash
+npm run lint
 npm run build
+npm test
 ```
 
-This starter does not use `wrangler.jsonc`.
+The test suite builds the production application, starts it with `next start`, and verifies the primary pages, service routes, SEO endpoints, AI-readable summaries, branding asset, and standard Next.js configuration.
 
-## Included Shape
+## Routes
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+- `/`
+- `/services`
+- `/services/commercial-plowing`
+- `/services/deicing-salting`
+- `/services/sidewalks-walkways`
+- `/services/weather-reporting`
+- `/services/risk-management`
+- `/about`
+- `/service-areas`
+- `/quote`
+- `/contact`
+- `/partner-network`
 
-## Workspace Auth Headers
+SEO and discovery endpoints:
 
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
+- `/sitemap.xml`
+- `/robots.txt`
+- `/manifest.webmanifest`
+- `/llms.txt`
+- `/llms-full.txt`
 
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
+## Vercel preview setup
 
-Treat the full name as optional and fall back to email when it is absent:
+1. Import `ThePalantir/american-snow-ice-solutions` into Vercel.
+2. Keep the detected framework as **Next.js**.
+3. Use the repository defaults: `npm run build` and the standard `.next` output.
+4. Leave the production domain unassigned until the preview has been approved.
 
-```tsx
-import { headers } from "next/headers";
+Every pushed feature branch and pull request can then receive an isolated Vercel Preview Deployment. Production deployment and domain assignment remain separate approval steps.
 
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
+## Brand and media
 
-  const displayName = fullName ?? email;
-  // ...
-}
-```
-
-## Optional Dispatch-Owned ChatGPT Sign-In
-
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
-
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+The selected American Snow & Ice Solutions logo is stored at `public/media/brand/asai-logo.png`. Approved source imagery and its retrieval manifest remain under `images/`; optimized site selections are under `public/media/`.

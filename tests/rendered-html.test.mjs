@@ -1,91 +1,155 @@
 import assert from "node:assert/strict";
-import { access, readFile, readdir } from "node:fs/promises";
-import test from "node:test";
+import { spawn } from "node:child_process";
+import { access, readFile } from "node:fs/promises";
+import net from "node:net";
+import path from "node:path";
+import { after, before, test } from "node:test";
+import { setTimeout as delay } from "node:timers/promises";
+import { fileURLToPath } from "node:url";
 
-const developmentPreviewMeta =
-  /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
-const templateRoot = new URL("../", import.meta.url);
-const previewRoot = new URL("../app/_sites-preview/", import.meta.url);
+const projectRoot = fileURLToPath(new URL("../", import.meta.url));
+const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "next");
+let server;
+let baseUrl;
+let serverOutput = "";
 
-async function render() {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
-
-  return worker.fetch(
-    new Request("http://localhost/", {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
-  );
+async function findOpenPort() {
+  return new Promise((resolve, reject) => {
+    const probe = net.createServer();
+    probe.unref();
+    probe.on("error", reject);
+    probe.listen(0, "127.0.0.1", () => {
+      const address = probe.address();
+      const port = typeof address === "object" && address ? address.port : null;
+      probe.close(() => (port ? resolve(port) : reject(new Error("Unable to reserve a test port."))));
+    });
+  });
 }
 
-test("server-renders the starter loading skeleton", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+async function waitForServer(url) {
+  const deadline = Date.now() + 45_000;
+  while (Date.now() < deadline) {
+    if (server.exitCode !== null) {
+      throw new Error(`Next.js exited before becoming ready.\n${serverOutput}`);
+    }
+    try {
+      const response = await fetch(url);
+      if (response.ok) return;
+    } catch {
+      // The process is still warming up.
+    }
+    await delay(250);
+  }
+  throw new Error(`Timed out waiting for Next.js.\n${serverOutput}`);
+}
 
-  const html = await response.text();
-  assert.match(html, developmentPreviewMeta);
-  assert.match(html, /<title>Your site is taking shape<\/title>/i);
-  assert.match(html, /Building your site/);
-  assert.match(html, /Your site is taking shape/);
-  assert.match(
-    html,
-    /Your first version will appear here automatically when it’s ready\./,
-  );
-  assert.doesNotMatch(html, /Codex/);
-  assert.match(html, /react-loading-skeleton/);
-  assert.match(html, /role="status"/);
+before(async () => {
+  const port = await findOpenPort();
+  baseUrl = `http://127.0.0.1:${port}`;
+  server = spawn(process.execPath, [nextBin, "start", "-H", "127.0.0.1", "-p", String(port)], {
+    cwd: projectRoot,
+    env: { ...process.env, NODE_ENV: "production" },
+    stdio: ["ignore", "pipe", "pipe"],
+    windowsHide: true,
+  });
+  server.stdout.on("data", (chunk) => { serverOutput += chunk.toString(); });
+  server.stderr.on("data", (chunk) => { serverOutput += chunk.toString(); });
+  await waitForServer(baseUrl);
 });
 
-test("keeps the loading skeleton scoped and disposable", async () => {
-  const [preview, css, page, layout, packageJson, files] = await Promise.all([
-    readFile(new URL("SkeletonPreview.tsx", previewRoot), "utf8"),
-    readFile(new URL("preview.css", previewRoot), "utf8"),
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-    readdir(previewRoot),
+after(async () => {
+  if (server && server.exitCode === null) {
+    server.kill();
+    await Promise.race([new Promise((resolve) => server.once("exit", resolve)), delay(5_000)]);
+  }
+});
+
+test("uses the standard Next.js pipeline without legacy hosting dependencies", async () => {
+  const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+  assert.equal(packageJson.scripts.dev, "next dev");
+  assert.equal(packageJson.scripts.build, "next build");
+  assert.equal(packageJson.scripts.start, "next start");
+
+  const dependencyNames = new Set([
+    ...Object.keys(packageJson.dependencies ?? {}),
+    ...Object.keys(packageJson.devDependencies ?? {}),
   ]);
+  for (const legacyDependency of [
+    "vinext",
+    "vite",
+    "wrangler",
+    "@cloudflare/vite-plugin",
+    "@vitejs/plugin-react",
+    "@vitejs/plugin-rsc",
+    "react-server-dom-webpack",
+    "drizzle-orm",
+    "drizzle-kit",
+  ]) {
+    assert.equal(dependencyNames.has(legacyDependency), false, `${legacyDependency} should be removed`);
+  }
 
-  assert.deepEqual(files.sort(), ["SkeletonPreview.tsx", "preview.css"]);
-  assert.match(preview, /from "react-loading-skeleton"/);
-  assert.match(preview, /baseColor="#eceae7"/);
-  assert.match(preview, /highlightColor="#f9f8f6"/);
-  assert.match(preview, /duration=\{2\.8\}/);
-  assert.match(preview, /sites-skeleton-search-placeholder/);
-  assert.match(packageJson, /"react-loading-skeleton": "3\.5\.0"/);
+  for (const legacyFile of [
+    "../vite.config.ts",
+    "../.openai/hosting.json",
+    "../worker/index.ts",
+    "../build/sites-vite-plugin.ts",
+    "../app/chatgpt-auth.ts",
+  ]) {
+    await assert.rejects(access(new URL(legacyFile, import.meta.url)));
+  }
+});
 
-  const shellIndex = preview.indexOf('className="sites-skeleton-shell"');
-  const statusIndex = preview.indexOf('className="sites-skeleton-status"');
-  assert.ok(shellIndex >= 0 && statusIndex > shellIndex);
-  assert.match(css, /position:\s*fixed/);
-  assert.match(css, /inset:\s*0/);
-  assert.match(css, /opacity:\s*0\.52/);
-  assert.match(css, /prefers-reduced-motion:\s*reduce/);
-  assert.doesNotMatch(css, /#020617|canvas|pets|progress/i);
-  assert.doesNotMatch(
-    preview,
-    /loading-spinner|status-mark|status-progress|canvas|cookie|random/i,
-  );
+test("serves every primary website route", async () => {
+  const routes = [
+    "/",
+    "/services",
+    "/services/commercial-plowing",
+    "/services/deicing-salting",
+    "/services/sidewalks-walkways",
+    "/services/weather-reporting",
+    "/services/risk-management",
+    "/about",
+    "/service-areas",
+    "/quote",
+    "/contact",
+    "/partner-network",
+  ];
 
-  assert.match(page, /export const metadata:\s*Metadata/);
-  assert.match(page, /"codex-preview": "development"/);
-  assert.match(page, /<SkeletonPreview \/>/);
-  assert.match(layout, /title:\s*"Starter Project"/);
-  assert.doesNotMatch(layout, /codex-preview|_sites-preview|themeColor|\bViewport\b/);
-  assert.doesNotMatch(css, /(^|\s)(html|body)\s*\{/m);
+  for (const route of routes) {
+    const response = await fetch(`${baseUrl}${route}`);
+    assert.equal(response.status, 200, `${route} should return 200`);
+    assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+  }
+});
 
-  await assert.rejects(
-    access(new URL("public/_sites-preview", templateRoot)),
-  );
+test("renders the selected brand and premium homepage content", async () => {
+  const response = await fetch(baseUrl);
+  const html = await response.text();
+  assert.match(html, /Commercial Winter Operations \| American Snow &amp; Ice Solutions/i);
+  assert.match(html, /Winter doesn.t wait/i);
+  assert.match(html, /American Snow &amp; Ice Solutions/i);
+  assert.match(html, /\/media\/brand\/asai-logo\.png/i);
+  await access(new URL("../public/media/brand/asai-logo.png", import.meta.url));
+});
+
+test("serves technical SEO and GEO discovery endpoints", async () => {
+  const robots = await (await fetch(`${baseUrl}/robots.txt`)).text();
+  assert.match(robots, /Sitemap: https:\/\/americansnowandicesolutions\.com\/sitemap\.xml/i);
+
+  const sitemapResponse = await fetch(`${baseUrl}/sitemap.xml`);
+  assert.equal(sitemapResponse.status, 200);
+  const sitemap = await sitemapResponse.text();
+  assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/services\/commercial-plowing/i);
+  assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/service-areas/i);
+
+  const manifest = await (await fetch(`${baseUrl}/manifest.webmanifest`)).json();
+  assert.equal(manifest.name, "American Snow & Ice Solutions");
+
+  const llms = await (await fetch(`${baseUrl}/llms.txt`)).text();
+  assert.match(llms, /Commercial and industrial snow and ice management company/i);
+
+  const serviceHtml = await (await fetch(`${baseUrl}/services/commercial-plowing`)).text();
+  assert.match(serviceHtml, /application\/ld\+json/i);
+  assert.match(serviceHtml, /Commercial snow plowing/i);
+  assert.match(serviceHtml, /rel="canonical" href="https:\/\/americansnowandicesolutions\.com\/services\/commercial-plowing"/i);
 });
