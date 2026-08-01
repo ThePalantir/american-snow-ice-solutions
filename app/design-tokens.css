@@ -1,0 +1,47 @@
+/*
+ * Midnight Operations is provisional. Components consume semantic tokens only,
+ * so a final visual direction can be applied by replacing this token set.
+ */
+:root,
+html[data-design-direction="midnight-operations"] {
+  --ink-950: #06111e;
+  --ink-900: #091827;
+  --ink-850: #0d2033;
+  --ink-800: #122a40;
+  --ice-500: #5cc8f3;
+  --ice-300: #a9e5fb;
+  --signal-500: #ef442e;
+  --signal-400: #ff6652;
+  --snow-50: #f7fbfd;
+  --snow-100: #edf5f8;
+  --steel-300: #b8c8d2;
+  --steel-500: #758997;
+  --white: #ffffff;
+
+  --surface-page: var(--snow-50);
+  --surface-dark: var(--ink-950);
+  --surface-raised: var(--white);
+  --surface-tint: var(--snow-100);
+  --text-main: var(--ink-950);
+  --text-muted: #526876;
+  --text-on-dark: var(--white);
+  --text-on-dark-muted: #b9c9d3;
+  --brand-primary: var(--ice-500);
+  --brand-primary-soft: var(--ice-300);
+  --brand-accent: var(--signal-500);
+  --border-subtle: #d8e4ea;
+  --border-dark: rgba(255, 255, 255, 0.14);
+
+  --font-display: "Arial Narrow", "Aptos Display", "Segoe UI", sans-serif;
+  --font-body: "Segoe UI", Arial, sans-serif;
+  --font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 20px 60px rgba(6, 17, 30, 0.12);
+  --shadow-dark: 0 24px 80px rgba(0, 0, 0, 0.3);
+  --container: 1240px;
+  --section-space: clamp(76px, 9vw, 132px);
+}
