@@ -9,7 +9,7 @@ export default function ServicesPage() {
   return (
     <main>
       <section className="subhero subhero--overview">
-        <Image className="subhero__image" src="/media/operations/risk-management.jpg" alt="Plow truck working through an active winter storm" fill sizes="100vw" priority />
+        <Image className="subhero__image" src="/media/operations/risk-management.jpg" alt="Plow truck working through an active winter storm" fill sizes="(max-width: 1050px) 100vw, 64vw" quality={90} priority />
         <div className="subhero__scrim" />
         <div className="container subhero__content"><p className="eyebrow eyebrow--light">Commercial winter operations</p><h1>Complete snow & ice management.</h1><p>Five coordinated disciplines. One accountable property plan.</p></div>
       </section>
@@ -20,7 +20,7 @@ export default function ServicesPage() {
             {services.map((service, index) => (
               <Link key={service.slug} href={`/services/${service.slug}`} className="service-list__item">
                 <span>{String(index + 1).padStart(2, "0")}</span>
-                <Image src={service.image} alt="" width={230} height={150} sizes="(max-width: 760px) 100vw, 230px" />
+                <Image src={service.image} alt="" width={460} height={300} quality={85} sizes="(max-width: 760px) calc(100vw - 28px), 230px" />
                 <div><p>{service.eyebrow.split(" / ")[1]}</p><h2>{service.title}</h2><strong>{service.summary}</strong></div>
                 <b aria-hidden="true">↗</b>
               </Link>

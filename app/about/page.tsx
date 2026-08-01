@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <main>
       <section className="subhero subhero--about">
-        <Image className="subhero__image" src="/media/operations/company-history.jpg" alt="American Property Solutions truck and snow equipment" fill sizes="100vw" priority />
+        <Image className="subhero__image" src="/media/operations/company-history.jpg" alt="American Property Solutions truck and snow equipment" fill sizes="(max-width: 1050px) 100vw, 64vw" quality={90} priority />
         <div className="subhero__scrim" /><div className="container subhero__content"><p className="eyebrow eyebrow--light">Built through winters</p><h1>Three generations.<br />One operating standard.</h1><p>A family operation shaped by more than four decades of snow work.</p></div>
       </section>
       <section className="section"><div className="container story-grid"><div><p className="eyebrow">The Piechota story</p><h2>From a Bethlehem garage to regional winter operations.</h2></div><div className="prose-large"><p>Greg and Mark Piechota opened a small auto repair garage in Bethlehem in 1975. By the early 1980s, snow plowing had become part of the family’s winter work. The operation expanded steadily—adding accounts, trucks, Bobcat loaders, and deeper commercial capabilities.</p><p>Michael Piechota joined as a second-generation snowplow operator in 1991. The family committed more fully to commercial snow removal in 1998, and welcomed the third generation in 2016. Today, the organization focuses year-round on property maintenance, with snow and ice management at the center of its operations.</p></div></div></section>

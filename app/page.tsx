@@ -15,10 +15,8 @@ export default function Home() {
     <main>
       <section className="hero">
         <div className="hero__visual">
-          <Image className="hero__image" src="/media/operations/hero-snow-removal.jpg" alt="American Snow & Ice Solutions operator clearing an active commercial parking lot" fill sizes="(max-width: 1050px) 100vw, 65vw" priority />
+          <Image className="hero__image" src="/media/operations/hero-snow-removal.jpg" alt="American Snow & Ice Solutions operator clearing an active commercial parking lot" fill sizes="(max-width: 760px) 100vw, (max-width: 1050px) 70vw, 63vw" quality={90} priority />
           <div className="hero__atmosphere" aria-hidden="true" />
-          <div className="hero__snow hero__snow--far" aria-hidden="true" />
-          <div className="hero__snow hero__snow--near" aria-hidden="true" />
         </div>
         <div className="hero__overlay" aria-hidden="true" />
         <div className="container hero__content">
@@ -51,7 +49,7 @@ export default function Home() {
           <div className="service-grid">
             {services.map((service, index) => (
               <Link key={service.slug} className={`service-card ${index === 0 ? "service-card--feature" : ""}`} href={`/services/${service.slug}`}>
-                <Image src={service.image} alt="" fill sizes={index === 0 ? "100vw" : "(max-width: 760px) 100vw, 50vw"} />
+                <Image src={service.image} alt="" fill quality={90} sizes={index === 0 ? "(max-width: 760px) calc(100vw - 28px), (max-width: 1280px) calc(100vw - 40px), 1240px" : "(max-width: 760px) calc(100vw - 28px), (max-width: 1280px) calc((100vw - 56px) / 2), 612px"} />
                 <div className="service-card__overlay" />
                 <div className="service-card__content">
                   <span>{String(index + 1).padStart(2, "0")}</span>
@@ -88,7 +86,7 @@ export default function Home() {
       <section className="section proof-section">
         <div className="container proof-grid">
           <div className="proof-photo">
-            <Image src="/media/operations/snow-hauling.jpg" alt="Loader moving snow into a commercial hauling truck" fill sizes="(max-width: 1050px) 100vw, 50vw" />
+            <Image src="/media/operations/snow-hauling.jpg" alt="Loader moving snow into a commercial hauling truck" fill quality={90} sizes="(max-width: 1050px) calc(100vw - 40px), 46vw" />
             <div className="photo-label"><span>Field operations</span><strong>Scale matched to the property</strong></div>
           </div>
           <div className="proof-copy">
@@ -124,11 +122,11 @@ export default function Home() {
         <div className="container">
           <p className="eyebrow eyebrow--center">Professional standards & affiliations</p>
           <div className="credential-row">
-            <Image src="/media/credentials/snowfighters.png" alt="Snowfighters Institute" width={160} height={90} />
-            <Image src="/media/credentials/sima.jpg" alt="Snow and Ice Management Association" width={160} height={90} />
-            <Image src="/media/credentials/asca.png" alt="Accredited Snow Contractors Association" width={160} height={90} />
-            <Image src="/media/credentials/bbb.png" alt="Better Business Bureau Accredited Business" width={160} height={90} />
-            <Image src="/media/credentials/chamber.png" alt="Greater Lehigh Valley Chamber of Commerce" width={160} height={90} />
+            <Image src="/media/credentials/snowfighters.png" alt="Snowfighters Institute" width={101} height={100} />
+            <Image src="/media/credentials/sima.jpg" alt="Snow and Ice Management Association" width={171} height={68} />
+            <Image src="/media/credentials/asca.png" alt="Accredited Snow Contractors Association" width={124} height={70} />
+            <Image src="/media/credentials/bbb.png" alt="Better Business Bureau Accredited Business" width={864} height={350} />
+            <Image src="/media/credentials/chamber.png" alt="Greater Lehigh Valley Chamber of Commerce" width={246} height={67} />
           </div>
         </div>
       </section>

@@ -38,7 +38,7 @@ export function ServicePage({ service }: { service: Service }) {
         ]}
       />
       <section className="subhero subhero--service">
-        <Image className="subhero__image" src={service.image} alt={service.imageAlt} fill sizes="100vw" priority />
+        <Image className="subhero__image" src={service.image} alt={service.imageAlt} fill sizes="(max-width: 1050px) 100vw, 64vw" quality={90} priority />
         <div className="subhero__scrim" />
         <div className="container subhero__content">
           <p className="eyebrow eyebrow--light">{service.eyebrow}</p>

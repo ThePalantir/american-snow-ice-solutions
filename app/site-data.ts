@@ -29,8 +29,8 @@ export const services: Service[] = [
     summary: "Modern equipment, roving supervisors, and property-specific routing built for demanding commercial sites.",
     description:
       "American Snow & Ice Solutions pairs advanced plowing equipment with an operating plan built around your entrances, loading zones, traffic patterns, and opening times. Roving snow supervisors remain available throughout every winter event so emerging issues can be addressed quickly.",
-    image: "/media/operations/commercial-plowing.jpg",
-    imageAlt: "Commercial snow equipment staged for a winter event",
+    image: "/media/operations/hero-snow-removal.jpg",
+    imageAlt: "Commercial snow equipment actively clearing a parking lot",
     highlights: ["Extended-wing and V-plows", "Containment plows and loaders", "Roving snow supervisors", "Priority-based site routing"],
     outcomes: [
       { label: "Faster clearance", detail: "Equipment is matched to the scale and movement patterns of each property." },
@@ -46,8 +46,8 @@ export const services: Service[] = [
     summary: "Temperature-aware pre-treatment, in-event applications, and post-storm service for safer surfaces.",
     description:
       "Ice control begins before accumulation. We select products for the expected temperature, pre-treat parking areas and walks, monitor conditions during the event, and perform a final treatment after the storm to reduce bonding, hardpack, and slip exposure.",
-    image: "/media/operations/deicing.jpg",
-    imageAlt: "Commercial de-icing material being loaded for application",
+    image: "/media/operations/deicing-full.jpg",
+    imageAlt: "Crew member clearing accumulated snow from a pedestrian route",
     highlights: ["12–24 hour pre-treatment window", "Temperature-matched materials", "In-event monitoring", "Post-event treatment"],
     outcomes: [
       { label: "Early defense", detail: "Pre-treatment helps prevent snow and ice from bonding to pavement." },
@@ -80,8 +80,8 @@ export const services: Service[] = [
     summary: "Professional forecasting, certified event records, and real-time field documentation inform every move.",
     description:
       "We combine forecast intelligence from The Weather Pros, certified post-event reporting, and field updates through Yeti Snow Management. The result is a clearer operating picture before, during, and after each winter event.",
-    image: "/media/operations/night-operations.jpg",
-    imageAlt: "Snow loader operating at night during winter response",
+    image: "/media/operations/snow-hauling.jpg",
+    imageAlt: "Commercial loader and hauling truck working through event closeout",
     highlights: ["Pre-storm forecast intelligence", "Live field observations", "Geo-fenced service records", "Post-event reporting"],
     outcomes: [
       { label: "Better timing", detail: "Forecast updates guide mobilization and treatment decisions." },
