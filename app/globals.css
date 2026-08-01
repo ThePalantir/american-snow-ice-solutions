@@ -65,18 +65,18 @@ p { color: var(--text-muted); }
 /* Home hero */
 .hero { position: relative; min-height: 850px; display: flex; align-items: stretch; overflow: hidden; background: #020a12; color: white; isolation: isolate; }
 .hero__visual { position: absolute; z-index: -3; inset: 0 0 78px 37%; overflow: hidden; background: #0a1925; }
-.hero__image { object-fit: cover; object-position: 55% center; animation: hero-drift 22s cubic-bezier(.45,.05,.45,.95) infinite alternate; }
-.hero__atmosphere { position: absolute; inset: 0; background: radial-gradient(circle at 60% 34%, rgba(220,241,250,.22), transparent 22%), linear-gradient(180deg, rgba(5,15,25,.05), rgba(4,13,22,.24)); mix-blend-mode: screen; animation: hero-light 16s ease-in-out infinite alternate; }
+.hero__image { object-fit: cover; object-position: 55% center; opacity: .88; transform-origin: 55% 50%; animation: hero-cinematic-drift 18s ease-in-out infinite alternate; will-change: transform; }
+.hero__atmosphere { position: absolute; inset: -3%; background: radial-gradient(circle at 60% 34%, rgba(220,241,250,.2), transparent 22%), linear-gradient(180deg, rgba(5,15,25,.03), rgba(4,13,22,.18)); mix-blend-mode: screen; animation: hero-atmosphere-shift 24s ease-in-out infinite alternate; will-change: transform, opacity; }
 .hero__snow { position: absolute; inset: -20%; pointer-events: none; background-repeat: repeat; transform: rotate(-8deg); }
-.hero__snow--far { opacity: .18; background-image: radial-gradient(circle, rgba(255,255,255,.85) 0 1px, transparent 1.5px); background-size: 36px 44px; animation: snow-far 20s linear infinite; }
-.hero__snow--near { opacity: .14; background-image: radial-gradient(ellipse, rgba(255,255,255,.9) 0 1.5px, transparent 2px); background-size: 82px 96px; filter: blur(.25px); animation: snow-near 13s linear infinite; }
+.hero__snow--far { opacity: .09; background-image: radial-gradient(circle, rgba(255,255,255,.85) 0 1px, transparent 1.5px); background-size: 48px 60px; animation: snow-far 28s linear infinite; }
+.hero__snow--near { opacity: .06; background-image: radial-gradient(ellipse, rgba(255,255,255,.9) 0 1.5px, transparent 2px); background-size: 110px 130px; filter: blur(.25px); animation: snow-near 24s linear infinite; }
 .hero__overlay { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, #020a12 0%, #06111e 31%, rgba(6,17,30,.96) 38%, rgba(6,17,30,.76) 47%, rgba(6,17,30,.24) 62%, rgba(2,10,18,.06) 100%), linear-gradient(0deg, rgba(2,10,18,.52) 0%, transparent 40%); }
 .hero__content { position: relative; z-index: 2; display: flex; align-items: center; min-height: 850px; padding-top: 176px; padding-bottom: 142px; }
-.hero__copy { width: min(39%, 490px); }
+.hero__copy { width: min(40%, 520px); max-width: 520px; }
 .hero__copy .eyebrow { margin-bottom: 22px; }
-.hero h1 { max-width: 490px; margin-bottom: 24px; color: white; font-size: clamp(3rem, 3.7vw, 3.5rem); line-height: .97; letter-spacing: -.045em; }
+.hero h1 { max-width: 520px; margin-bottom: 24px; color: white; font-size: clamp(3rem, 4.2vw, 4rem); line-height: .96; letter-spacing: -.045em; }
 .hero h1 em { color: var(--ice-300); font-style: normal; }
-.hero__lede { max-width: 490px; margin-bottom: 32px; color: #c8d6df; font-size: 1.01rem; line-height: 1.58; }
+.hero__lede { max-width: 450px; margin-bottom: 32px; color: #c8d6df; font-size: .96rem; line-height: 1.55; }
 .hero .button { min-height: 52px; padding-inline: 20px; gap: 16px; font-size: .68rem; }
 .hero .button--outline { border-color: rgba(255,255,255,.34); background: rgba(2,10,18,.12); }
 .hero__foot { position: absolute; z-index: 3; bottom: 0; width: 100%; border-top: 1px solid rgba(255,255,255,.16); background: rgba(2,10,18,.91); }
@@ -85,21 +85,22 @@ p { color: var(--text-muted); }
 .hero__foot-inner strong:first-child { padding-left: 0; border-left: 0; }
 .hero__foot-inner strong::before { content: ""; flex: 0 0 auto; width: 5px; height: 5px; margin-right: 12px; border-radius: 50%; background: var(--ice-500); box-shadow: 0 0 0 4px rgba(92,200,243,.09); }
 
-@keyframes hero-drift {
-  0% { transform: scale(1.02) translate3d(0,0,0); }
-  100% { transform: scale(1.055) translate3d(-1.1%,.35%,0); }
+@keyframes hero-cinematic-drift {
+  0% { transform: scale(1.05) translate3d(-.8%,0,0); }
+  50% { transform: scale(1.09) translate3d(.8%,-.4%,0); }
+  100% { transform: scale(1.06) translate3d(.3%,.4%,0); }
 }
-@keyframes hero-light {
-  0% { opacity: .58; transform: translate3d(-1%,0,0); }
-  100% { opacity: .86; transform: translate3d(2%,1%,0); }
+@keyframes hero-atmosphere-shift {
+  0% { opacity: .52; transform: translate3d(-.6%,0,0) scale(1.01); }
+  100% { opacity: .76; transform: translate3d(1.2%,.4%,0) scale(1.025); }
 }
 @keyframes snow-far {
-  from { transform: translate3d(-3%,-12%,0) rotate(-8deg); }
-  to { transform: translate3d(6%,12%,0) rotate(-8deg); }
+  from { transform: translate3d(-1%,-6%,0) rotate(-8deg); }
+  to { transform: translate3d(3%,6%,0) rotate(-8deg); }
 }
 @keyframes snow-near {
-  from { transform: translate3d(-5%,-16%,0) rotate(-8deg); }
-  to { transform: translate3d(9%,16%,0) rotate(-8deg); }
+  from { transform: translate3d(-2%,-7%,0) rotate(-8deg); }
+  to { transform: translate3d(4%,7%,0) rotate(-8deg); }
 }
 
 /* Shared section patterns */
