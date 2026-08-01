@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { QuoteForm } from "./components/QuoteForm";
-import { company, propertyTypes, services } from "./site-data";
+import { company, services } from "./site-data";
 import { makeMetadata } from "./seo";
 
 export const metadata = makeMetadata({
@@ -14,31 +14,30 @@ export default function Home() {
   return (
     <main>
       <section className="hero">
-        <Image className="hero__image" src="/media/operations/hero-snow-removal.jpg" alt="Commercial snow removal equipment clearing a parking lot" fill sizes="100vw" priority />
-        <div className="hero__overlay" />
-        <div className="hero__grid" aria-hidden="true" />
+        <div className="hero__visual">
+          <Image className="hero__image" src="/media/operations/hero-snow-removal.jpg" alt="American Snow & Ice Solutions operator clearing an active commercial parking lot" fill sizes="(max-width: 1050px) 100vw, 65vw" priority />
+          <div className="hero__atmosphere" aria-hidden="true" />
+          <div className="hero__snow hero__snow--far" aria-hidden="true" />
+          <div className="hero__snow hero__snow--near" aria-hidden="true" />
+        </div>
+        <div className="hero__overlay" aria-hidden="true" />
         <div className="container hero__content">
           <div className="hero__copy">
-            <p className="eyebrow eyebrow--light"><span>Commercial winter operations</span> Eastern PA + surrounding regions</p>
+            <p className="eyebrow eyebrow--light">Commercial winter operations</p>
             <h1>Winter doesn’t wait.<br /><em>Neither do we.</em></h1>
-            <p className="hero__lede">Snow and ice management for commercial properties that cannot afford to slow down.</p>
+            <p className="hero__lede">Commercial snow and ice management planned before the first flake—protecting facilities across Eastern Pennsylvania, New Jersey, and Southern New York.</p>
             <div className="button-row">
-              <Link className="button button--signal" href="/quote">Build your snow plan <span aria-hidden="true">↗</span></Link>
-              <Link className="button button--outline" href="/services">Explore operations <span aria-hidden="true">→</span></Link>
+              <Link className="button button--signal" href="/quote">Build Your Snow Plan <span aria-hidden="true">↗</span></Link>
+              <a className="button button--outline" href={company.phoneHref}>Call {company.phone}</a>
             </div>
-          </div>
-          <div className="hero__status">
-            <div className="status-head"><span>Operations status</span><strong>Season planning</strong></div>
-            <div className="status-row"><span>Coverage</span><strong>PA · NJ · NY · DE</strong></div>
-            <div className="status-row"><span>Response</span><strong>24 / 7 events</strong></div>
-            <div className="status-row"><span>Operations center</span><strong>Walnutport, PA</strong></div>
-            <a href={company.phoneHref}>Speak with operations <span>↗</span></a>
           </div>
         </div>
         <div className="hero__foot">
           <div className="container hero__foot-inner">
-            <span>Built for</span>
-            {propertyTypes.slice(0, 4).map((type) => <strong key={type}>{type}</strong>)}
+            <strong>40+ Years of Experience</strong>
+            <strong>24/7 Weather Monitoring</strong>
+            <strong>GPS + Photo Documentation</strong>
+            <strong>Roving Snow Supervisors</strong>
           </div>
         </div>
       </section>
