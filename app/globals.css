@@ -49,8 +49,8 @@ p { color: var(--text-muted); }
 .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ice-500); box-shadow: 0 0 0 4px rgba(92,200,243,.12); }
 .site-header { position: absolute; z-index: 40; top: 34px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.16); color: white; }
 .site-header__inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; }
-.brand { width: min(300px, 29vw); }
-.brand img { width: 100%; max-height: 60px; object-fit: contain; object-position: left center; filter: drop-shadow(0 3px 8px rgba(0,0,0,.24)); }
+.brand { width: min(340px, 32vw); }
+.brand img { width: 100%; max-height: 72px; object-fit: contain; object-position: left center; filter: drop-shadow(0 3px 8px rgba(0,0,0,.24)); }
 .primary-nav { display: flex; align-items: center; gap: clamp(18px, 2.25vw, 34px); font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .primary-nav > a:not(.button), .nav-group > a { padding: 30px 0; }
 .primary-nav > a:not(.button):hover, .nav-group > a:hover { color: var(--brand-primary-soft); }
@@ -66,7 +66,7 @@ p { color: var(--text-muted); }
 /* Home hero */
 .hero { position: relative; min-height: 850px; display: flex; align-items: stretch; overflow: hidden; background: #020a12; color: white; isolation: isolate; }
 .hero__visual { position: absolute; z-index: -3; inset: 0 0 78px auto; width:min(63%,1294px); overflow: hidden; background: #0a1925; }
-.hero__image { object-fit: cover; object-position: 52% 50%; opacity: 1; transform-origin: 55% 50%; animation: hero-cinematic-drift 20s ease-in-out infinite alternate; will-change: transform; }
+.hero__image { object-fit: cover; object-position: 52% 50%; opacity: 1; transform-origin: 55% 50%; animation: hero-cinematic-drift 17s ease-in-out infinite alternate; will-change: transform; }
 .hero__atmosphere { position: absolute; inset: -3%; opacity: .55; background: radial-gradient(ellipse at 70% 32%, rgba(169,229,251,.18), transparent 31%); mix-blend-mode: screen; animation: hero-atmosphere-shift 26s ease-in-out infinite alternate; will-change: transform; }
 .hero__overlay { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, #020a12 0%, #06111e 30%, rgba(6,17,30,.94) 38%, rgba(6,17,30,.68) 48%, rgba(6,17,30,.18) 64%, transparent 100%), linear-gradient(0deg, rgba(2,10,18,.38) 0%, transparent 38%); }
 .hero__content { position: relative; z-index: 2; display: flex; align-items: center; min-height: 850px; padding-top: 176px; padding-bottom: 142px; }
@@ -84,9 +84,9 @@ p { color: var(--text-muted); }
 .hero__foot-inner strong::before { content: ""; flex: 0 0 auto; width: 5px; height: 5px; margin-right: 12px; border-radius: 50%; background: var(--ice-500); box-shadow: 0 0 0 4px rgba(92,200,243,.09); }
 
 @keyframes hero-cinematic-drift {
-  0% { transform: scale(1.05) translate3d(-.8%,0,0); }
-  50% { transform: scale(1.09) translate3d(.8%,-.4%,0); }
-  100% { transform: scale(1.06) translate3d(.3%,.4%,0); }
+  0% { transform: scale(1.06) translate3d(-1.3%,.2%,0); }
+  50% { transform: scale(1.13) translate3d(1.6%,-.7%,0); }
+  100% { transform: scale(1.08) translate3d(.5%,.8%,0); }
 }
 @keyframes hero-atmosphere-shift {
   0% { transform: translate3d(-.5%,0,0) scale(1.01); }
@@ -301,7 +301,7 @@ textarea { resize:vertical; }
   .primary-nav > a:not(.button), .nav-group > a { display:block; padding:15px 8px; border-bottom:1px solid rgba(255,255,255,.1); }
   .nav-mega { display:none; }
   .primary-nav .button { margin-top:12px; }
-  .brand { width:320px; max-width:68%; }
+  .brand { width:340px; max-width:72%; }
   .hero { min-height:820px; }
   .hero__visual { inset:0 0 78px auto; width:70%; }
   .hero__image { object-position:55% 48%; }
@@ -327,7 +327,7 @@ textarea { resize:vertical; }
   .ops-bar__planning { display:none; }
   .site-header__inner { min-height:72px; }
   .primary-nav { top:72px; right:14px; left:14px; }
-  .brand { width:220px; }
+  .brand { width:250px; }
   .hero { min-height:880px; }
   .hero__visual { inset:112px 0 142px 0; width:100%; }
   .hero__image { object-position:54% 52%; }
