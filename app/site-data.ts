@@ -23,7 +23,7 @@ export const company = {
 export const services: Service[] = [
   {
     slug: "commercial-plowing",
-    eyebrow: "01 / Heavy operations",
+    eyebrow: "Heavy operations",
     title: "Commercial snow plowing",
     shortTitle: "Plowing",
     summary: "Modern equipment, roving supervisors, and property-specific routing built for demanding commercial sites.",
@@ -40,7 +40,7 @@ export const services: Service[] = [
   },
   {
     slug: "deicing-salting",
-    eyebrow: "02 / Surface safety",
+    eyebrow: "Surface safety",
     title: "De-icing & salting",
     shortTitle: "De-icing",
     summary: "Temperature-aware pre-treatment, in-event applications, and post-storm service for safer surfaces.",
@@ -57,7 +57,7 @@ export const services: Service[] = [
   },
   {
     slug: "sidewalks-walkways",
-    eyebrow: "03 / Pedestrian zones",
+    eyebrow: "Pedestrian zones",
     title: "Sidewalks & walkways",
     shortTitle: "Sidewalks",
     summary: "Specialized compact equipment and trained crews keep pedestrian routes open and dependable.",
@@ -74,7 +74,7 @@ export const services: Service[] = [
   },
   {
     slug: "weather-reporting",
-    eyebrow: "04 / Decision intelligence",
+    eyebrow: "Decision intelligence",
     title: "Weather reporting",
     shortTitle: "Weather reporting",
     summary: "Professional forecasting, certified event records, and real-time field documentation inform every move.",
@@ -91,7 +91,7 @@ export const services: Service[] = [
   },
   {
     slug: "risk-management",
-    eyebrow: "05 / Operational continuity",
+    eyebrow: "Operational continuity",
     title: "Winter risk management",
     shortTitle: "Risk management",
     summary: "A property-specific plan aligned to your people, traffic, operating hours, and highest-consequence areas.",

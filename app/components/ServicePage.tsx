@@ -70,9 +70,8 @@ export function ServicePage({ service }: { service: Service }) {
             <h2>What this service is designed to deliver.</h2>
           </div>
           <div className="outcome-grid">
-            {service.outcomes.map((outcome, index) => (
+            {service.outcomes.map((outcome) => (
               <article key={outcome.label} className="outcome-card">
-                <span>0{index + 1}</span>
                 <h3>{outcome.label}</h3>
                 <p>{outcome.detail}</p>
               </article>
@@ -89,10 +88,10 @@ export function ServicePage({ service }: { service: Service }) {
           </div>
           <div className="process-line">
             {[
-              ["01", "Assess", "Walk the property and identify exposure, traffic, and priority zones."],
-              ["02", "Prepare", "Assign equipment, materials, crews, triggers, and communication paths."],
-              ["03", "Respond", "Monitor the event and execute the property-specific operations plan."],
-              ["04", "Document", "Confirm completion, conditions, materials, and post-event needs."],
+              ["1", "Assess", "Walk the property and identify exposure, traffic, and priority zones."],
+              ["2", "Prepare", "Assign equipment, materials, crews, triggers, and communication paths."],
+              ["3", "Respond", "Monitor the event and execute the property-specific operations plan."],
+              ["4", "Document", "Confirm completion, conditions, materials, and post-event needs."],
             ].map(([number, title, detail]) => (
               <article key={number}>
                 <span>{number}</span><h3>{title}</h3><p>{detail}</p>

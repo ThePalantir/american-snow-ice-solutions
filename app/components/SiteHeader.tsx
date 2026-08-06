@@ -40,7 +40,6 @@ export function SiteHeader() {
               <div className="nav-mega">
                 {services.map((service) => (
                   <Link key={service.slug} href={`/services/${service.slug}`} onClick={() => setOpen(false)}>
-                    <span>{service.eyebrow.split(" / ")[0]}</span>
                     {service.shortTitle}
                   </Link>
                 ))}

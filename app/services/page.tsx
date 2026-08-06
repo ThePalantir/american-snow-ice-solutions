@@ -17,11 +17,10 @@ export default function ServicesPage() {
         <div className="container">
           <div className="section-heading section-heading--split"><div><p className="eyebrow">The operating stack</p><h2>Coverage from forecast to closeout.</h2></div><p>Each service can stand alone, but the strongest winter program connects them into one clear response protocol.</p></div>
           <div className="service-list">
-            {services.map((service, index) => (
+            {services.map((service) => (
               <Link key={service.slug} href={`/services/${service.slug}`} className="service-list__item">
-                <span>{String(index + 1).padStart(2, "0")}</span>
                 <Image src={service.image} alt="" width={460} height={300} quality={85} sizes="(max-width: 760px) calc(100vw - 28px), 230px" />
-                <div><p>{service.eyebrow.split(" / ")[1]}</p><h2>{service.title}</h2><strong>{service.summary}</strong></div>
+                <div><p>{service.eyebrow}</p><h2>{service.title}</h2><strong>{service.summary}</strong></div>
                 <b aria-hidden="true">↗</b>
               </Link>
             ))}

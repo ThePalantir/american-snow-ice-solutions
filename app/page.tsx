@@ -52,7 +52,6 @@ export default function Home() {
                 <Image src={service.image} alt="" fill quality={90} sizes={index === 0 ? "(max-width: 760px) calc(100vw - 28px), (max-width: 1280px) calc(100vw - 40px), 1240px" : "(max-width: 760px) calc(100vw - 28px), (max-width: 1280px) calc((100vw - 56px) / 2), 612px"} />
                 <div className="service-card__overlay" />
                 <div className="service-card__content">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
                   <div><h3>{service.shortTitle}</h3><p>{service.summary}</p></div>
                   <b aria-hidden="true">↗</b>
                 </div>
@@ -72,10 +71,10 @@ export default function Home() {
           </div>
           <div className="protocol-steps">
             {[
-              ["01", "Site intelligence", "Entrances, loading areas, shift changes, pedestrian routes, and priority zones mapped in advance."],
-              ["02", "Storm readiness", "Equipment, operators, materials, and escalation contacts assigned to the property plan."],
-              ["03", "Active command", "Forecast monitoring, field reporting, and roving supervision throughout the winter event."],
-              ["04", "Verified closeout", "Post-treatment, completion checks, imagery, and event documentation after conditions stabilize."],
+              ["1", "Site intelligence", "Entrances, loading areas, shift changes, pedestrian routes, and priority zones mapped in advance."],
+              ["2", "Storm readiness", "Equipment, operators, materials, and escalation contacts assigned to the property plan."],
+              ["3", "Active command", "Forecast monitoring, field reporting, and roving supervision throughout the winter event."],
+              ["4", "Verified closeout", "Post-treatment, completion checks, imagery, and event documentation after conditions stabilize."],
             ].map(([number, title, detail]) => (
               <article key={number}><span>{number}</span><div><h3>{title}</h3><p>{detail}</p></div></article>
             ))}
