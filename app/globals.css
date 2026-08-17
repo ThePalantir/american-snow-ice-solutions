@@ -48,9 +48,9 @@ p { color: var(--text-muted); }
 .ops-bar a { color: white; font-weight: 700; }
 .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ice-500); box-shadow: 0 0 0 4px rgba(92,200,243,.15); }
 .site-header { position: absolute; z-index: 40; top: 34px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.16); color: white; }
-.site-header__inner { min-height: 92px; display: flex; align-items: center; justify-content: space-between; }
-.brand { flex: 0 0 auto; width: min(376px, 35vw); padding: 7px 12px; border: 1px solid rgba(169,229,251,.22); border-radius: 5px; background: linear-gradient(105deg,#edf5f8 0%,#edf5f8 27%,#18394e 43%,#071521 100%); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
-.brand img { width: 100%; max-height: 72px; object-fit: contain; object-position: left center; filter: drop-shadow(0 2px 5px rgba(0,0,0,.16)); }
+.site-header__inner { min-height: 124px; display: flex; align-items: center; justify-content: space-between; }
+.brand { flex: 0 0 auto; width: min(330px, 31vw); padding: 6px 10px; border: 1px solid rgba(169,229,251,.28); border-radius: 5px; background: #f7fbfd; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+.brand img { width: 100%; height: auto; object-fit: contain; object-position: left center; }
 .primary-nav { display: flex; align-items: center; gap: clamp(18px, 2.25vw, 34px); font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .primary-nav > a:not(.button), .nav-group > a { padding: 30px 0; }
 .primary-nav > a:not(.button):hover, .nav-group > a:hover { color: var(--brand-primary-soft); }
@@ -279,7 +279,7 @@ textarea { resize:vertical; }
 .not-found h1 { margin-bottom:28px; color:white; text-transform:uppercase; }
 .not-found p:not(.eyebrow) { max-width:560px; margin-bottom:34px; color:#c2d2dc; font-size:1.1rem; }
 .footer-grid { display:grid; grid-template-columns:1.55fr .7fr .7fr 1fr; gap:60px; padding-bottom:65px; }
-.footer-brand img { width:min(330px,100%); margin-bottom:26px; }
+.footer-brand img { width:min(360px,100%); margin-bottom:26px; padding:8px; border-radius:5px; background:#f7fbfd; }
 .footer-brand p { max-width:420px; color:#94a8b5; }
 .footer-phone { color:white; font-family:var(--font-display); font-size:2.2rem; font-weight:900; letter-spacing:-.04em; }
 .footer-heading { margin-bottom:22px; color:var(--ice-300) !important; font-family:var(--font-mono); font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
@@ -291,12 +291,12 @@ textarea { resize:vertical; }
 @media (max-width: 1050px) {
   .site-header { background:rgba(2,10,18,.9); backdrop-filter:blur(12px); }
   .menu-toggle { display:block; }
-  .primary-nav { position:absolute; display:none; top:92px; right:20px; left:20px; padding:20px; background:var(--ink-950); border:1px solid var(--border-dark); box-shadow:var(--shadow-dark); }
+  .primary-nav { position:absolute; display:none; top:124px; right:20px; left:20px; padding:20px; background:var(--ink-950); border:1px solid var(--border-dark); box-shadow:var(--shadow-dark); }
   .primary-nav.is-open { display:grid; gap:0; }
   .primary-nav > a:not(.button), .nav-group > a { display:block; padding:15px 8px; border-bottom:1px solid rgba(255,255,255,.1); }
   .nav-mega { display:none; }
   .primary-nav .button { margin-top:12px; }
-  .brand { width:376px; max-width:76%; }
+  .brand { width:330px; max-width:72%; }
   .hero { min-height:820px; }
   .hero__visual { inset:0 0 78px auto; width:70%; }
   .hero__image { object-position:55% 48%; }
@@ -320,9 +320,9 @@ textarea { resize:vertical; }
 @media (max-width: 760px) {
   .container { width:min(calc(100% - 28px),var(--container)); }
   .ops-bar__planning { display:none; }
-  .site-header__inner { min-height:88px; }
-  .primary-nav { top:88px; right:14px; left:14px; }
-  .brand { width:280px; max-width:calc(100% - 64px); padding:7px 10px; }
+  .site-header__inner { min-height:100px; }
+  .primary-nav { top:100px; right:14px; left:14px; }
+  .brand { width:260px; max-width:calc(100% - 64px); padding:5px 8px; }
   .hero { min-height:880px; }
   .hero__visual { inset:112px 0 142px 0; width:100%; }
   .hero__image { object-position:54% 52%; }

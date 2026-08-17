@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#06111e",
     icons: [
       {
-        src: "/media/brand/asai-favicon.png",
+        src: "/media/brand/asais-gpt-icon.png",
         sizes: "152x120",
         type: "image/png",
       },

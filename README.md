@@ -60,4 +60,4 @@ Every pushed feature branch and pull request can then receive an isolated Vercel
 
 ## Brand and media
 
-The selected American Snow & Ice Solutions logo is stored at `public/media/brand/asai-logo.png`. Approved source imagery and its retrieval manifest remain under `images/`; optimized site selections are under `public/media/`.
+The selected American Snow & Ice Solutions logo is stored at `public/media/brand/asais-gpt-logo.png`. Approved source imagery and its retrieval manifest remain under `images/`; optimized site selections are under `public/media/`.

@@ -128,8 +128,8 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(html, /Commercial Winter Operations \| American Snow &amp; Ice Solutions/i);
   assert.match(html, /Winter doesn.t wait/i);
   assert.match(html, /American Snow &amp; Ice Solutions/i);
-  assert.match(html, /\/media\/brand\/asai-logo\.png/i);
-  await access(new URL("../public/media/brand/asai-logo.png", import.meta.url));
+  assert.match(html, /\/media\/brand\/asais-gpt-logo\.png/i);
+  await access(new URL("../public/media/brand/asais-gpt-logo.png", import.meta.url));
 });
 
 test("serves technical SEO and GEO discovery endpoints", async () => {

@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   },
   formatDetection: { email: false, address: false, telephone: false },
   icons: {
-    icon: "/media/brand/asai-favicon.png",
-    shortcut: "/media/brand/asai-favicon.png",
+    icon: "/media/brand/asais-gpt-icon.png",
+    shortcut: "/media/brand/asais-gpt-icon.png",
   },
   openGraph: {
     title: `${siteName} | Commercial Winter Operations`,
@@ -75,7 +75,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               name: siteName,
               alternateName: "ASAI",
               url: siteUrl,
-              logo: absoluteUrl("/media/brand/asai-logo.png"),
+              logo: absoluteUrl("/media/brand/asais-gpt-logo.png"),
               image: absoluteUrl("/og.png"),
               telephone: "+1-610-760-0600",
               email: "info@americansnowandice.com",
