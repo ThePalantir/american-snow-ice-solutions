@@ -108,6 +108,10 @@ test("serves every primary website route", async () => {
     "/services/sidewalks-walkways",
     "/services/weather-reporting",
     "/services/risk-management",
+    "/winter-risk-plan",
+    "/technology-reporting",
+    "/snow-ice-science",
+    "/schedule",
     "/about",
     "/service-areas",
     "/quote",
@@ -125,8 +129,11 @@ test("serves every primary website route", async () => {
 test("renders the selected brand and premium homepage content", async () => {
   const response = await fetch(baseUrl);
   const html = await response.text();
-  assert.match(html, /Commercial Winter Operations \| American Snow &amp; Ice Solutions/i);
-  assert.match(html, /Winter doesn.t wait/i);
+  assert.match(html, /Professional Winter Risk Management \| American Snow &amp; Ice Solutions/i);
+  assert.match(html, /We professionally manage/i);
+  assert.match(html, /winter risk/i);
+  assert.match(html, /weatherwidget-io/i);
+  assert.match(html, /LEHIGH VALLEY/i);
   assert.match(html, /American Snow &amp; Ice Solutions/i);
   assert.match(html, /\/media\/brand\/asais-gpt-logo\.png/i);
   await access(new URL("../public/media/brand/asais-gpt-logo.png", import.meta.url));
@@ -141,12 +148,14 @@ test("serves technical SEO and GEO discovery endpoints", async () => {
   const sitemap = await sitemapResponse.text();
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/services\/commercial-plowing/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/service-areas/i);
+  assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/winter-risk-plan/i);
+  assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/schedule/i);
 
   const manifest = await (await fetch(`${baseUrl}/manifest.webmanifest`)).json();
   assert.equal(manifest.name, "American Snow & Ice Solutions");
 
   const llms = await (await fetch(`${baseUrl}/llms.txt`)).text();
-  assert.match(llms, /Commercial and industrial snow and ice management company/i);
+  assert.match(llms, /Professional commercial snow and ice management company/i);
 
   const serviceHtml = await (await fetch(`${baseUrl}/services/commercial-plowing`)).text();
   assert.match(serviceHtml, /application\/ld\+json/i);

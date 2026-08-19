@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { company, services } from "../site-data";
+import { company, servicesForDisplay } from "../site-data";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -38,18 +38,25 @@ export function SiteHeader() {
             <div className="nav-group">
               <Link href="/services" onClick={() => setOpen(false)}>Services</Link>
               <div className="nav-mega">
-                {services.map((service) => (
+                {servicesForDisplay.map((service) => (
                   <Link key={service.slug} href={`/services/${service.slug}`} onClick={() => setOpen(false)}>
                     {service.shortTitle}
                   </Link>
                 ))}
               </div>
             </div>
+            <div className="nav-group">
+              <Link href="/winter-risk-plan" onClick={() => setOpen(false)}>Our approach</Link>
+              <div className="nav-mega">
+                <Link href="/winter-risk-plan" onClick={() => setOpen(false)}>Site-specific planning</Link>
+                <Link href="/technology-reporting" onClick={() => setOpen(false)}>Technology &amp; reporting</Link>
+                <Link href="/snow-ice-science" onClick={() => setOpen(false)}>Snow &amp; ice science</Link>
+              </div>
+            </div>
             <Link href="/about" onClick={() => setOpen(false)}>Company</Link>
             <Link href="/service-areas" onClick={() => setOpen(false)}>Coverage</Link>
-            <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
-            <Link href="/quote" className="button button--small button--signal" onClick={() => setOpen(false)}>
-              Build your snow plan <span aria-hidden="true">↗</span>
+            <Link href="/schedule" className="button button--small button--signal" onClick={() => setOpen(false)}>
+              Schedule a consultation <span aria-hidden="true">↗</span>
             </Link>
           </nav>
         </div>

@@ -108,6 +108,11 @@ export const services: Service[] = [
   },
 ];
 
+export const servicesForDisplay = [
+  ...services.filter((service) => service.slug === "risk-management"),
+  ...services.filter((service) => service.slug !== "risk-management"),
+];
+
 export const serviceAreas = [
   "Allentown", "Bethlehem", "Easton", "Nazareth", "Northampton", "Walnutport", "Whitehall", "Center Valley",
   "Fogelsville", "Macungie", "Emmaus", "Coopersburg", "Quakertown", "Kutztown", "Reading", "Pottstown",

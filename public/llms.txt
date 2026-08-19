@@ -1,6 +1,6 @@
 # American Snow & Ice Solutions
 
-> Commercial and industrial snow and ice management company based in Walnutport, Pennsylvania. The company serves eastern Pennsylvania, western New Jersey, southern New York, and northern Delaware.
+> Professional commercial snow and ice management company based in Walnutport, Pennsylvania. The company builds site-specific winter plans and coordinates weather intelligence, field operations, and event documentation across eastern Pennsylvania, western New Jersey, southern New York, and northern Delaware.
 
 Canonical website: https://americansnowandicesolutions.com/
 
@@ -14,9 +14,12 @@ Canonical website: https://americansnowandicesolutions.com/
 
 ## Company and coverage
 
+- [Site-specific winter risk planning](https://americansnowandicesolutions.com/winter-risk-plan): Operating-hour, shift, delivery, priority-zone, resource, communication, and documentation planning.
+- [Technology and reporting](https://americansnowandicesolutions.com/technology-reporting): YETI Snow Management, professional forecast inputs, field records, and third-party post-event weather reporting.
+- [Snow and ice science](https://americansnowandicesolutions.com/snow-ice-science): Pavement temperature, salt performance, brine, mechanical removal, and responsible material use.
 - [Company history](https://americansnowandicesolutions.com/about): A three-generation family operation with more than four decades of snow experience.
 - [Service areas](https://americansnowandicesolutions.com/service-areas): Eastern Pennsylvania and surrounding regional markets.
-- [Request a site review](https://americansnowandicesolutions.com/quote)
+- [Schedule a winter risk consultation](https://americansnowandicesolutions.com/schedule)
 - [Contact operations](https://americansnowandicesolutions.com/contact)
 
 ## Contact facts

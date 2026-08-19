@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { services } from "../site-data";
+import { servicesForDisplay } from "../site-data";
 import { makeMetadata } from "../seo";
 
 export const metadata = makeMetadata({ title: "Commercial Snow & Ice Services", description: "Coordinated commercial plowing, de-icing, sidewalk clearing, weather reporting, and winter risk management.", path: "/services" });
@@ -17,7 +17,7 @@ export default function ServicesPage() {
         <div className="container">
           <div className="section-heading section-heading--split"><div><p className="eyebrow">The operating stack</p><h2>Coverage from forecast to closeout.</h2></div><p>Each service can stand alone, but the strongest winter program connects them into one clear response protocol.</p></div>
           <div className="service-list">
-            {services.map((service) => (
+            {servicesForDisplay.map((service) => (
               <Link key={service.slug} href={`/services/${service.slug}`} className="service-list__item">
                 <Image src={service.image} alt="" width={460} height={300} quality={85} sizes="(max-width: 760px) calc(100vw - 28px), 230px" />
                 <div><p>{service.eyebrow}</p><h2>{service.title}</h2><strong>{service.summary}</strong></div>
@@ -27,7 +27,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Your property. Your priorities.</p><h2>Start with a site review.</h2></div><Link className="button button--light" href="/quote">Build your snow plan <span>↗</span></Link></div></section>
+      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Your property. Your priorities.</p><h2>Start with an operating conversation.</h2></div><Link className="button button--light" href="/schedule">Schedule a risk consultation <span>↗</span></Link></div></section>
     </main>
   );
 }

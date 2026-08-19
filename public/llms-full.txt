@@ -1,6 +1,6 @@
 # American Snow & Ice Solutions — factual site summary
 
-American Snow & Ice Solutions is a commercial and industrial snow and ice management company headquartered at 4531 Lehigh Drive, Walnutport, Pennsylvania 18088. It is part of Piechota Group LLC alongside American Property Solutions.
+American Snow & Ice Solutions is a professional commercial and industrial snow and ice management company headquartered at 4531 Lehigh Drive, Walnutport, Pennsylvania 18088. Its positioning centers on managing winter risk through site-specific planning, weather intelligence, coordinated field operations, communication, and event documentation. It is part of Piechota Group LLC alongside American Property Solutions.
 
 The Piechota family began snow-plowing work in the early 1980s after Greg and Mark Piechota opened Piechota Brothers in Bethlehem in 1975. Michael Piechota joined as a second-generation snowplow operator in 1991. The family expanded its commercial snow capabilities in 1998 and welcomed a third generation in 2016. The organization now focuses on year-round property maintenance with snow and ice management as its primary winter operation.
 
@@ -15,6 +15,14 @@ Sidewalk and walkway service uses dedicated compact equipment and crews for entr
 Weather reporting combines professional forecast information, field observations, geo-fenced service records, before-and-after documentation, and certified post-event reporting.
 
 Winter risk management begins with property review and prioritizes operating hours, employee and customer access, delivery areas, loading zones, traffic flow, and other business-continuity requirements.
+
+## Planning, technology, and materials
+
+The site-specific planning process considers operating hours, shifts, deliveries, pedestrian and vehicle movement, recurring trouble areas, response priorities, equipment, materials, communication paths, backup resources, and event records.
+
+The company reports using YETI Snow Management for operational coordination and service records, The Weather Pros for business-focused winter forecasting, and WeatherWorks for post-event weather reporting. Current account scope, company memberships, and individual credential status require owner confirmation before public launch.
+
+Material decisions consider pavement temperature, precipitation, timing, traffic, mechanical removal, product guidance, and application method. Brine may be used as an anti-icing tool before qualifying events to help delay bonding. The company avoids absolute safety, environmental, savings, and incident-prevention guarantees.
 
 ## Customers and properties
 
@@ -34,3 +42,4 @@ Emergency winter-event services: 24/7
 
 Canonical website: https://americansnowandicesolutions.com/
 Sitemap: https://americansnowandicesolutions.com/sitemap.xml
+Consultation: https://americansnowandicesolutions.com/schedule

@@ -9,7 +9,7 @@ import { absoluteUrl, defaultDescription, siteName, siteUrl } from "./seo";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} | Commercial Winter Operations`,
+    default: `${siteName} | Professional Winter Risk Management`,
     template: `%s | ${siteName}`,
   },
   description: defaultDescription,
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     shortcut: "/media/brand/asais-gpt-icon.png",
   },
   openGraph: {
-    title: `${siteName} | Commercial Winter Operations`,
-    description: "Commercial snow and ice management engineered for properties that cannot afford to slow down.",
+    title: `${siteName} | Professional Winter Risk Management`,
+    description: "Site-specific snow and ice planning, accountable winter operations, and documented closeout for commercial properties.",
     url: siteUrl,
     siteName,
     locale: "en_US",
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} | Commercial Winter Operations`,
-    description: "Commercial snow and ice management engineered for properties that cannot afford to slow down.",
+    title: `${siteName} | Professional Winter Risk Management`,
+    description: "Site-specific snow and ice planning, accountable winter operations, and documented closeout for commercial properties.",
     images: ["/og.png"],
   },
 };

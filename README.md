@@ -37,7 +37,11 @@ The test suite builds the production application, starts it with `next start`, a
 - `/services/risk-management`
 - `/about`
 - `/service-areas`
-- `/quote`
+- `/schedule` (primary consultation workflow)
+- `/quote` (legacy permanent redirect to `/schedule`)
+- `/winter-risk-plan`
+- `/technology-reporting`
+- `/snow-ice-science`
 - `/contact`
 - `/partner-network`
 
