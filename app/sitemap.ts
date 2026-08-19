@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/winter-risk-plan"), lastModified, changeFrequency: "monthly", priority: 0.9 },
     { url: absoluteUrl("/technology-reporting"), lastModified, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/snow-ice-science"), lastModified, changeFrequency: "monthly", priority: 0.8 },
-    { url: absoluteUrl("/schedule"), lastModified, changeFrequency: "monthly", priority: 0.9 },
+    { url: absoluteUrl("/quote"), lastModified, changeFrequency: "monthly", priority: 0.9 },
     { url: absoluteUrl("/contact"), lastModified, changeFrequency: "yearly", priority: 0.7 },
     { url: absoluteUrl("/partner-network"), lastModified, changeFrequency: "yearly", priority: 0.5 },
   ];

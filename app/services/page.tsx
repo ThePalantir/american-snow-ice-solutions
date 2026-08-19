@@ -27,7 +27,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Your property. Your priorities.</p><h2>Start with an operating conversation.</h2></div><Link className="button button--light" href="/schedule">Schedule a risk consultation <span>↗</span></Link></div></section>
+      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Your property. Your priorities.</p><h2>Start with an operating conversation.</h2></div><Link className="button button--light" href="/quote">Request a risk consultation <span>↗</span></Link></div></section>
     </main>
   );
 }

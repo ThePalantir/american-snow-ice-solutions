@@ -77,9 +77,9 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
         )}
       </div>
       <button className="button button--signal button--wide" type="submit">
-        Request a site review <span aria-hidden="true">↗</span>
+        Request a risk consultation <span aria-hidden="true">↗</span>
       </button>
-      <p className="form-note">No commitment. An operations specialist will review your needs and follow up.</p>
+      <p className="form-note">An operations specialist will review your needs and follow up directly.</p>
     </form>
   );
 }

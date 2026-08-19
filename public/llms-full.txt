@@ -42,4 +42,4 @@ Emergency winter-event services: 24/7
 
 Canonical website: https://americansnowandicesolutions.com/
 Sitemap: https://americansnowandicesolutions.com/sitemap.xml
-Consultation: https://americansnowandicesolutions.com/schedule
+Consultation request: https://americansnowandicesolutions.com/quote

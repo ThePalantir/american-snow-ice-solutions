@@ -32,7 +32,7 @@ export default function Home() {
             <h1>We professionally manage <em>winter risk</em> for your property.</h1>
             <p className="hero__lede">Site-specific planning, professional weather intelligence, accountable field operations, and documented closeout—built around how your property actually works.</p>
             <div className="button-row">
-              <Link className="button button--signal" href="/schedule">Schedule a risk consultation <span aria-hidden="true">↗</span></Link>
+              <Link className="button button--signal" href="/quote">Request a risk consultation <span aria-hidden="true">↗</span></Link>
               <a className="button button--outline" href={company.phoneHref}>Call {company.phone}</a>
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function Home() {
       <section className="section consultation-section">
         <div className="container consultation-grid">
           <div><p className="eyebrow eyebrow--light">Plan before the season</p><h2>Start with a conversation about the property—not a generic quote.</h2></div>
-          <div><p>Choose a consultation time, tell us how your site operates, and identify the winter problems you want corrected. That gives the operations team a stronger starting point for discovery.</p><Link className="button button--signal" href="/schedule">Schedule a snow &amp; ice risk consultation <span aria-hidden="true">↗</span></Link></div>
+          <div><p>Tell us how your site operates and identify the winter problems you want corrected. That gives the operations team a stronger starting point for discovery and follow-up.</p><Link className="button button--signal" href="/quote">Request a snow &amp; ice risk consultation <span aria-hidden="true">↗</span></Link></div>
         </div>
       </section>
     </main>

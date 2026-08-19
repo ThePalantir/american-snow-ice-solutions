@@ -149,7 +149,7 @@ test("serves technical SEO and GEO discovery endpoints", async () => {
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/services\/commercial-plowing/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/service-areas/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/winter-risk-plan/i);
-  assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/schedule/i);
+  assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/quote/i);
 
   const manifest = await (await fetch(`${baseUrl}/manifest.webmanifest`)).json();
   assert.equal(manifest.name, "American Snow & Ice Solutions");

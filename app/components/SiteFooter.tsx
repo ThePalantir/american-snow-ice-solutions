@@ -20,7 +20,7 @@ export function SiteFooter() {
           <Link href="/winter-risk-plan">Winter risk planning</Link>
           <Link href="/technology-reporting">Technology &amp; reporting</Link>
           <Link href="/snow-ice-science">Snow &amp; ice science</Link>
-          <Link href="/schedule">Schedule a consultation</Link>
+          <Link href="/quote">Request a consultation</Link>
         </div>
         <div>
           <p className="footer-heading">Company</p>
@@ -34,7 +34,7 @@ export function SiteFooter() {
           <p>{company.address}</p>
           <a href={company.emailHref}>{company.email}</a>
           <p>Office: Mon–Fri, 8am–5pm<br />Emergency services: 24/7</p>
-          <Link className="button button--light button--small" href="/schedule">Schedule a consultation</Link>
+          <Link className="button button--light button--small" href="/quote">Request a consultation</Link>
         </div>
       </div>
       <div className="container footer-base">

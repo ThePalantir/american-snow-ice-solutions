@@ -23,7 +23,7 @@ export default function WinterRiskPlanPage() {
       <section className="subhero">
         <Image className="subhero__image" src="/media/operations/risk-management.jpg" alt="Commercial snow operations working through a winter event" fill sizes="(max-width: 1050px) 100vw, 64vw" quality={90} priority />
         <div className="subhero__scrim" />
-        <div className="container subhero__content"><p className="eyebrow eyebrow--light">Site-specific winter planning</p><h1>Your property should not run on a generic snow plan.</h1><p>We learn how the site operates, identify the highest-consequence winter exposures, and align the response before the season begins.</p><Link className="button button--signal" href="/schedule">Schedule a risk consultation <span aria-hidden="true">↗</span></Link></div>
+        <div className="container subhero__content"><p className="eyebrow eyebrow--light">Site-specific winter planning</p><h1>Your property should not run on a generic snow plan.</h1><p>We learn how the site operates, identify the highest-consequence winter exposures, and align the response before the season begins.</p><Link className="button button--signal" href="/quote">Request a risk consultation <span aria-hidden="true">↗</span></Link></div>
       </section>
 
       <section className="section"><div className="container two-column"><div><p className="eyebrow">Learn the business</p><h2>The operating schedule shapes the snow schedule.</h2></div><div className="prose-large"><p>A distribution center, medical property, retail center, and corporate campus can experience the same storm very differently. The right plan accounts for who arrives, what must move, which surfaces carry the most exposure, and when each area must be ready.</p><p>The goal is not to promise that weather creates no disruption. It is to make priorities, roles, decisions, and communication clearer before pressure builds.</p></div></div></section>
@@ -34,7 +34,7 @@ export default function WinterRiskPlanPage() {
 
       <section className="section"><div className="container two-column"><div><p className="eyebrow">Risk support, clearly stated</p><h2>A stronger layer of winter documentation.</h2></div><div className="prose-large"><p>Planning, communication, weather information, and service records can support property operations and post-event review. AS&amp;IS is not an insurer, attorney, or guarantor against incidents; its role is to provide professional snow and ice management and a clearer operational record.</p><Link className="text-link" href="/technology-reporting">See how operations are documented →</Link></div></div></section>
 
-      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Build the plan early</p><h2>Bring us the property—not just the square footage.</h2></div><Link className="button button--light" href="/schedule">Schedule a consultation <span aria-hidden="true">↗</span></Link></div></section>
+      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Build the plan early</p><h2>Bring us the property—not just the square footage.</h2></div><Link className="button button--light" href="/quote">Request a consultation <span aria-hidden="true">↗</span></Link></div></section>
     </main>
   );
 }

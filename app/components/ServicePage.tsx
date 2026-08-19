@@ -44,7 +44,7 @@ export function ServicePage({ service }: { service: Service }) {
           <p className="eyebrow eyebrow--light">{service.eyebrow}</p>
           <h1>{service.title}</h1>
           <p>{service.summary}</p>
-          <Link className="button button--signal" href="/schedule">Discuss this service <span aria-hidden="true">↗</span></Link>
+          <Link className="button button--signal" href="/quote">Discuss this service <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
 
@@ -104,7 +104,7 @@ export function ServicePage({ service }: { service: Service }) {
       <section className="cta-band">
         <div className="container cta-band__inner">
           <div><p className="eyebrow eyebrow--light">Winter readiness starts now</p><h2>Let’s build the plan before the first warning.</h2></div>
-          <Link className="button button--light" href="/schedule">Schedule a risk consultation <span aria-hidden="true">↗</span></Link>
+          <Link className="button button--light" href="/quote">Request a risk consultation <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
     </main>

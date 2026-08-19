@@ -14,7 +14,7 @@ export default function SnowIceSciencePage() {
       <section className="subhero">
         <Image className="subhero__image" src="/media/operations/deicing-full.jpg" alt="Commercial sidewalk and de-icing operation" fill sizes="(max-width: 1050px) 100vw, 64vw" quality={90} priority />
         <div className="subhero__scrim" />
-        <div className="container subhero__content"><p className="eyebrow eyebrow--light">Snow &amp; ice science</p><h1>Materials work differently as conditions change.</h1><p>Pavement temperature, timing, precipitation, traffic, and mechanical removal all affect which ice-control approach is appropriate.</p><Link className="button button--signal" href="/schedule">Plan your property strategy <span aria-hidden="true">↗</span></Link></div>
+        <div className="container subhero__content"><p className="eyebrow eyebrow--light">Snow &amp; ice science</p><h1>Materials work differently as conditions change.</h1><p>Pavement temperature, timing, precipitation, traffic, and mechanical removal all affect which ice-control approach is appropriate.</p><Link className="button button--signal" href="/quote">Plan your property strategy <span aria-hidden="true">↗</span></Link></div>
       </section>
 
       <section className="section"><div className="container two-column"><div><p className="eyebrow">Pavement temperature matters</p><h2>Air temperature tells only part of the story.</h2></div><div className="prose-large"><p>Ice-control decisions should account for the surface itself. Sun, shade, wind, traffic, ground temperature, drainage, and the storm’s timing can cause different areas of the same property to behave differently.</p><p>Rock salt must dissolve into a brine to work. That process slows as pavement temperatures fall, so colder conditions may call for different timing, products, rates, or expectations. No deicer removes the need for sound judgment and mechanical snow removal.</p></div></div></section>
@@ -25,7 +25,7 @@ export default function SnowIceSciencePage() {
 
       <section className="section"><div className="container two-column"><div><p className="eyebrow">Claims with context</p><h2>Responsible does not mean risk-free.</h2></div><div className="prose-large"><p>Chloride-based deicers can affect vegetation, soil, water, concrete, metals, and animals when misapplied or overused. Products described as treated, pet-friendlier, or environmentally preferable still require label-compliant storage and application. AS&amp;IS avoids absolute “safe” or “green” claims and focuses on fit-for-condition products, mechanical removal, calibrated equipment, and documented use.</p></div></div></section>
 
-      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Match the plan to the property</p><h2>Make temperature, traffic, and surface conditions part of discovery.</h2></div><Link className="button button--light" href="/schedule">Schedule a consultation <span aria-hidden="true">↗</span></Link></div></section>
+      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Match the plan to the property</p><h2>Make temperature, traffic, and surface conditions part of discovery.</h2></div><Link className="button button--light" href="/quote">Request a consultation <span aria-hidden="true">↗</span></Link></div></section>
     </main>
   );
 }

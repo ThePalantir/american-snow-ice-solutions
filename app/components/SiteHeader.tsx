@@ -55,8 +55,8 @@ export function SiteHeader() {
             </div>
             <Link href="/about" onClick={() => setOpen(false)}>Company</Link>
             <Link href="/service-areas" onClick={() => setOpen(false)}>Coverage</Link>
-            <Link href="/schedule" className="button button--small button--signal" onClick={() => setOpen(false)}>
-              Schedule a consultation <span aria-hidden="true">↗</span>
+            <Link href="/quote" className="button button--small button--signal" onClick={() => setOpen(false)}>
+              Request a consultation <span aria-hidden="true">↗</span>
             </Link>
           </nav>
         </div>

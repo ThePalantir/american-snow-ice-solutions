@@ -399,13 +399,10 @@ textarea { resize:vertical; }
 }
 
 /* Winter-risk repositioning */
-.hero-weather { position:absolute; z-index:4; top:188px; right:0; width:min(350px,29vw); }
-.weather-card { overflow:hidden; border:1px solid rgba(169,229,251,.3); border-radius:var(--radius-md); background:rgba(6,17,30,.9); box-shadow:0 18px 48px rgba(0,0,0,.32); backdrop-filter:blur(12px); }
-.weather-card__heading { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:11px 14px; border-bottom:1px solid rgba(255,255,255,.12); }
-.weather-card__heading span { color:white; font-family:var(--font-mono); font-size:.62rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }
-.weather-card__heading small { color:#a9bac5; font-size:.57rem; white-space:nowrap; }
-.weather-card .weatherwidget-io { display:block; min-height:124px; }
-.weather-card > p { margin:0; padding:9px 14px 11px; color:#9fb2bd; font-size:.58rem; line-height:1.45; }
+.hero-weather { position:absolute; z-index:4; top:190px; right:0; width:120px; }
+.weather-card { width:120px; height:67px; overflow:hidden; border-top:1px solid rgba(169,229,251,.2); border-bottom:1px solid rgba(169,229,251,.2); background:#080f16; }
+.weather-card .weatherwidget-io { display:block; height:133px; min-height:0; }
+.weather-card .weatherwidget-io-frame { width:240px !important; height:133px !important; transform:scale(.5); transform-origin:top left; }
 
 .planning-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:clamp(60px,9vw,130px); align-items:start; }
 .planning-copy { position:sticky; top:40px; }
@@ -476,35 +473,10 @@ textarea { resize:vertical; }
 .detail-grid--dark h3 { color:white; }
 .detail-grid--dark p { color:#aebfc9; }
 
-.schedule-panel { background:white; box-shadow:var(--shadow-soft); }
-.schedule-progress { display:grid; grid-template-columns:repeat(2,1fr); background:var(--ink-950); }
-.schedule-progress span { padding:16px 22px; border-right:1px solid rgba(255,255,255,.12); color:#6f8491; font-family:var(--font-mono); font-size:.62rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; }
-.schedule-progress span.is-active { color:var(--ice-300); }
-.schedule-form { padding:clamp(28px,4vw,48px); }
-.schedule-form .button { margin-top:24px; }
-.form-note--left { text-align:left; }
-.form-alert { margin:18px 0 0; padding:12px 14px; border-left:3px solid var(--brand-accent); background:#fff1ee; color:#74291e; font-size:.76rem; }
-.schedule-selection { display:grid; grid-template-columns:1fr auto; gap:3px 16px; margin-bottom:28px; padding:18px; background:var(--snow-100); }
-.schedule-selection span { color:#58707e; font-family:var(--font-mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; }
-.schedule-selection strong { grid-row:2; }
-.schedule-selection button { grid-column:2; grid-row:1 / 3; align-self:center; border:0; background:transparent; color:#15789f; font-size:.72rem; font-weight:800; text-transform:uppercase; cursor:pointer; }
-.choice-field { margin:0; padding:20px; border:1px solid #cbd9e0; }
-.choice-field legend { padding:0 8px; color:#405765; font-family:var(--font-mono); font-size:.62rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
-.choice-field label { display:inline-flex; grid-auto-flow:column; align-items:center; gap:8px; margin:8px 22px 0 0; color:#314956; font-size:.85rem; }
-.choice-field input { width:auto; }
-.schedule-success { min-height:520px; display:flex; flex-direction:column; justify-content:center; padding:clamp(32px,5vw,64px); background:white; }
-.schedule-success > span { color:#2180a8; font-family:var(--font-mono); font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
-.schedule-success h2 { margin:16px 0; font-size:clamp(2.4rem,4vw,4rem); }
-.schedule-success button { align-self:flex-start; padding:0; border:0; background:transparent; cursor:pointer; }
-.integration-note { padding:28px 0; border-top:1px solid #c7d7de; background:var(--snow-100); }
-.integration-note .container { display:grid; grid-template-columns:240px 1fr; gap:30px; }
-.integration-note strong { font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; }
-.integration-note p { margin:0; font-size:.76rem; }
-
 .footer-grid { grid-template-columns:1.4fr .75fr .85fr .65fr 1fr; gap:38px; }
 
 @media (max-width: 1050px) {
-  .hero-weather { top:188px; width:min(315px,36vw); }
+  .hero-weather { top:188px; width:120px; }
   .planning-grid,.intelligence-grid,.consultation-grid,.platform-grid,.science-comparison { grid-template-columns:1fr; gap:58px; }
   .planning-copy { position:static; }
   .intelligence-visual { min-height:540px; }
@@ -517,13 +489,10 @@ textarea { resize:vertical; }
 }
 
 @media (max-width: 760px) {
-  .hero { min-height:1050px; }
+  .hero { min-height:880px; }
   .hero__visual { inset:112px 0 142px; }
-  .hero__content { min-height:1050px; padding-top:170px; padding-bottom:174px; }
-  .hero-weather { top:132px; right:0; width:100%; }
-  .weather-card__heading { padding-block:8px; }
-  .weather-card .weatherwidget-io { min-height:104px; }
-  .weather-card > p { display:none; }
+  .hero__content { min-height:880px; padding-top:170px; padding-bottom:174px; }
+  .hero-weather { top:140px; right:0; width:120px; }
   .question-grid,.science-cards,.detail-grid,.partner-evidence { grid-template-columns:1fr; }
   .question-grid article,.science-cards article,.science-cards article:first-child,.detail-grid article,.detail-grid article:nth-child(3n),.detail-grid article:nth-child(even) { min-height:auto; padding:26px 0; border-right:0; border-left:0; }
   .question-grid h3,.science-cards h3,.detail-grid h3 { margin-top:24px; }
@@ -534,10 +503,6 @@ textarea { resize:vertical; }
   .process-line--dark { grid-template-columns:1fr; }
   .partner-evidence article,.partner-evidence article + article { padding:28px 0; border-right:0; border-bottom:1px solid var(--border-subtle); }
   .comparison-stack article { grid-template-columns:1fr; gap:8px; }
-  .schedule-progress { grid-template-columns:1fr; }
-  .schedule-progress span { border-right:0; border-bottom:1px solid rgba(255,255,255,.1); }
-  .schedule-selection { grid-template-columns:1fr auto; }
-  .integration-note .container { grid-template-columns:1fr; gap:8px; }
   .footer-grid { grid-template-columns:1fr 1fr; gap:45px 25px; }
   .footer-brand,.footer-contact { grid-column:1/-1; }
 }
