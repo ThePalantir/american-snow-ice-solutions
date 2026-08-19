@@ -57,8 +57,8 @@ export default function Home() {
             <Link className="text-link" href="/winter-risk-plan">See how a site-specific plan is built →</Link>
           </div>
           <div className="question-grid">
-            {operatingQuestions.map(([title, detail], index) => (
-              <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{detail}</p></article>
+            {operatingQuestions.map(([title, detail]) => (
+              <article key={title}><h3>{title}</h3><p>{detail}</p></article>
             ))}
           </div>
         </div>
@@ -125,9 +125,9 @@ export default function Home() {
         <div className="container">
           <div className="section-heading section-heading--split"><div><p className="eyebrow">Snow &amp; ice science</p><h2>The temperature changes the strategy.</h2></div><p>Effective ice management depends on pavement temperature, precipitation type, timing, traffic, product choice, and application method—not one material used the same way in every storm.</p></div>
           <div className="science-cards">
-            <article><span>01</span><h3>Why salt slows down</h3><p>Rock salt needs moisture to form a working brine. As pavement temperatures fall, the process becomes slower and less effective, requiring a different operational decision.</p></article>
-            <article><span>02</span><h3>Where brine fits</h3><p>When conditions allow, liquid anti-icing can be applied before a storm to help delay bonding and support more controlled material use.</p></article>
-            <article><span>03</span><h3>Responsible application</h3><p>Calibrated equipment, appropriate products, mechanical removal, and documented application rates help balance surface needs with material stewardship.</p></article>
+            <article><h3>Why salt slows down</h3><p>Rock salt needs moisture to form a working brine. As pavement temperatures fall, the process becomes slower and less effective, requiring a different operational decision.</p></article>
+            <article><h3>Where brine fits</h3><p>When conditions allow, liquid anti-icing can be applied before a storm to help delay bonding and support more controlled material use.</p></article>
+            <article><h3>Responsible application</h3><p>Calibrated equipment, appropriate products, mechanical removal, and documented application rates help balance surface needs with material stewardship.</p></article>
           </div>
           <Link className="text-link science-link" href="/snow-ice-science">Understand the science and materials →</Link>
         </div>

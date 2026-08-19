@@ -410,8 +410,7 @@ textarea { resize:vertical; }
 .question-grid { display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid var(--border-subtle); }
 .question-grid article { min-height:245px; padding:28px; border-right:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle); }
 .question-grid article:nth-child(even) { border-right:0; }
-.question-grid span,.science-cards > article > span,.detail-grid > article > span { color:#2180a8; font-family:var(--font-mono); font-size:.65rem; }
-.question-grid h3 { margin:42px 0 12px; }
+.question-grid h3 { margin:0 0 12px; }
 .question-grid p { margin:0; font-size:.86rem; }
 
 .intelligence-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(60px,8vw,110px); align-items:center; }
@@ -426,7 +425,7 @@ textarea { resize:vertical; }
 .science-cards { display:grid; grid-template-columns:repeat(3,1fr); border-block:1px solid #cbd9df; }
 .science-cards article { min-height:300px; padding:30px; border-left:1px solid #cbd9df; }
 .science-cards article:first-child { padding-left:0; border-left:0; }
-.science-cards h3 { margin:72px 0 16px; font-size:2rem; }
+.science-cards h3 { margin:0 0 16px; font-size:2rem; }
 .science-cards p { margin:0; font-size:.88rem; }
 .science-link { margin-top:34px; }
 .credential-heading { max-width:960px; margin-inline:auto; text-align:center; }
@@ -441,7 +440,7 @@ textarea { resize:vertical; }
 .detail-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--border-subtle); }
 .detail-grid article { min-height:285px; padding:30px; border-right:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle); }
 .detail-grid article:nth-child(3n) { border-right:0; }
-.detail-grid h3 { margin:54px 0 14px; }
+.detail-grid h3 { margin:0 0 14px; }
 .detail-grid p { margin:0; font-size:.86rem; }
 .process-line--dark { grid-template-columns:repeat(5,1fr); border-color:rgba(255,255,255,.18); }
 .process-line--dark article::before { background:var(--ice-500); }
@@ -495,7 +494,6 @@ textarea { resize:vertical; }
   .hero-weather { top:140px; right:0; width:120px; }
   .question-grid,.science-cards,.detail-grid,.partner-evidence { grid-template-columns:1fr; }
   .question-grid article,.science-cards article,.science-cards article:first-child,.detail-grid article,.detail-grid article:nth-child(3n),.detail-grid article:nth-child(even) { min-height:auto; padding:26px 0; border-right:0; border-left:0; }
-  .question-grid h3,.science-cards h3,.detail-grid h3 { margin-top:24px; }
   .intelligence-visual { min-height:430px; }
   .intelligence-list > div { grid-template-columns:1fr; gap:6px; }
   .credential-row--focused { grid-template-columns:repeat(3,1fr); }
