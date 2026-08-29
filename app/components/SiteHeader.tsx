@@ -2,24 +2,26 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { company, servicesForDisplay } from "../site-data";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const isHome = usePathname() === "/";
 
   return (
     <>
       <div className="ops-bar">
         <div className="container ops-bar__inner">
-          <span className="ops-bar__planning">Now planning for the 2026–27 season</span>
+          <span className="ops-bar__planning">Now planning for the <span className="ops-bar__season">2026–27 season</span></span>
           <a href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
         </div>
       </div>
-      <header className="site-header">
+      <header className={`site-header ${isHome ? "site-header--home" : ""}`}>
         <div className="container site-header__inner">
-          <Link href="/" className="brand" aria-label="American Snow and Ice Solutions home">
-            <Image src="/media/brand/asis-2026-logo.png" alt="American Snow & Ice Solutions" width={1312} height={1199} sizes="(max-width: 760px) 82px, 112px" priority />
+          <Link href="/" className={`brand ${isHome ? "brand--home" : ""}`} aria-label="American Snow and Ice Solutions home">
+            <Image src="/media/brand/asis-2026-logo.png" alt="American Snow & Ice Solutions" width={1312} height={1199} sizes="(max-width: 760px) 106px, (max-width: 1050px) 148px, 176px" priority />
           </Link>
           <button
             className="menu-toggle"

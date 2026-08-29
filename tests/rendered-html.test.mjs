@@ -142,6 +142,8 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(html, /https:\/\/truecore\.services\//i);
   assert.match(html, /\/media\/brand\/asis-2026-logo\.png/i);
   assert.doesNotMatch(html, /\/media\/brand\/asais-gpt-logo\.png/i);
+  assert.match(html, /class="brand brand--home"/i);
+  assert.equal((html.match(/class="supporting-proof"/gi) ?? []).length, 8);
   assert.match(html, /Website by\s*<a[^>]+>TrueCore<\/a>/i);
   assert.match(html, /\/media\/credentials\/asca-logo\.png/i);
   assert.match(html, /\/media\/credentials\/bbb-logo\.svg/i);
@@ -160,6 +162,10 @@ test("renders the selected brand and premium homepage content", async () => {
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.doesNotMatch(styles, /credential-row[^}]*filter:\s*grayscale/i);
   assert.match(styles, /\.footer-base a\s*\{[^}]*text-transform:\s*none/i);
+  assert.match(styles, /\.brand--home\s*\{[^}]*width:\s*210px;[^}]*height:\s*176px/i);
+
+  const tokens = await readFile(new URL("../app/design-tokens.css", import.meta.url), "utf8");
+  assert.match(tokens, /--type-supporting-proof:\s*clamp\(/i);
 });
 
 test("serves technical SEO and GEO discovery endpoints", async () => {
