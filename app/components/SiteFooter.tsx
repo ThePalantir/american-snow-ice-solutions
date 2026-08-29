@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="footer-brand">
           <Image src="/media/brand/asais-gpt-logo.png" alt="American Snow & Ice Solutions" width={1505} height={534} />
           <p>Professional winter risk management built around site-specific planning, accountable operations, and a clearer event record.</p>
-          <a className="footer-phone" href={company.phoneHref}>{company.phone}</a>
+          <a className="footer-phone" href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
         </div>
         <div>
           <p className="footer-heading">Operations</p>

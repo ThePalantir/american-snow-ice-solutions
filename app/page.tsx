@@ -116,7 +116,7 @@ export default function Home() {
               <div><strong>The Weather Pros</strong><span>Business-focused winter forecasting and storm intelligence for operational planning.</span></div>
               <div><strong>WeatherWorks</strong><span>Third-party post-event snowfall and weather documentation.</span></div>
             </div>
-            <Link className="button button--dark" href="/technology-reporting">See the reporting system <span aria-hidden="true">→</span></Link>
+            <Link className="button button--secondary" href="/technology-reporting">See the reporting system <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </section>

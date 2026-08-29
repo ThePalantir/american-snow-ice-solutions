@@ -13,7 +13,7 @@ export function SiteHeader() {
       <div className="ops-bar">
         <div className="container ops-bar__inner">
           <span className="ops-bar__planning">Now planning for the 2026–27 season</span>
-          <a href={company.phoneHref}>{company.phone}</a>
+          <a href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
         </div>
       </div>
       <header className="site-header">

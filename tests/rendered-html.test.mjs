@@ -180,3 +180,22 @@ test("publishes the salt brine resource with canonical metadata and responsible 
   assert.doesNotMatch(html, /3[–-]4 times faster/i);
   assert.doesNotMatch(html, /Headwaters Hot/i);
 });
+
+test("renders a consistent interaction hierarchy across key routes", async () => {
+  const home = await (await fetch(baseUrl)).text();
+  assert.match(home, /class="button button--signal" href="\/quote"/i);
+  assert.match(home, /class="button button--secondary" href="\/technology-reporting"/i);
+  assert.match(home, /class="text-link" href="\/winter-risk-plan"/i);
+  assert.match(home, /class="service-card service-card--feature"/i);
+
+  const services = await (await fetch(`${baseUrl}/services`)).text();
+  assert.match(services, /class="service-list__item"/i);
+
+  const serviceAreas = await (await fetch(`${baseUrl}/service-areas`)).text();
+  assert.match(serviceAreas, /class="button button--signal" href="\/quote"/i);
+  assert.match(serviceAreas, /class="button button--secondary" href="\/partner-network"/i);
+
+  const contact = await (await fetch(`${baseUrl}/contact`)).text();
+  assert.match(contact, /class="contact-phone" href="tel:\+16107600600" aria-label="Call American Snow &amp; Ice Solutions/i);
+  assert.match(contact, /class="contact-email" href="mailto:info@americansnowandice.com"/i);
+});

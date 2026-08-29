@@ -8,8 +8,8 @@ export default function NotFound() {
         <h1>This route is<br />snowed in.</h1>
         <p>The page may have moved, but the operations center is still ready.</p>
         <div className="button-row">
-          <Link className="button button--signal" href="/">Return home <span>→</span></Link>
-          <Link className="button button--outline" href="/contact">Contact operations <span>↗</span></Link>
+          <Link className="button button--signal" href="/">Return home <span aria-hidden="true">→</span></Link>
+          <Link className="button button--outline" href="/contact">Contact operations <span aria-hidden="true">↗</span></Link>
         </div>
       </div>
     </main>
