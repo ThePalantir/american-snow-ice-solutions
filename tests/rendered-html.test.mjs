@@ -135,8 +135,8 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(html, /weatherwidget-io/i);
   assert.match(html, /LEHIGH VALLEY/i);
   assert.match(html, /American Snow &amp; Ice Solutions/i);
-  assert.match(html, /\/media\/brand\/asais-gpt-logo\.png/i);
-  await access(new URL("../public/media/brand/asais-gpt-logo.png", import.meta.url));
+  assert.match(html, /\/media\/brand\/asais-logo-transparent\.png/i);
+  await access(new URL("../public/media/brand/asais-logo-transparent.png", import.meta.url));
 });
 
 test("serves technical SEO and GEO discovery endpoints", async () => {
