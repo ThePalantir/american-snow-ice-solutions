@@ -111,6 +111,7 @@ test("serves every primary website route", async () => {
     "/winter-risk-plan",
     "/technology-reporting",
     "/snow-ice-science",
+    "/salt-brine",
     "/schedule",
     "/about",
     "/service-areas",
@@ -135,6 +136,10 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(html, /weatherwidget-io/i);
   assert.match(html, /LEHIGH VALLEY/i);
   assert.match(html, /American Snow &amp; Ice Solutions/i);
+  assert.doesNotMatch(html, /24\/7 winter event operations/i);
+  assert.match(html, /We take the stress out of winter/i);
+  assert.match(html, /\/salt-brine/i);
+  assert.match(html, /https:\/\/truecore\.services\//i);
   assert.match(html, /\/media\/brand\/asais-gpt-logo\.png/i);
   await access(new URL("../public/media/brand/asais-gpt-logo.png", import.meta.url));
 });
@@ -149,6 +154,7 @@ test("serves technical SEO and GEO discovery endpoints", async () => {
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/services\/commercial-plowing/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/service-areas/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/winter-risk-plan/i);
+  assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/salt-brine/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/quote/i);
 
   const manifest = await (await fetch(`${baseUrl}/manifest.webmanifest`)).json();
@@ -161,4 +167,16 @@ test("serves technical SEO and GEO discovery endpoints", async () => {
   assert.match(serviceHtml, /application\/ld\+json/i);
   assert.match(serviceHtml, /Commercial snow plowing/i);
   assert.match(serviceHtml, /rel="canonical" href="https:\/\/americansnowandicesolutions\.com\/services\/commercial-plowing"/i);
+});
+
+test("publishes the salt brine resource with canonical metadata and responsible claims", async () => {
+  const response = await fetch(`${baseUrl}/salt-brine`);
+  const html = await response.text();
+  assert.equal(response.status, 200);
+  assert.match(html, /<h1[^>]*>Salt Brine &amp; Anti-Icing<\/h1>/i);
+  assert.match(html, /sodium-chloride solution/i);
+  assert.match(html, /produces salt brine on-site/i);
+  assert.match(html, /rel="canonical" href="https:\/\/americansnowandicesolutions\.com\/salt-brine"/i);
+  assert.doesNotMatch(html, /3[–-]4 times faster/i);
+  assert.doesNotMatch(html, /Headwaters Hot/i);
 });

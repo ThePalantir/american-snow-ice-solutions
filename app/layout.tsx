@@ -96,6 +96,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               knowsAbout: [
                 "Commercial snow plowing",
                 "De-icing and salting",
+                "Salt brine and anti-icing",
                 "Sidewalk snow removal",
                 "Weather reporting",
                 "Winter risk management",

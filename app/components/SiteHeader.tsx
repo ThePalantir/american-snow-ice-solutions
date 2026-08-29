@@ -12,7 +12,6 @@ export function SiteHeader() {
     <>
       <div className="ops-bar">
         <div className="container ops-bar__inner">
-          <span><i className="live-dot" /> 24/7 winter event operations</span>
           <span className="ops-bar__planning">Now planning for the 2026–27 season</span>
           <a href={company.phoneHref}>{company.phone}</a>
         </div>
@@ -51,6 +50,7 @@ export function SiteHeader() {
                 <Link href="/winter-risk-plan" onClick={() => setOpen(false)}>Site-specific planning</Link>
                 <Link href="/technology-reporting" onClick={() => setOpen(false)}>Technology &amp; reporting</Link>
                 <Link href="/snow-ice-science" onClick={() => setOpen(false)}>Snow &amp; ice science</Link>
+                <Link href="/salt-brine" onClick={() => setOpen(false)}>Salt brine &amp; anti-icing</Link>
               </div>
             </div>
             <Link href="/about" onClick={() => setOpen(false)}>Company</Link>

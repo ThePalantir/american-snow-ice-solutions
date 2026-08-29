@@ -36,7 +36,6 @@ export default function Home() {
               <a className="button button--outline" href={company.phoneHref}>Call {company.phone}</a>
             </div>
           </div>
-          <div className="hero-weather"><WeatherWidget /></div>
         </div>
         <div className="hero__foot">
           <div className="container hero__foot-inner">
@@ -51,9 +50,10 @@ export default function Home() {
       <section className="section planning-section">
         <div className="container planning-grid">
           <div className="planning-copy">
-            <p className="eyebrow">The plan comes before the plow</p>
-            <h2>We learn your operation before winter tests it.</h2>
+            <p className="eyebrow">Learn the business</p>
+            <h2>We learn your business before we build your snow plan.</h2>
             <p>A useful snow plan begins with business questions—not a generic price sheet. We map the property around the people, movement, timing, and access points that matter most.</p>
+            <p className="planning-promise">We take the stress out of winter.</p>
             <Link className="text-link" href="/winter-risk-plan">See how a site-specific plan is built →</Link>
           </div>
           <div className="question-grid">
@@ -129,18 +129,31 @@ export default function Home() {
             <article><h3>Where brine fits</h3><p>When conditions allow, liquid anti-icing can be applied before a storm to help delay bonding and support more controlled material use.</p></article>
             <article><h3>Responsible application</h3><p>Calibrated equipment, appropriate products, mechanical removal, and documented application rates help balance surface needs with material stewardship.</p></article>
           </div>
-          <Link className="text-link science-link" href="/snow-ice-science">Understand the science and materials →</Link>
+          <div className="science-links">
+            <Link className="text-link" href="/snow-ice-science">Understand the science and materials →</Link>
+            <Link className="text-link" href="/salt-brine">Explore salt brine &amp; anti-icing →</Link>
+          </div>
         </div>
       </section>
 
       <section className="section credentials-section">
         <div className="container">
-          <div className="section-heading credential-heading"><p className="eyebrow">Professional development &amp; industry resources</p><h2>Standards, training, and third-party expertise support the work.</h2><p>AS&amp;IS reports using SIMA education and practices, Snowfighters Institute management training, YETI operational software, The Weather Pros forecasting, and WeatherWorks reporting. Current company membership and individual credential status will be confirmed with ownership before launch.</p></div>
-          <div className="credential-row credential-row--focused">
-            <Image src="/media/credentials/snowfighters.png" alt="Snowfighters Institute" width={101} height={100} />
-            <Image src="/media/credentials/sima.jpg" alt="Snow and Ice Management Association" width={171} height={68} />
-            <Image src="/media/credentials/asca.png" alt="Accredited Snow Contractors Association" width={124} height={70} />
+          <div className="section-heading credential-heading"><p className="eyebrow">Credentials &amp; affiliations</p><h2>Training, standards, and specialized resources support the work.</h2></div>
+          <div className="credential-row credential-row--six">
+            <div><Image src="/media/credentials/asca.png" alt="Accredited Snow Contractors Association logo" width={124} height={70} /></div>
+            <div><Image src="/media/credentials/bbb.png" alt="Better Business Bureau logo" width={864} height={350} /></div>
+            <div><Image src="/media/credentials/chamber.png" alt="Greater Lehigh Valley Chamber of Commerce logo" width={246} height={67} /></div>
+            <div><Image src="/media/credentials/sima.jpg" alt="Snow and Ice Management Association logo" width={171} height={68} /></div>
+            <div><Image src="/media/credentials/snowfighters.png" alt="Snowfighters Institute logo" width={101} height={100} /></div>
+            <div><Image src="/media/credentials/weather-pros.png" alt="The Weather Pros logo" width={439} height={420} /></div>
           </div>
+        </div>
+      </section>
+
+      <section className="home-weather-section" aria-labelledby="local-weather-heading">
+        <div className="container home-weather-grid">
+          <div><p className="eyebrow eyebrow--light">Local conditions</p><h2 id="local-weather-heading">Lehigh Valley weather</h2></div>
+          <WeatherWidget />
         </div>
       </section>
 

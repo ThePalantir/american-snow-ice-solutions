@@ -17,6 +17,7 @@ Canonical website: https://americansnowandicesolutions.com/
 - [Site-specific winter risk planning](https://americansnowandicesolutions.com/winter-risk-plan): Operating-hour, shift, delivery, priority-zone, resource, communication, and documentation planning.
 - [Technology and reporting](https://americansnowandicesolutions.com/technology-reporting): YETI Snow Management, professional forecast inputs, field records, and third-party post-event weather reporting.
 - [Snow and ice science](https://americansnowandicesolutions.com/snow-ice-science): Pavement temperature, salt performance, brine, mechanical removal, and responsible material use.
+- [Salt brine and anti-icing](https://americansnowandicesolutions.com/salt-brine): What salt brine is, when anti-icing is appropriate, how it is produced on-site, and how it supports professional material decisions.
 - [Company history](https://americansnowandicesolutions.com/about): A three-generation family operation with more than four decades of snow experience.
 - [Service areas](https://americansnowandicesolutions.com/service-areas): Eastern Pennsylvania and surrounding regional markets.
 - [Request a winter risk consultation](https://americansnowandicesolutions.com/quote)

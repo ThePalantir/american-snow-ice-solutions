@@ -504,3 +504,69 @@ textarea { resize:vertical; }
   .footer-grid { grid-template-columns:1fr 1fr; gap:45px 25px; }
   .footer-brand,.footer-contact { grid-column:1/-1; }
 }
+
+/* Approved 2026 content refinements */
+.ops-bar__inner { min-height:50px; gap:28px; }
+.ops-bar__planning { color:white; font-size:clamp(.88rem,1.25vw,1.05rem); font-weight:900; letter-spacing:.055em; }
+.ops-bar a { color:var(--ice-300); font-family:var(--font-display); font-size:clamp(1.12rem,1.7vw,1.45rem); font-weight:900; letter-spacing:-.01em; }
+.site-header { top:50px; }
+.hero__copy .eyebrow { padding-left:14px; border-left:3px solid var(--ice-500); font-size:.88rem; letter-spacing:.12em; }
+.planning-promise { margin:28px 0 !important; padding:6px 0 6px 20px; border-left:4px solid var(--brand-accent); color:var(--ink-950) !important; font-family:var(--font-display); font-size:clamp(1.55rem,2.3vw,2.1rem) !important; font-weight:900; line-height:1.05 !important; letter-spacing:-.035em; }
+.science-links { display:flex; flex-wrap:wrap; gap:20px 34px; margin-top:34px; }
+.credential-row--six { grid-template-columns:repeat(6,1fr); gap:14px; }
+.credential-row--six > div { min-width:0; min-height:132px; display:flex; align-items:center; justify-content:center; padding:20px 16px; border:1px solid var(--border-subtle); background:var(--snow-100); }
+.credential-row--six img { width:auto; max-width:100%; height:auto; max-height:76px; margin:auto; object-fit:contain; }
+.home-weather-section { padding:58px 0; border-block:1px solid rgba(255,255,255,.09); background:var(--ink-900); color:white; }
+.home-weather-grid { display:grid; grid-template-columns:1fr auto; align-items:center; gap:50px; }
+.home-weather-grid .eyebrow { margin-bottom:12px; }
+.home-weather-grid h2 { margin:0; color:white; font-size:clamp(2rem,3vw,3.2rem); }
+.weather-card { width:240px; height:133px; border:1px solid rgba(169,229,251,.24); border-radius:var(--radius-sm); }
+.weather-card .weatherwidget-io { height:133px; }
+.weather-card .weatherwidget-io-frame { width:240px !important; height:133px !important; transform:none; }
+.service-context-link { margin-top:30px; }
+.brine-benefit-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--border-subtle); }
+.brine-benefit-grid article { min-height:245px; padding:30px; border-right:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle); }
+.brine-benefit-grid article:nth-child(3n) { border-right:0; }
+.brine-benefit-grid h3 { margin:0 0 14px; font-size:1.75rem; }
+.brine-benefit-grid p { margin:0; font-size:.88rem; }
+.brine-control-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(60px,10vw,150px); }
+.brine-control-grid h2 { color:white; }
+.brine-control-grid .prose-large p { color:#b9c9d3; }
+.brine-decision-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(48px,8vw,110px); }
+.brine-decision-grid > div { padding-top:28px; border-top:1px solid var(--border-subtle); }
+.brine-decision-grid > div > p:not(.eyebrow) { font-size:1.02rem; }
+.brine-decision-grid a { color:#176f94; font-weight:800; text-decoration:underline; text-underline-offset:3px; }
+.decision-formula { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:30px 0; }
+.decision-formula span { padding:9px 12px; border:1px solid #b9cbd4; background:white; color:var(--ink-950); font-family:var(--font-mono); font-size:.65rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+.decision-formula b { color:var(--brand-accent); }
+.footer-grid { grid-template-columns:1.55fr repeat(3,1fr); }
+.footer-base { justify-content:flex-start; }
+.footer-base a { color:#b8ddeb; font-weight:800; text-decoration:underline; text-underline-offset:3px; }
+
+@media (max-width: 1050px) {
+  .credential-row--six { grid-template-columns:repeat(3,1fr); }
+  .brine-benefit-grid { grid-template-columns:repeat(2,1fr); }
+  .brine-benefit-grid article:nth-child(3n) { border-right:1px solid var(--border-subtle); }
+  .brine-benefit-grid article:nth-child(even) { border-right:0; }
+  .brine-control-grid,.brine-decision-grid { grid-template-columns:1fr; gap:58px; }
+  .footer-grid { grid-template-columns:1.3fr repeat(3,.8fr); }
+}
+
+@media (max-width: 760px) {
+  .ops-bar__inner { min-height:52px; gap:10px; }
+  .ops-bar__planning { display:block; font-size:.7rem; letter-spacing:.02em; line-height:1.2; }
+  .ops-bar a { flex:0 0 auto; font-size:1rem; }
+  .site-header { top:52px; }
+  .hero__visual { inset:152px 0 142px; }
+  .hero__content { padding-top:188px; }
+  .hero__copy .eyebrow { font-size:.72rem; }
+  .credential-row--six { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .credential-row--six > div { min-height:112px; padding:16px 12px; }
+  .credential-row--six img:last-child { grid-column:auto; }
+  .home-weather-grid { grid-template-columns:1fr; gap:26px; }
+  .weather-card { width:240px; max-width:100%; }
+  .brine-benefit-grid { grid-template-columns:1fr; }
+  .brine-benefit-grid article,.brine-benefit-grid article:nth-child(3n),.brine-benefit-grid article:nth-child(even) { min-height:auto; padding:26px 0; border-right:0; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  .footer-brand { grid-column:1/-1; }
+}

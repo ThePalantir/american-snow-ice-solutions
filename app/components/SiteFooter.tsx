@@ -20,6 +20,7 @@ export function SiteFooter() {
           <Link href="/winter-risk-plan">Winter risk planning</Link>
           <Link href="/technology-reporting">Technology &amp; reporting</Link>
           <Link href="/snow-ice-science">Snow &amp; ice science</Link>
+          <Link href="/salt-brine">Salt brine &amp; anti-icing</Link>
           <Link href="/quote">Request a consultation</Link>
         </div>
         <div>
@@ -29,18 +30,9 @@ export function SiteFooter() {
           <Link href="/partner-network">Partner network</Link>
           <Link href="/contact">Contact</Link>
         </div>
-        <div className="footer-contact">
-          <p className="footer-heading">Operations center</p>
-          <p>{company.address}</p>
-          <a href={company.emailHref}>{company.email}</a>
-          <p>Office: Mon–Fri, 8am–5pm<br />Emergency services: 24/7</p>
-          <Link className="button button--light button--small" href="/quote">Request a consultation</Link>
-        </div>
       </div>
       <div className="container footer-base">
-        <span>© {new Date().getFullYear()} American Snow & Ice Solutions</span>
-        <span>A Piechota Group LLC company</span>
-        <span>Built for winter readiness.</span>
+        <span>© Copyright 2024. All Rights Reserved American Snow &amp; Ice Solutions. Website by <a href="https://truecore.services/">TrueCore</a></span>
       </div>
     </footer>
   );
