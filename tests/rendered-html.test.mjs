@@ -140,8 +140,26 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(html, /We take the stress out of winter/i);
   assert.match(html, /\/salt-brine/i);
   assert.match(html, /https:\/\/truecore\.services\//i);
-  assert.match(html, /\/media\/brand\/asais-gpt-logo\.png/i);
-  await access(new URL("../public/media/brand/asais-gpt-logo.png", import.meta.url));
+  assert.match(html, /\/media\/brand\/asis-2026-logo\.png/i);
+  assert.doesNotMatch(html, /\/media\/brand\/asais-gpt-logo\.png/i);
+  assert.match(html, /Website by\s*<a[^>]+>TrueCore<\/a>/i);
+  assert.match(html, /\/media\/credentials\/asca-logo\.png/i);
+  assert.match(html, /\/media\/credentials\/bbb-logo\.svg/i);
+  assert.match(html, /\/media\/credentials\/chamber-logo\.png/i);
+  assert.match(html, /\/media\/credentials\/sima-logo\.webp/i);
+  assert.match(html, /\/media\/credentials\/snowfighters-logo\.png/i);
+  assert.match(html, /\/media\/credentials\/weather-pros-logo\.png/i);
+  await access(new URL("../public/media/brand/asis-2026-logo.png", import.meta.url));
+  await access(new URL("../public/media/credentials/bbb-logo.svg", import.meta.url));
+
+  const technology = await (await fetch(`${baseUrl}/technology-reporting`)).text();
+  assert.match(technology, /\/media\/partners\/yeti-logo\.jpg/i);
+  assert.match(technology, /alt="YETI Snow Tracker logo"/i);
+  await access(new URL("../public/media/partners/yeti-logo.jpg", import.meta.url));
+
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.doesNotMatch(styles, /credential-row[^}]*filter:\s*grayscale/i);
+  assert.match(styles, /\.footer-base a\s*\{[^}]*text-transform:\s*none/i);
 });
 
 test("serves technical SEO and GEO discovery endpoints", async () => {

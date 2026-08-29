@@ -19,7 +19,7 @@ export function SiteHeader() {
       <header className="site-header">
         <div className="container site-header__inner">
           <Link href="/" className="brand" aria-label="American Snow and Ice Solutions home">
-            <Image src="/media/brand/asais-gpt-logo.png" alt="American Snow & Ice Solutions" width={1505} height={534} sizes="(max-width: 760px) 242px, 308px" />
+            <Image src="/media/brand/asis-2026-logo.png" alt="American Snow & Ice Solutions" width={1312} height={1199} sizes="(max-width: 760px) 82px, 112px" priority />
           </Link>
           <button
             className="menu-toggle"

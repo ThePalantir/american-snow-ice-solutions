@@ -41,7 +41,7 @@ export function ServicePage({ service }: { service: Service }) {
         <Image className="subhero__image" src={service.image} alt={service.imageAlt} fill sizes="(max-width: 1050px) 100vw, 64vw" quality={90} priority />
         <div className="subhero__scrim" />
         <div className="container subhero__content">
-          <p className="eyebrow eyebrow--light">{service.eyebrow}</p>
+          <p className="eyebrow eyebrow--light major-section-label">{service.eyebrow}</p>
           <h1>{service.title}</h1>
           <p>{service.summary}</p>
           <Link className="button button--signal" href="/quote">Discuss this service <span aria-hidden="true">↗</span></Link>
@@ -51,7 +51,7 @@ export function ServicePage({ service }: { service: Service }) {
       <section className="section service-intro">
         <div className="container two-column">
           <div>
-            <p className="eyebrow">Built around your property</p>
+            <p className="eyebrow major-section-label">Built around your property</p>
             <h2>A stronger response starts before the forecast.</h2>
           </div>
           <div className="prose-large">
@@ -69,7 +69,7 @@ export function ServicePage({ service }: { service: Service }) {
       <section className="section section--dark">
         <div className="container">
           <div className="section-heading section-heading--light">
-            <p className="eyebrow eyebrow--light">Operational value</p>
+            <p className="eyebrow eyebrow--light major-section-label">Operational value</p>
             <h2>What this service is designed to deliver.</h2>
           </div>
           <div className="outcome-grid">
@@ -86,7 +86,7 @@ export function ServicePage({ service }: { service: Service }) {
       <section className="section process-section">
         <div className="container">
           <div className="section-heading">
-            <p className="eyebrow">The operating rhythm</p>
+            <p className="eyebrow major-section-label">The operating rhythm</p>
             <h2>One plan. Four accountable phases.</h2>
           </div>
           <div className="process-line">
@@ -106,7 +106,7 @@ export function ServicePage({ service }: { service: Service }) {
 
       <section className="cta-band">
         <div className="container cta-band__inner">
-          <div><p className="eyebrow eyebrow--light">Winter readiness starts now</p><h2>Let’s build the plan before the first warning.</h2></div>
+          <div><p className="eyebrow eyebrow--light major-section-label">Winter readiness starts now</p><h2>Let’s build the plan before the first warning.</h2></div>
           <Link className="button button--light" href="/quote">Request a risk consultation <span aria-hidden="true">↗</span></Link>
         </div>
       </section>

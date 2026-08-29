@@ -28,7 +28,7 @@ export default function Home() {
         <div className="hero__overlay" aria-hidden="true" />
         <div className="container hero__content">
           <div className="hero__copy">
-            <p className="eyebrow eyebrow--light">Professional snow &amp; ice management</p>
+            <p className="eyebrow eyebrow--light major-section-label">Professional snow &amp; ice management</p>
             <h1>We professionally manage <em>winter risk</em> for your property.</h1>
             <p className="hero__lede">Site-specific planning, professional weather intelligence, accountable field operations, and documented closeout—built around how your property actually works.</p>
             <div className="button-row">
@@ -50,7 +50,7 @@ export default function Home() {
       <section className="section planning-section">
         <div className="container planning-grid">
           <div className="planning-copy">
-            <p className="eyebrow">Learn the business</p>
+            <p className="eyebrow major-section-label">Learn the business</p>
             <h2>We learn your business before we build your snow plan.</h2>
             <p>A useful snow plan begins with business questions—not a generic price sheet. We map the property around the people, movement, timing, and access points that matter most.</p>
             <p className="planning-promise">We take the stress out of winter.</p>
@@ -67,7 +67,7 @@ export default function Home() {
       <section className="section services-section section--tint">
         <div className="container">
           <div className="section-heading section-heading--split">
-            <div><p className="eyebrow">One accountable winter partner</p><h2>A management system—not isolated services.</h2></div>
+            <div><p className="eyebrow major-section-label">One accountable winter partner</p><h2>A management system—not isolated services.</h2></div>
             <p>Every operating discipline supports one property plan, from the first risk review through the final event record.</p>
           </div>
           <div className="service-grid">
@@ -85,7 +85,7 @@ export default function Home() {
       <section className="section section--dark protocol-section">
         <div className="container protocol-grid">
           <div className="protocol-copy">
-            <p className="eyebrow eyebrow--light">The AS&amp;IS operating protocol</p>
+            <p className="eyebrow eyebrow--light major-section-label">The AS&amp;IS operating protocol</p>
             <h2>Prepared before the first flake.</h2>
             <p>Winter exposure is operational exposure. People, equipment, materials, forecast intelligence, decision triggers, and communication paths are aligned before conditions threaten your schedule.</p>
             <Link className="text-link text-link--light" href="/winter-risk-plan">Explore the winter risk plan →</Link>
@@ -108,7 +108,7 @@ export default function Home() {
             <div className="photo-label"><span>Operational visibility</span><strong>Field activity connected to the event record</strong></div>
           </div>
           <div className="intelligence-copy">
-            <p className="eyebrow">Technology &amp; reporting</p>
+            <p className="eyebrow major-section-label">Technology &amp; reporting</p>
             <h2>Better decisions before, during, and after the storm.</h2>
             <p>AS&amp;IS uses purpose-built operational software, professional forecast support, and post-event weather reporting to create a clearer picture of what was expected, what crews encountered, and what work was completed.</p>
             <div className="intelligence-list">
@@ -123,7 +123,7 @@ export default function Home() {
 
       <section className="section science-section section--tint">
         <div className="container">
-          <div className="section-heading section-heading--split"><div><p className="eyebrow">Snow &amp; ice science</p><h2>The temperature changes the strategy.</h2></div><p>Effective ice management depends on pavement temperature, precipitation type, timing, traffic, product choice, and application method—not one material used the same way in every storm.</p></div>
+          <div className="section-heading section-heading--split"><div><p className="eyebrow major-section-label">Snow &amp; ice science</p><h2>The temperature changes the strategy.</h2></div><p>Effective ice management depends on pavement temperature, precipitation type, timing, traffic, product choice, and application method—not one material used the same way in every storm.</p></div>
           <div className="science-cards">
             <article><h3>Why salt slows down</h3><p>Rock salt needs moisture to form a working brine. As pavement temperatures fall, the process becomes slower and less effective, requiring a different operational decision.</p></article>
             <article><h3>Where brine fits</h3><p>When conditions allow, liquid anti-icing can be applied before a storm to help delay bonding and support more controlled material use.</p></article>
@@ -138,28 +138,28 @@ export default function Home() {
 
       <section className="section credentials-section">
         <div className="container">
-          <div className="section-heading credential-heading"><p className="eyebrow">Credentials &amp; affiliations</p><h2>Training, standards, and specialized resources support the work.</h2></div>
+          <div className="section-heading credential-heading"><p className="eyebrow major-section-label">Credentials &amp; affiliations</p><h2>Training, standards, and specialized resources support the work.</h2></div>
           <div className="credential-row credential-row--six">
-            <div><Image src="/media/credentials/asca.png" alt="Accredited Snow Contractors Association logo" width={124} height={70} /></div>
-            <div><Image src="/media/credentials/bbb.png" alt="Better Business Bureau logo" width={864} height={350} /></div>
-            <div><Image src="/media/credentials/chamber.png" alt="Greater Lehigh Valley Chamber of Commerce logo" width={246} height={67} /></div>
-            <div><Image src="/media/credentials/sima.jpg" alt="Snow and Ice Management Association logo" width={171} height={68} /></div>
-            <div><Image src="/media/credentials/snowfighters.png" alt="Snowfighters Institute logo" width={101} height={100} /></div>
-            <div><Image src="/media/credentials/weather-pros.png" alt="The Weather Pros logo" width={439} height={420} /></div>
+            <div><Image src="/media/credentials/asca-logo.png" alt="Accredited Snow Contractors Association logo" width={403} height={241} /></div>
+            <div><Image className="credential-logo--tall" src="/media/credentials/bbb-logo.svg" alt="Better Business Bureau logo" width={562} height={961} /></div>
+            <div><Image className="credential-logo--wide" src="/media/credentials/chamber-logo.png" alt="Greater Lehigh Valley Chamber of Commerce logo" width={1504} height={410} /></div>
+            <div><Image className="credential-logo--wide" src="/media/credentials/sima-logo.webp" alt="Snow and Ice Management Association logo" width={400} height={161} /></div>
+            <div><Image className="credential-logo--tall" src="/media/credentials/snowfighters-logo.png" alt="Snowfighters Institute logo" width={1000} height={1000} /></div>
+            <div><Image className="credential-logo--wide" src="/media/credentials/weather-pros-logo.png" alt="The Weather Pros logo" width={639} height={312} /></div>
           </div>
         </div>
       </section>
 
       <section className="home-weather-section" aria-labelledby="local-weather-heading">
         <div className="container home-weather-grid">
-          <div><p className="eyebrow eyebrow--light">Local conditions</p><h2 id="local-weather-heading">Lehigh Valley weather</h2></div>
+          <div><p className="eyebrow eyebrow--light major-section-label">Local conditions</p><h2 id="local-weather-heading">Lehigh Valley weather</h2></div>
           <WeatherWidget />
         </div>
       </section>
 
       <section className="section consultation-section">
         <div className="container consultation-grid">
-          <div><p className="eyebrow eyebrow--light">Plan before the season</p><h2>Start with a conversation about the property—not a generic quote.</h2></div>
+          <div><p className="eyebrow eyebrow--light major-section-label">Plan before the season</p><h2>Start with a conversation about the property—not a generic quote.</h2></div>
           <div><p>Tell us how your site operates and identify the winter problems you want corrected. That gives the operations team a stronger starting point for discovery and follow-up.</p><Link className="button button--signal" href="/quote">Request a snow &amp; ice risk consultation <span aria-hidden="true">↗</span></Link></div>
         </div>
       </section>
