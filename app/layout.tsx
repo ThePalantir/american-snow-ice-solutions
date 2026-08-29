@@ -75,7 +75,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               name: siteName,
               alternateName: "ASAI",
               url: siteUrl,
-              logo: absoluteUrl("/media/brand/asais-gpt-logo.png"),
+              logo: absoluteUrl("/media/brand/asais-logo-transparent.png"),
               image: absoluteUrl("/og.png"),
               telephone: "+1-610-760-0600",
               email: "info@americansnowandice.com",

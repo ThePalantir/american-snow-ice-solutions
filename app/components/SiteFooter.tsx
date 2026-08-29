@@ -7,7 +7,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <Image src="/media/brand/asais-gpt-logo.png" alt="American Snow & Ice Solutions" width={1505} height={534} />
+          <Image src="/media/brand/asais-logo-transparent.png" alt="American Snow & Ice Solutions" width={2079} height={756} />
           <p>Professional winter risk management built around site-specific planning, accountable operations, and a clearer event record.</p>
           <a className="footer-phone" href={company.phoneHref}>{company.phone}</a>
         </div>
