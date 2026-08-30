@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "./components/SiteHeader";
 import { SiteFooter } from "./components/SiteFooter";
 import { StructuredData } from "./components/StructuredData";
+import { brandLogoPath } from "./components/BrandLogo";
 import { absoluteUrl, defaultDescription, siteName, siteUrl } from "./seo";
 
 export const metadata: Metadata = {
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
   },
   formatDetection: { email: false, address: false, telephone: false },
   icons: {
-    icon: "/media/brand/asis-2026-logo.png",
-    shortcut: "/media/brand/asis-2026-logo.png",
+    icon: brandLogoPath,
+    shortcut: brandLogoPath,
   },
   openGraph: {
     title: `${siteName} | Professional Winter Risk Management`,
@@ -75,7 +76,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               name: siteName,
               alternateName: "ASAI",
               url: siteUrl,
-              logo: absoluteUrl("/media/brand/asis-2026-logo.png"),
+              logo: absoluteUrl(brandLogoPath),
               image: absoluteUrl("/og.png"),
               telephone: "+1-610-760-0600",
               email: "info@americansnowandice.com",

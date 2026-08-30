@@ -11,8 +11,8 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#06111e",
     icons: [
       {
-        src: "/media/brand/asis-2026-logo.png",
-        sizes: "1312x1199",
+        src: "/media/brand/asis-2026-logo-v2.png",
+        sizes: "1254x1254",
         type: "image/png",
       },
     ],

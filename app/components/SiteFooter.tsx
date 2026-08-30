@@ -1,13 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import { company, servicesForDisplay } from "../site-data";
+import { BrandLogo } from "./BrandLogo";
 
 export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <Image src="/media/brand/asis-2026-logo.png" alt="American Snow & Ice Solutions" width={1312} height={1199} sizes="180px" />
+          <BrandLogo context="footer" />
           <p>Professional winter risk management built around site-specific planning, accountable operations, and a clearer event record.</p>
           <a className="footer-phone" href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
         </div>

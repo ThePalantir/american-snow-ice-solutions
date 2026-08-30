@@ -48,7 +48,7 @@ export default function SaltBrinePage() {
         <Image className="subhero__image" src="/media/operations/deicing-full.jpg" alt="Commercial snow and ice crew treating a pedestrian route" fill sizes="(max-width: 1050px) 100vw, 64vw" quality={90} priority />
         <div className="subhero__scrim" />
         <div className="container subhero__content">
-          <p className="eyebrow eyebrow--light">Professional material strategy</p>
+          <p className="eyebrow eyebrow--light major-section-label">Professional material strategy</p>
           <h1>Salt Brine &amp; Anti-Icing</h1>
           <p>Salt brine is a sodium-chloride solution used as part of proactive anti-icing strategies. When applied under appropriate conditions, it can help reduce the bond between snow or ice and pavement.</p>
           <Link className="button button--signal" href="/quote">Schedule a snow management consultation <span aria-hidden="true">↗</span></Link>
@@ -57,7 +57,7 @@ export default function SaltBrinePage() {
 
       <section className="section">
         <div className="container two-column">
-          <div><p className="eyebrow">What is salt brine?</p><h2>Salt, water, and a proactive operating decision.</h2></div>
+          <div><p className="eyebrow major-section-label">What is salt brine?</p><h2>Salt, water, and a proactive operating decision.</h2></div>
           <div className="prose-large">
             <p>Salt brine is rock salt dissolved in water at a controlled concentration. A commercial snow management team can apply it to qualifying pavement before a winter event as an anti-icing treatment.</p>
             <p>Its purpose is not to replace plowing or every other form of commercial deicing. It gives trained personnel another material option when the forecast, pavement temperature, precipitation type, timing, traffic, and property requirements support its use.</p>
@@ -68,7 +68,7 @@ export default function SaltBrinePage() {
 
       <section className="section section--tint">
         <div className="container">
-          <div className="section-heading"><p className="eyebrow">Why use brine?</p><h2>More control before snow and ice establish a bond.</h2></div>
+          <div className="section-heading"><p className="eyebrow major-section-label">Why use brine?</p><h2>More control before snow and ice establish a bond.</h2></div>
           <div className="brine-benefit-grid">
             {brineBenefits.map(([title, detail]) => <article key={title}><h3>{title}</h3><p>{detail}</p></article>)}
           </div>
@@ -77,7 +77,7 @@ export default function SaltBrinePage() {
 
       <section className="section section--dark">
         <div className="container brine-control-grid">
-          <div><p className="eyebrow eyebrow--light">Produced in-house</p><h2>Material readiness under operational control.</h2></div>
+          <div><p className="eyebrow eyebrow--light major-section-label">Produced in-house</p><h2>Material readiness under operational control.</h2></div>
           <div className="prose-large">
             <p>American Snow &amp; Ice Solutions produces salt brine on-site using dedicated brine-making equipment and storage tanks.</p>
             <p>This internal capability supports preparation, material availability, quality-minded operational control, and winter-event readiness without making assumptions about a one-size-fits-all treatment.</p>
@@ -87,7 +87,7 @@ export default function SaltBrinePage() {
 
       <section className="section">
         <div className="container two-column">
-          <div><p className="eyebrow">Lower-temperature performance</p><h2>Additives require the same disciplined judgment.</h2></div>
+          <div><p className="eyebrow major-section-label">Lower-temperature performance</p><h2>Additives require the same disciplined judgment.</h2></div>
           <div className="prose-large">
             <p>Properly supported performance-enhancing additives may extend brine effectiveness under lower-temperature conditions. Product selection still depends on manufacturer guidance, pavement conditions, the expected event, and the property plan.</p>
             <p>American Snow &amp; Ice Solutions does not rely on an unverified temperature claim. Crews evaluate the available products and current conditions before selecting an application.</p>
@@ -113,7 +113,7 @@ export default function SaltBrinePage() {
         </div>
       </section>
 
-      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Plan materials before the event</p><h2>Build a treatment strategy around your property.</h2></div><Link className="button button--light" href="/quote">Schedule a snow management consultation <span aria-hidden="true">↗</span></Link></div></section>
+      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light major-section-label">Plan materials before the event</p><h2>Build a treatment strategy around your property.</h2></div><Link className="button button--light" href="/quote">Schedule a snow management consultation <span aria-hidden="true">↗</span></Link></div></section>
     </main>
   );
 }

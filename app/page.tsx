@@ -30,7 +30,7 @@ export default function Home() {
           <div className="hero__copy">
             <p className="eyebrow eyebrow--light major-section-label">Professional snow &amp; ice management</p>
             <h1>We professionally manage <em>winter risk</em> for your property.</h1>
-            <p className="hero__lede">Site-specific planning, professional weather intelligence, accountable field operations, and documented closeout—built around how your property actually works.</p>
+            <p className="hero__lede">Site-specific planning, professional weather intelligence, accountable field operations, and documented closeout, all built around how your property actually works.</p>
             <div className="button-row">
               <Link className="button button--signal" href="/quote">Request a risk consultation <span aria-hidden="true">↗</span></Link>
               <a className="button button--outline" href={company.phoneHref}>Call {company.phone}</a>
@@ -52,7 +52,7 @@ export default function Home() {
           <div className="planning-copy">
             <p className="eyebrow major-section-label">Learn the business</p>
             <h2>We learn your business before we build your snow plan.</h2>
-            <p>A useful snow plan begins with business questions—not a generic price sheet. We map the property around the people, movement, timing, and access points that matter most.</p>
+            <p>A useful snow plan begins with business questions, not a generic price sheet. We map the property around the people, movement, timing, and access points that matter most.</p>
             <p className="planning-promise">We take the stress out of winter.</p>
             <Link className="text-link" href="/winter-risk-plan">See how a site-specific plan is built →</Link>
           </div>
@@ -67,7 +67,7 @@ export default function Home() {
       <section className="section services-section section--tint">
         <div className="container">
           <div className="section-heading section-heading--split">
-            <div><p className="eyebrow major-section-label">One accountable winter partner</p><h2>A management system—not isolated services.</h2></div>
+            <div><p className="eyebrow major-section-label">One accountable winter partner</p><h2>A management system, not isolated services.</h2></div>
             <p>Every operating discipline supports one property plan, from the first risk review through the final event record.</p>
           </div>
           <div className="service-grid">
@@ -123,7 +123,7 @@ export default function Home() {
 
       <section className="section science-section section--tint">
         <div className="container">
-          <div className="section-heading section-heading--split"><div><p className="eyebrow major-section-label">Snow &amp; ice science</p><h2>The temperature changes the strategy.</h2></div><p>Effective ice management depends on pavement temperature, precipitation type, timing, traffic, product choice, and application method—not one material used the same way in every storm.</p></div>
+          <div className="section-heading section-heading--split"><div><p className="eyebrow major-section-label">Snow &amp; ice science</p><h2>The temperature changes the strategy.</h2></div><p>Effective ice management depends on pavement temperature, precipitation type, timing, traffic, product choice, and application method, not one material used the same way in every storm.</p></div>
           <div className="science-cards">
             <article><h3>Why salt slows down</h3><p>Rock salt needs moisture to form a working brine. As pavement temperatures fall, the process becomes slower and less effective, requiring a different operational decision.</p></article>
             <article><h3>Where brine fits</h3><p>When conditions allow, liquid anti-icing can be applied before a storm to help delay bonding and support more controlled material use.</p></article>
@@ -159,7 +159,7 @@ export default function Home() {
 
       <section className="section consultation-section">
         <div className="container consultation-grid">
-          <div><p className="eyebrow eyebrow--light major-section-label">Plan before the season</p><h2>Start with a conversation about the property—not a generic quote.</h2></div>
+          <div><p className="eyebrow eyebrow--light major-section-label">Plan before the season</p><h2>Start with a conversation about the property, not a generic quote.</h2></div>
           <div><p>Tell us how your site operates and identify the winter problems you want corrected. That gives the operations team a stronger starting point for discovery and follow-up.</p><Link className="button button--signal" href="/quote">Request a snow &amp; ice risk consultation <span aria-hidden="true">↗</span></Link></div>
         </div>
       </section>

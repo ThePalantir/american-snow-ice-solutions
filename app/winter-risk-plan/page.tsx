@@ -34,7 +34,7 @@ export default function WinterRiskPlanPage() {
 
       <section className="section"><div className="container two-column"><div><p className="eyebrow">Risk support, clearly stated</p><h2>A stronger layer of winter documentation.</h2></div><div className="prose-large"><p>Planning, communication, weather information, and service records can support property operations and post-event review. American Snow &amp; Ice Solutions is not an insurer, attorney, or guarantor against incidents; its role is to provide professional snow and ice management and a clearer operational record.</p><Link className="text-link" href="/technology-reporting">See how operations are documented →</Link></div></div></section>
 
-      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light">Build the plan early</p><h2>Bring us the property—not just the square footage.</h2></div><Link className="button button--light" href="/quote">Request a consultation <span aria-hidden="true">↗</span></Link></div></section>
+      <section className="cta-band"><div className="container cta-band__inner"><div><p className="eyebrow eyebrow--light major-section-label">Build the plan early</p><h2>Bring us the property, not just the square footage.</h2></div><Link className="button button--light" href="/quote">Request a consultation <span aria-hidden="true">↗</span></Link></div></section>
     </main>
   );
 }

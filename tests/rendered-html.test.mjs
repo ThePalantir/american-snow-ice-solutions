@@ -140,9 +140,10 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(html, /We take the stress out of winter/i);
   assert.match(html, /\/salt-brine/i);
   assert.match(html, /https:\/\/truecore\.services\//i);
-  assert.match(html, /\/media\/brand\/asis-2026-logo\.png/i);
+  assert.match(html, /\/media\/brand\/asis-2026-logo-v2\.png/i);
+  assert.doesNotMatch(html, /\/media\/brand\/asis-2026-logo\.png/i);
   assert.doesNotMatch(html, /\/media\/brand\/asais-gpt-logo\.png/i);
-  assert.match(html, /class="brand brand--home"/i);
+  assert.match(html, /class="brand"/i);
   assert.equal((html.match(/class="supporting-proof"/gi) ?? []).length, 8);
   assert.match(html, /Website by\s*<a[^>]+>TrueCore<\/a>/i);
   assert.match(html, /\/media\/credentials\/asca-logo\.png/i);
@@ -151,7 +152,7 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(html, /\/media\/credentials\/sima-logo\.webp/i);
   assert.match(html, /\/media\/credentials\/snowfighters-logo\.png/i);
   assert.match(html, /\/media\/credentials\/weather-pros-logo\.png/i);
-  await access(new URL("../public/media/brand/asis-2026-logo.png", import.meta.url));
+  await access(new URL("../public/media/brand/asis-2026-logo-v2.png", import.meta.url));
   await access(new URL("../public/media/credentials/bbb-logo.svg", import.meta.url));
 
   const technology = await (await fetch(`${baseUrl}/technology-reporting`)).text();
@@ -162,10 +163,74 @@ test("renders the selected brand and premium homepage content", async () => {
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.doesNotMatch(styles, /credential-row[^}]*filter:\s*grayscale/i);
   assert.match(styles, /\.footer-base a\s*\{[^}]*text-transform:\s*none/i);
-  assert.match(styles, /\.brand--home\s*\{[^}]*width:\s*210px;[^}]*height:\s*176px/i);
+  assert.match(styles, /\.brand\s*\{[^}]*width:\s*190px;[^}]*height:\s*176px/i);
+  assert.doesNotMatch(styles, /\.brand--home\b/i);
 
   const tokens = await readFile(new URL("../app/design-tokens.css", import.meta.url), "utf8");
+  assert.match(tokens, /--type-section-label:\s*clamp\(/i);
+  assert.match(tokens, /--type-section-title:\s*clamp\(/i);
   assert.match(tokens, /--type-supporting-proof:\s*clamp\(/i);
+});
+
+test("keeps production copy and numbered interface elements normalized", async () => {
+  const routes = [
+    "/",
+    "/services",
+    "/services/commercial-plowing",
+    "/winter-risk-plan",
+    "/technology-reporting",
+    "/snow-ice-science",
+    "/salt-brine",
+    "/about",
+    "/service-areas",
+    "/quote",
+    "/contact",
+    "/partner-network",
+  ];
+
+  for (const route of routes) {
+    const html = await (await fetch(`${baseUrl}${route}`)).text();
+    assert.doesNotMatch(html, /\u2014/, `${route} should not render em dashes`);
+    assert.doesNotMatch(html, />\s*0[1-9]\s*</, `${route} should use normal integer labels`);
+  }
+});
+
+test("serves every internal page and image reference used by production routes", async () => {
+  const pages = [
+    "/",
+    "/services",
+    "/services/commercial-plowing",
+    "/services/deicing-salting",
+    "/services/sidewalks-walkways",
+    "/services/weather-reporting",
+    "/services/risk-management",
+    "/winter-risk-plan",
+    "/technology-reporting",
+    "/snow-ice-science",
+    "/salt-brine",
+    "/schedule",
+    "/about",
+    "/service-areas",
+    "/quote",
+    "/contact",
+    "/partner-network",
+  ];
+  const internalReferences = new Set();
+
+  for (const page of pages) {
+    const html = await (await fetch(`${baseUrl}${page}`)).text();
+    for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
+      const reference = match[1];
+      if (reference.startsWith("/") && !reference.startsWith("/_next/")) {
+        internalReferences.add(reference);
+      }
+    }
+  }
+
+  for (const reference of internalReferences) {
+    const response = await fetch(new URL(reference, baseUrl));
+    assert.ok(response.status < 400, `${reference} should resolve without an error`);
+  }
 });
 
 test("serves technical SEO and GEO discovery endpoints", async () => {

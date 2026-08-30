@@ -40,7 +40,7 @@ export function WeatherWidget() {
         href="https://forecast7.com/en/40d61n75d49/allentown/?unit=us"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Current weather for Lehigh Valley, Pennsylvania — opens Forecast7"
+        aria-label="Current weather for Lehigh Valley, Pennsylvania, and opens Forecast7"
         data-label_1="LEHIGH VALLEY"
         data-label_2="PA"
         data-font="Helvetica"

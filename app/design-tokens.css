@@ -35,7 +35,9 @@ html[data-design-direction="midnight-operations"] {
   --font-display: "Arial Narrow", "Aptos Display", "Segoe UI", sans-serif;
   --font-body: "Segoe UI", Arial, sans-serif;
   --font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
-  --type-supporting-proof: clamp(0.82rem, 1vw, 0.95rem);
+  --type-section-label: clamp(0.98rem, 1.2vw, 1.12rem);
+  --type-section-title: clamp(2.45rem, 4.2vw, 4.4rem);
+  --type-supporting-proof: clamp(0.94rem, 1.1vw, 1.06rem);
   --weight-supporting-proof: 900;
 
   --radius-sm: 6px;
