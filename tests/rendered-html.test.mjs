@@ -158,6 +158,7 @@ test("renders the selected brand and premium homepage content", async () => {
   const technology = await (await fetch(`${baseUrl}/technology-reporting`)).text();
   assert.match(technology, /\/media\/partners\/yeti-logo\.jpg/i);
   assert.match(technology, /alt="YETI Snow Tracker logo"/i);
+  assert.match(technology, /American Snow And Ice Solutions uses the platform/i);
   await access(new URL("../public/media/partners/yeti-logo.jpg", import.meta.url));
 
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
@@ -192,7 +193,16 @@ test("keeps production copy and numbered interface elements normalized", async (
     const html = await (await fetch(`${baseUrl}${route}`)).text();
     assert.doesNotMatch(html, /\u2014/, `${route} should not render em dashes`);
     assert.doesNotMatch(html, />\s*0[1-9]\s*</, `${route} should use normal integer labels`);
+    assert.doesNotMatch(html, /AS&amp;IS/i, `${route} should spell out the company name`);
   }
+});
+
+test("applies the approved contact and service-area content removals", async () => {
+  const contact = await (await fetch(`${baseUrl}/contact`)).text();
+  assert.doesNotMatch(contact, /<h2[^>]*>4531 Lehigh Drive, Walnutport, PA 18088<\/h2>/i);
+
+  const serviceAreas = await (await fetch(`${baseUrl}/service-areas`)).text();
+  assert.doesNotMatch(serviceAreas, /Operations center\s*<br\s*\/?>\s*<strong>Walnutport, PA<\/strong>/i);
 });
 
 test("serves every internal page and image reference used by production routes", async () => {

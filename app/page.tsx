@@ -85,7 +85,7 @@ export default function Home() {
       <section className="section section--dark protocol-section">
         <div className="container protocol-grid">
           <div className="protocol-copy">
-            <p className="eyebrow eyebrow--light major-section-label">The AS&amp;IS operating protocol</p>
+            <p className="eyebrow eyebrow--light major-section-label">The American Snow And Ice Solutions operating protocol</p>
             <h2>Prepared before the first flake.</h2>
             <p>Winter exposure is operational exposure. People, equipment, materials, forecast intelligence, decision triggers, and communication paths are aligned before conditions threaten your schedule.</p>
             <Link className="text-link text-link--light" href="/winter-risk-plan">Explore the winter risk plan →</Link>
@@ -110,7 +110,7 @@ export default function Home() {
           <div className="intelligence-copy">
             <p className="eyebrow major-section-label">Technology &amp; reporting</p>
             <h2>Better decisions before, during, and after the storm.</h2>
-            <p>AS&amp;IS uses purpose-built operational software, professional forecast support, and post-event weather reporting to create a clearer picture of what was expected, what crews encountered, and what work was completed.</p>
+            <p>American Snow And Ice Solutions uses purpose-built operational software, professional forecast support, and post-event weather reporting to create a clearer picture of what was expected, what crews encountered, and what work was completed.</p>
             <div className="intelligence-list">
               <div><strong className="supporting-proof">YETI Snow Management</strong><span>Dispatch, GPS-supported activity, site photos, service history, and client visibility.</span></div>
               <div><strong className="supporting-proof">The Weather Pros</strong><span>Business-focused winter forecasting and storm intelligence for operational planning.</span></div>
