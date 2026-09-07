@@ -16,7 +16,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
         <span>Request prepared</span>
         <h3>Your property is on our radar.</h3>
         <p>This proof-of-concept keeps submissions local. In production, this request will route directly to the operations team.</p>
-        <button className="text-link" type="button" onClick={() => setSubmitted(false)}>Send another request →</button>
+        <button className="button button--signal" type="button" onClick={() => setSubmitted(false)}>Send another request <span aria-hidden="true">→</span></button>
       </div>
     );
   }

@@ -15,7 +15,7 @@ export function SiteHeader() {
       <div className="ops-bar">
         <div className="container ops-bar__inner">
           <span className="ops-bar__planning">Now planning for the <span className="ops-bar__season">2026–27 season</span></span>
-          <a href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
+          <a className="button button--signal button--utility" href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>Call {company.phone}</a>
         </div>
       </div>
       <header className="site-header">

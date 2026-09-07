@@ -54,7 +54,7 @@ export default function Home() {
             <h2>We learn your business before we build your snow plan.</h2>
             <p>A useful snow plan begins with business questions, not a generic price sheet. We map the property around the people, movement, timing, and access points that matter most.</p>
             <p className="planning-promise">We take the stress out of winter.</p>
-            <Link className="text-link" href="/winter-risk-plan">See how a site-specific plan is built →</Link>
+            <Link className="button button--signal" href="/winter-risk-plan">See how a site-specific plan is built <span aria-hidden="true">→</span></Link>
           </div>
           <div className="question-grid">
             {operatingQuestions.map(([title, detail]) => (
@@ -88,7 +88,7 @@ export default function Home() {
             <p className="eyebrow eyebrow--light major-section-label">The American Snow And Ice Solutions operating protocol</p>
             <h2>Prepared before the first flake.</h2>
             <p>Winter exposure is operational exposure. People, equipment, materials, forecast intelligence, decision triggers, and communication paths are aligned before conditions threaten your schedule.</p>
-            <Link className="text-link text-link--light" href="/winter-risk-plan">Explore the winter risk plan →</Link>
+            <Link className="button button--signal" href="/winter-risk-plan">Explore the winter risk plan <span aria-hidden="true">→</span></Link>
           </div>
           <div className="protocol-steps">
             {[
@@ -130,8 +130,8 @@ export default function Home() {
             <article><h3>Responsible application</h3><p>Calibrated equipment, appropriate products, mechanical removal, and documented application rates help balance surface needs with material stewardship.</p></article>
           </div>
           <div className="science-links">
-            <Link className="text-link" href="/snow-ice-science">Understand the science and materials →</Link>
-            <Link className="text-link" href="/salt-brine">Explore salt brine &amp; anti-icing →</Link>
+            <Link className="button button--signal" href="/snow-ice-science">Understand the science and materials <span aria-hidden="true">→</span></Link>
+            <Link className="button button--signal" href="/salt-brine">Explore salt brine &amp; anti-icing <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </section>

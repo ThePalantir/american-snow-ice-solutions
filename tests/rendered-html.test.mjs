@@ -163,7 +163,7 @@ test("renders the selected brand and premium homepage content", async () => {
 
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.doesNotMatch(styles, /credential-row[^}]*filter:\s*grayscale/i);
-  assert.match(styles, /\.footer-base a\s*\{[^}]*text-transform:\s*none/i);
+  assert.match(styles, /\.button--credit\s*\{[^}]*text-transform:\s*none/i);
   assert.match(styles, /\.brand\s*\{[^}]*width:\s*190px;[^}]*height:\s*176px/i);
   assert.doesNotMatch(styles, /\.brand--home\b/i);
 
@@ -284,7 +284,7 @@ test("renders a consistent interaction hierarchy across key routes", async () =>
   const home = await (await fetch(baseUrl)).text();
   assert.match(home, /class="button button--signal" href="\/quote"/i);
   assert.match(home, /class="button button--secondary" href="\/technology-reporting"/i);
-  assert.match(home, /class="text-link" href="\/winter-risk-plan"/i);
+  assert.match(home, /class="button button--signal" href="\/winter-risk-plan"/i);
   assert.match(home, /class="service-card service-card--feature"/i);
 
   const services = await (await fetch(`${baseUrl}/services`)).text();
@@ -295,6 +295,19 @@ test("renders a consistent interaction hierarchy across key routes", async () =>
   assert.match(serviceAreas, /class="button button--secondary" href="\/partner-network"/i);
 
   const contact = await (await fetch(`${baseUrl}/contact`)).text();
-  assert.match(contact, /class="contact-phone" href="tel:\+16107600600" aria-label="Call American Snow &amp; Ice Solutions/i);
-  assert.match(contact, /class="contact-email" href="mailto:info@americansnowandice.com"/i);
+  assert.match(contact, /class="button button--signal contact-link-button" href="tel:\+16107600600" aria-label="Call American Snow &amp; Ice Solutions/i);
+  assert.match(contact, /class="button button--signal contact-link-button" href="mailto:info@americansnowandice.com"/i);
+
+  const technology = await (await fetch(`${baseUrl}/technology-reporting`)).text();
+  assert.match(technology, /class="button button--signal" href="https:\/\/www\.yetisnow\.com\/"/i);
+  assert.match(technology, /class="button button--signal" href="https:\/\/www\.theweatherpros\.com\/"/i);
+  assert.match(technology, /class="button button--signal" href="https:\/\/weatherworksinc\.com\/"/i);
+
+  const footer = await (await fetch(`${baseUrl}/about`)).text();
+  assert.match(footer, /class="button button--signal button--footer" href="\/winter-risk-plan"/i);
+  assert.match(footer, /class="button button--signal button--footer button--credit" href="https:\/\/truecore\.services\/"/i);
+  assert.doesNotMatch(footer, /class="[^"]*text-link/i);
+
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.doesNotMatch(styles, /text-decoration:\s*underline/i);
 });
