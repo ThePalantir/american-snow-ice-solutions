@@ -1,6 +1,6 @@
 # American Snow & Ice Solutions
 
-> Professional commercial snow and ice management company based in Walnutport, Pennsylvania. The company builds site-specific winter plans and coordinates weather intelligence, field operations, and event documentation across eastern Pennsylvania, western New Jersey, southern New York, and northern Delaware.
+> Professional commercial snow and ice management company based in eastern Pennsylvania. The company builds site-specific winter plans and coordinates weather intelligence, field operations, and event documentation across eastern Pennsylvania, western New Jersey, southern New York, and northern Delaware.
 
 Canonical website: https://americansnowandicesolutions.com/
 
@@ -27,7 +27,6 @@ Canonical website: https://americansnowandicesolutions.com/
 
 - Phone: +1-610-760-0600
 - Email: info@americansnowandice.com
-- Address: 4531 Lehigh Drive, Walnutport, PA 18088
 - Office hours: Monday through Friday, 8:00 AM–5:00 PM
 - Emergency winter-event services: available 24/7
 

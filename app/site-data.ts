@@ -17,7 +17,6 @@ export const company = {
   phoneHref: "tel:+16107600600",
   email: "info@americansnowandice.com",
   emailHref: "mailto:info@americansnowandice.com",
-  address: "4531 Lehigh Drive, Walnutport, PA 18088",
 };
 
 export const services: Service[] = [
@@ -114,7 +113,7 @@ export const servicesForDisplay = [
 ];
 
 export const serviceAreas = [
-  "Allentown", "Bethlehem", "Easton", "Nazareth", "Northampton", "Walnutport", "Whitehall", "Center Valley",
+  "Allentown", "Bethlehem", "Easton", "Nazareth", "Northampton", "Whitehall", "Center Valley",
   "Fogelsville", "Macungie", "Emmaus", "Coopersburg", "Quakertown", "Kutztown", "Reading", "Pottstown",
   "Palmerton", "Lehighton", "Hazleton", "Jim Thorpe", "Bangor", "Wind Gap", "New Tripoli", "Orefield",
   "Eastern Pennsylvania", "Western New Jersey", "Southern New York", "Northern Delaware",

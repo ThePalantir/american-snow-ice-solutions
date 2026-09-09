@@ -3,7 +3,7 @@ import Image from "next/image";
 import { company } from "../site-data";
 import { makeMetadata } from "../seo";
 
-export const metadata = makeMetadata({ title: "Contact", description: "Contact American Snow & Ice Solutions in Walnutport, Pennsylvania.", path: "/contact" });
+export const metadata = makeMetadata({ title: "Contact", description: "Contact American Snow & Ice Solutions for commercial snow and ice management across eastern Pennsylvania and surrounding markets.", path: "/contact" });
 
 export default function ContactPage() {
   return (

@@ -199,10 +199,11 @@ test("keeps production copy and numbered interface elements normalized", async (
 
 test("applies the approved contact and service-area content removals", async () => {
   const contact = await (await fetch(`${baseUrl}/contact`)).text();
-  assert.doesNotMatch(contact, /<h2[^>]*>4531 Lehigh Drive, Walnutport, PA 18088<\/h2>/i);
+  assert.doesNotMatch(contact, /Walnutport|4531 Lehigh Drive|18088/i);
 
   const serviceAreas = await (await fetch(`${baseUrl}/service-areas`)).text();
-  assert.doesNotMatch(serviceAreas, /Operations center\s*<br\s*\/?>\s*<strong>Walnutport, PA<\/strong>/i);
+  assert.doesNotMatch(serviceAreas, /Walnutport|4531 Lehigh Drive|18088/i);
+  assert.match(serviceAreas, /Based out of eastern Pennsylvania and operating across the region’s most active commercial corridors\./i);
 });
 
 test("serves every internal page and image reference used by production routes", async () => {

@@ -80,14 +80,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               image: absoluteUrl("/og.png"),
               telephone: "+1-610-760-0600",
               email: "info@americansnowandice.com",
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "4531 Lehigh Drive",
-                addressLocality: "Walnutport",
-                addressRegion: "PA",
-                postalCode: "18088",
-                addressCountry: "US",
-              },
               areaServed: [
                 { "@type": "State", name: "Pennsylvania" },
                 { "@type": "State", name: "New Jersey" },
