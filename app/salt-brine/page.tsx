@@ -61,7 +61,7 @@ export default function SaltBrinePage() {
           <div className="prose-large">
             <p>Salt brine is rock salt dissolved in water at a controlled concentration. A commercial snow management team can apply it to qualifying pavement before a winter event as an anti-icing treatment.</p>
             <p>Its purpose is not to replace plowing or every other form of commercial deicing. It gives trained personnel another material option when the forecast, pavement temperature, precipitation type, timing, traffic, and property requirements support its use.</p>
-            <Link className="button button--signal" href="/snow-ice-science">Review the larger snow &amp; ice science strategy <span aria-hidden="true">→</span></Link>
+            <Link className="text-link" href="/snow-ice-science">Review the larger snow &amp; ice science strategy →</Link>
           </div>
         </div>
       </section>
@@ -108,11 +108,7 @@ export default function SaltBrinePage() {
             <div className="decision-formula" aria-label="Professional winter treatment decision inputs">
               <span>Forecast</span><b aria-hidden="true">+</b><span>Pavement conditions</span><b aria-hidden="true">+</b><span>Property needs</span><b aria-hidden="true">+</b><span>Trained personnel</span><b aria-hidden="true">+</b><span>Appropriate materials</span>
             </div>
-            <p>The right material, at the right time, is part of professionally managing winter risk for the property.</p>
-            <div className="button-row brine-decision-actions">
-              <Link className="button button--signal" href="/services/deicing-salting">Commercial deicing service <span aria-hidden="true">→</span></Link>
-              <Link className="button button--signal" href="/winter-risk-plan">Site-specific winter plan <span aria-hidden="true">→</span></Link>
-            </div>
+            <p>The right material, at the right time, is part of professionally managing winter risk for the property. Learn how that carries through our <Link href="/services/deicing-salting">commercial deicing service</Link> and <Link href="/winter-risk-plan">site-specific winter plan</Link>.</p>
           </div>
         </div>
       </section>

@@ -60,7 +60,7 @@ export function ServicePage({ service }: { service: Service }) {
               {service.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}
             </div>
             {service.slug === "deicing-salting" && (
-              <Link className="button button--signal service-context-link" href="/salt-brine">Learn about salt brine &amp; anti-icing <span aria-hidden="true">→</span></Link>
+              <Link className="text-link service-context-link" href="/salt-brine">Learn about salt brine &amp; anti-icing →</Link>
             )}
           </div>
         </div>
