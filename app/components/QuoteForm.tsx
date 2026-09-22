@@ -2,8 +2,6 @@
 
 import { FormEvent, useState } from "react";
 
-const quoteSubmissionEndpoint = "https://formsubmit.co/ajax/troy.stone@truecore.services";
-
 export function QuoteForm({ compact = false }: { compact?: boolean }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -19,17 +17,13 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
     const payload = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch(quoteSubmissionEndpoint, {
+      const response = await fetch("/api/quote", {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...payload,
-          _subject: "New ASIS risk consultation request",
-          _template: "table",
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

@@ -16,6 +16,20 @@ npm run dev
 
 Open the local address printed by Next.js, normally `http://localhost:3000`.
 
+## Quote request email
+
+The `/quote` form sends consultation requests through Resend to
+`troy.stone@truecore.services`. Configure these server-side environment
+variables in each deployed environment:
+
+```bash
+RESEND_API_KEY=re_replace_with_server_side_key
+RESEND_FROM_EMAIL=American Snow & Ice Solutions <website@your-verified-domain.example>
+```
+
+`RESEND_FROM_EMAIL` must use a sending domain already verified in Resend. Never
+expose `RESEND_API_KEY` to browser code or commit it to the repository.
+
 ## Validation
 
 ```bash
