@@ -198,6 +198,9 @@ input,select,textarea { width:100%; border:1px solid #cbd9e0; border-radius:var(
 input:focus,select:focus,textarea:focus { border-color:#2a9ac6; box-shadow:0 0 0 3px rgba(92,200,243,.17); }
 textarea { resize:vertical; }
 .quote-form .button { margin-top:24px; }
+.quote-form .button:disabled { cursor:wait; opacity:.72; }
+.form-honeypot { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }
+.form-error { margin:12px 0 0; color:#a1261c; font-size:.78rem; font-weight:700; text-align:center; }
 .form-note { margin:12px 0 0; color:#70838f; font-size:.68rem; text-align:center; }
 .form-success { min-height:360px; display:flex; flex-direction:column; justify-content:center; padding:48px; background:white; color:var(--ink-950); }
 .form-success > span { color:#2180a8; font-family:var(--font-mono); font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }

@@ -2,12 +2,49 @@
 
 import { FormEvent, useState } from "react";
 
+const quoteSubmissionEndpoint = "https://formsubmit.co/ajax/troy.stone@truecore.services";
+
 export function QuoteForm({ compact = false }: { compact?: boolean }) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmissionError("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch(quoteSubmissionEndpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...payload,
+          _subject: "New ASIS risk consultation request",
+          _template: "table",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("The request could not be delivered.");
+      }
+
+      form.reset();
+      setSubmitted(true);
+    } catch {
+      setSubmissionError(
+        "We could not send your request. Please try again or contact our operations team directly.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -15,7 +52,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
       <div className="form-success" role="status">
         <span>Request prepared</span>
         <h3>Your property is on our radar.</h3>
-        <p>This proof-of-concept keeps submissions local. In production, this request will route directly to the operations team.</p>
+        <p>Your request has been sent to our operations team. We will follow up directly.</p>
         <button className="text-link" type="button" onClick={() => setSubmitted(false)}>Send another request →</button>
       </div>
     );
@@ -76,9 +113,11 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
           </>
         )}
       </div>
-      <button className="button button--signal button--wide" type="submit">
-        Request a risk consultation <span aria-hidden="true">↗</span>
+      <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <button className="button button--signal button--wide" type="submit" disabled={submitting}>
+        {submitting ? "Sending request…" : "Request a risk consultation"} <span aria-hidden="true">↗</span>
       </button>
+      {submissionError && <p className="form-error" role="alert">{submissionError}</p>}
       <p className="form-note">An operations specialist will review your needs and follow up directly.</p>
     </form>
   );
