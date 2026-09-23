@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { access, readFile } from "node:fs/promises";
+import { access, cp, readFile } from "node:fs/promises";
 import net from "node:net";
 import path from "node:path";
 import { after, before, test } from "node:test";
@@ -8,7 +8,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
-const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "next");
+const standaloneRoot = path.join(projectRoot, ".next", "standalone");
 let server;
 let baseUrl;
 let serverOutput = "";
@@ -46,9 +46,11 @@ async function waitForServer(url) {
 before(async () => {
   const port = await findOpenPort();
   baseUrl = `http://127.0.0.1:${port}`;
-  server = spawn(process.execPath, [nextBin, "start", "-H", "127.0.0.1", "-p", String(port)], {
+  await cp(path.join(projectRoot, "public"), path.join(standaloneRoot, "public"), { recursive: true });
+  await cp(path.join(projectRoot, ".next", "static"), path.join(standaloneRoot, ".next", "static"), { recursive: true });
+  server = spawn(process.execPath, [path.join(standaloneRoot, "server.js")], {
     cwd: projectRoot,
-    env: { ...process.env, NODE_ENV: "production" },
+    env: { ...process.env, NODE_ENV: "production", HOSTNAME: "127.0.0.1", PORT: String(port) },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
   });
@@ -125,6 +127,19 @@ test("serves every primary website route", async () => {
     assert.equal(response.status, 200, `${route} should return 200`);
     assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   }
+});
+
+test("preserves the host health identity and exposes the server-side quote endpoint", async () => {
+  const health = await fetch(`${baseUrl}/health`);
+  assert.equal(health.status, 200);
+  assert.deepEqual(await health.json(), { service: "american-snow-ice-solutions", status: "ok" });
+  const response = await fetch(`${baseUrl}/api/quote`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({}),
+  });
+  assert.equal(response.status, 400);
+  assert.deepEqual(await response.json(), { error: "Please complete all required fields." });
 });
 
 test("renders the selected brand and premium homepage content", async () => {

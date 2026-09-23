@@ -30,6 +30,21 @@ RESEND_FROM_EMAIL=American Snow & Ice Solutions <website@your-verified-domain.ex
 `RESEND_FROM_EMAIL` must use a sending domain already verified in Resend. Never
 expose `RESEND_API_KEY` to browser code or commit it to the repository.
 
+In the operations dashboard, paste the two lines into this project's environment
+variables, save, then **Deploy saved settings** so the running process receives
+them. These are runtime variables; they do not need build-time exposure or a
+`NEXT_PUBLIC_` prefix. The recipient remains `troy.stone@truecore.services`, and
+Reply-To is the visitor's submitted email address.
+
+The host must run the Next.js server, not a static `out/` export: static hosting
+cannot execute `POST /api/quote`. For self-hosting, `npm run build` produces
+`.next/standalone/server.js`. Copy `public/` into `.next/standalone/public/` and
+`.next/static/` into `.next/standalone/.next/static/`, then run that server with
+the host's `HOSTNAME`, `PORT`, and the two Resend variables. `GET /health` preserves
+the application's service identity for host monitoring. The legacy host's static
+export recipe needs a one-time switch to this server artifact before environment
+variables alone can enable email.
+
 ## Validation
 
 ```bash
@@ -38,7 +53,7 @@ npm run build
 npm test
 ```
 
-The test suite builds the production application, starts it with `next start`, and verifies the primary pages, service routes, SEO endpoints, AI-readable summaries, branding asset, and standard Next.js configuration.
+The test suite builds and starts the standalone production server and verifies the primary pages, service routes, health and quote endpoints, SEO endpoints, AI-readable summaries, and branding asset. Email tests exercise the real Resend SDK with mocked network responses; no real emails are sent.
 
 ## Routes
 
