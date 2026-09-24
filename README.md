@@ -19,7 +19,7 @@ Open the local address printed by Next.js, normally `http://localhost:3000`.
 ## Quote request email
 
 The `/quote` form sends consultation requests through Resend to
-`troy.stone@truecore.services`. Configure these server-side environment
+`Piechotagrpinc@gmail.com`. Configure these server-side environment
 variables in each deployed environment:
 
 ```bash
@@ -33,7 +33,7 @@ expose `RESEND_API_KEY` to browser code or commit it to the repository.
 In the operations dashboard, paste the two lines into this project's environment
 variables, save, then **Deploy saved settings** so the running process receives
 them. These are runtime variables; they do not need build-time exposure or a
-`NEXT_PUBLIC_` prefix. The recipient remains `troy.stone@truecore.services`, and
+`NEXT_PUBLIC_` prefix. The recipient is `Piechotagrpinc@gmail.com`, and
 Reply-To is the visitor's submitted email address.
 
 The host must run the Next.js server, not a static `out/` export: static hosting

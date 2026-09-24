@@ -3,7 +3,7 @@ import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
-const recipient = "troy.stone@truecore.services";
+const recipient = "Piechotagrpinc@gmail.com";
 const rateLimitWindowMs = 15 * 60 * 1000;
 const rateLimitMaxRequests = 5;
 const requestLog = new Map<string, number[]>();

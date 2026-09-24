@@ -40,7 +40,7 @@ test("sends through Resend using runtime settings, a fixed recipient, and the vi
     assert.equal(new Headers(options.headers).get("authorization"), `Bearer ${environment.RESEND_API_KEY}`);
     const email = JSON.parse(options.body);
     assert.equal(email.from, environment.RESEND_FROM_EMAIL);
-    assert.deepEqual(email.to, ["troy.stone@truecore.services"]);
+    assert.deepEqual(email.to, ["Piechotagrpinc@gmail.com"]);
     assert.equal(email.reply_to, submission.email);
     assert.match(email.text, /Example <Warehouse>/);
     assert.match(email.html, /&lt;script&gt;example&lt;\/script&gt;/);
