@@ -129,6 +129,28 @@ test("serves every primary website route", async () => {
   }
 });
 
+test("permanently redirects previous-site pages to their current equivalents", async () => {
+  const redirects = [
+    ["/where-we-serve", "/service-areas"],
+    ["/weather-reporting", "/services/weather-reporting"],
+    ["/risk-management", "/services/risk-management"],
+    ["/plowing-2", "/services/commercial-plowing"],
+    ["/de-icing-salting", "/services/deicing-salting"],
+  ];
+
+  for (const [legacy, current] of redirects) {
+    const response = await fetch(`${baseUrl}${legacy}`, { redirect: "manual" });
+    assert.equal(response.status, 308, `${legacy} should redirect permanently`);
+    assert.equal(new URL(response.headers.get("location"), baseUrl).pathname, current, `${legacy} should point to ${current}`);
+
+    for (const variant of [legacy, `${legacy}/`]) {
+      const landed = await fetch(`${baseUrl}${variant}`);
+      assert.equal(landed.status, 200, `${variant} should land on a working page`);
+      assert.equal(new URL(landed.url).pathname, current, `${variant} should land on ${current}`);
+    }
+  }
+});
+
 test("preserves the host health identity and exposes the server-side quote endpoint", async () => {
   const health = await fetch(`${baseUrl}/health`);
   assert.equal(health.status, 200);
