@@ -15,8 +15,8 @@ export const company = {
   name: "American Snow & Ice Solutions",
   phone: "(610) 760-0600",
   phoneHref: "tel:+16107600600",
-  email: "info@americansnowandice.com",
-  emailHref: "mailto:info@americansnowandice.com",
+  email: "piechotagrpinc@gmail.com",
+  emailHref: "mailto:piechotagrpinc@gmail.com",
 };
 
 export const services: Service[] = [
