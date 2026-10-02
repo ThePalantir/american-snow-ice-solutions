@@ -79,7 +79,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               logo: absoluteUrl(brandLogoPath),
               image: absoluteUrl("/og.png"),
               telephone: "+1-610-760-0600",
-              email: "info@americansnowandice.com",
+              email: "piechotagrpinc@gmail.com",
               areaServed: [
                 { "@type": "State", name: "Pennsylvania" },
                 { "@type": "State", name: "New Jersey" },

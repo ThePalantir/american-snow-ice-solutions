@@ -312,5 +312,15 @@ test("renders a consistent interaction hierarchy across key routes", async () =>
 
   const contact = await (await fetch(`${baseUrl}/contact`)).text();
   assert.match(contact, /class="contact-phone" href="tel:\+16107600600" aria-label="Call American Snow &amp; Ice Solutions/i);
-  assert.match(contact, /class="contact-email" href="mailto:info@americansnowandice.com"/i);
+  assert.match(contact, /class="contact-email" href="mailto:piechotagrpinc@gmail\.com">Email (?:<!-- -->)?piechotagrpinc@gmail\.com</i);
+
+  // The previous address's domain is not registered, so it must not appear anywhere a visitor or crawler reads.
+  const partners = await (await fetch(`${baseUrl}/partner-network`)).text();
+  assert.match(partners, /href="mailto:piechotagrpinc@gmail\.com\?subject=Service%20Partner%20Network"/i);
+  assert.match(home, /"email":"piechotagrpinc@gmail\.com"/i);
+  for (const [name, body] of [["contact", contact], ["partner-network", partners], ["home", home],
+    ["llms.txt", await (await fetch(`${baseUrl}/llms.txt`)).text()],
+    ["llms-full.txt", await (await fetch(`${baseUrl}/llms-full.txt`)).text()]]) {
+    assert.doesNotMatch(body, /americansnowandice\.com/i, `${name} should not show the unregistered address`);
+  }
 });
