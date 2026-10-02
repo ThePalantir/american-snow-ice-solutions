@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 
-export function QuoteForm({ compact = false }: { compact?: boolean }) {
+export function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
@@ -53,7 +53,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form className={`quote-form ${compact ? "quote-form--compact" : ""}`} onSubmit={handleSubmit}>
+    <form className="quote-form" onSubmit={handleSubmit}>
       <div className="field-grid">
         <label>
           <span>Company name</span>
@@ -71,41 +71,37 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
           <span>Phone</span>
           <input type="tel" name="phone" autoComplete="tel" required placeholder="(610) 000-0000" />
         </label>
-        {!compact && (
-          <>
-            <label className="field-span">
-              <span>Property address or portfolio area</span>
-              <input name="location" autoComplete="street-address" required placeholder="Street, city, state or service region" />
-            </label>
-            <label>
-              <span>Property type</span>
-              <select name="propertyType" defaultValue="">
-                <option value="" disabled>Select a property type</option>
-                <option>Industrial / warehouse</option>
-                <option>Retail / shopping center</option>
-                <option>Medical / healthcare</option>
-                <option>Office / corporate campus</option>
-                <option>Multi-site portfolio</option>
-                <option>Other commercial property</option>
-              </select>
-            </label>
-            <label>
-              <span>Services needed</span>
-              <select name="service" defaultValue="">
-                <option value="" disabled>Select primary need</option>
-                <option>Full snow & ice management</option>
-                <option>Commercial plowing</option>
-                <option>De-icing & salting</option>
-                <option>Sidewalks & walkways</option>
-                <option>Multi-site service partner</option>
-              </select>
-            </label>
-            <label className="field-span">
-              <span>Tell us about the property</span>
-              <textarea name="details" rows={5} placeholder="Share site size, operating hours, priority areas, or current winter challenges." />
-            </label>
-          </>
-        )}
+        <label className="field-span">
+          <span>Property address or portfolio area</span>
+          <input name="location" autoComplete="street-address" required placeholder="Street, city, state or service region" />
+        </label>
+        <label>
+          <span>Property type</span>
+          <select name="propertyType" defaultValue="">
+            <option value="" disabled>Select a property type</option>
+            <option>Industrial / warehouse</option>
+            <option>Retail / shopping center</option>
+            <option>Medical / healthcare</option>
+            <option>Office / corporate campus</option>
+            <option>Multi-site portfolio</option>
+            <option>Other commercial property</option>
+          </select>
+        </label>
+        <label>
+          <span>Services needed</span>
+          <select name="service" defaultValue="">
+            <option value="" disabled>Select primary need</option>
+            <option>Full snow & ice management</option>
+            <option>Commercial plowing</option>
+            <option>De-icing & salting</option>
+            <option>Sidewalks & walkways</option>
+            <option>Multi-site service partner</option>
+          </select>
+        </label>
+        <label className="field-span">
+          <span>Tell us about the property</span>
+          <textarea name="details" rows={5} placeholder="Share site size, operating hours, priority areas, or current winter challenges." />
+        </label>
       </div>
       <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <button className="button button--signal button--wide" type="submit" disabled={submitting}>

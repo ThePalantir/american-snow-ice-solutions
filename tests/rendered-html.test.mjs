@@ -196,7 +196,18 @@ test("renders the selected brand and premium homepage content", async () => {
   assert.match(technology, /\/media\/partners\/yeti-logo\.jpg/i);
   assert.match(technology, /alt="YETI Snow Tracker logo"/i);
   assert.match(technology, /American Snow And Ice Solutions uses the platform/i);
+  assert.doesNotMatch(technology, /confirmed before launch/i);
+  assert.match(technology, /defined during discovery according to the contracted service scope/i);
   await access(new URL("../public/media/partners/yeti-logo.jpg", import.meta.url));
+
+  assert.match(html, new RegExp(`© Copyright (?:<!-- -->)?${new Date().getFullYear()}(?:<!-- -->)?\\.`));
+  assert.doesNotMatch(html, /© Copyright 2024\./i);
+
+  const quote = await (await fetch(`${baseUrl}/quote`)).text();
+  const locationInput = quote.match(/<input[^>]*name="location"[^>]*>/i)?.[0];
+  assert.ok(locationInput, "the quote form should render the required location field");
+  assert.match(locationInput, /required/i);
+  assert.match(quote, /Property address or portfolio area/i);
 
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.doesNotMatch(styles, /credential-row[^}]*filter:\s*grayscale/i);

@@ -3,6 +3,8 @@ import { company, servicesForDisplay } from "../site-data";
 import { BrandLogo } from "./BrandLogo";
 
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -32,7 +34,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="container footer-base">
-        <span>© Copyright 2024. All Rights Reserved American Snow &amp; Ice Solutions. Website by <a href="https://truecore.services/">TrueCore</a></span>
+        <span>© Copyright {currentYear}. All Rights Reserved American Snow &amp; Ice Solutions. Website by <a href="https://truecore.services/">TrueCore</a></span>
       </div>
     </footer>
   );
