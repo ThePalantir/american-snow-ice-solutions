@@ -783,3 +783,17 @@ textarea { resize:vertical; }
     font-size: clamp(.92rem, 3.8vw, 1.02rem);
   }
 }
+/* Optional analytics UI is rendered only after explicit build-time activation. */
+.analytics-consent {
+  position: fixed; bottom: 1rem; left: 1rem; right: 1rem; z-index: 100;
+  max-width: 42rem; padding: 1.25rem; background: #fff; color: #080f16;
+  border: 1px solid #080f16; box-shadow: 0 4px 24px #0003;
+}
+.analytics-consent p { margin: 0 0 1rem; }
+.analytics-consent a { text-decoration: underline; }
+.analytics-consent div { display: flex; flex-wrap: wrap; gap: .75rem; }
+.analytics-consent button, .analytics-settings {
+  padding: .65rem 1rem; border: 1px solid currentColor; cursor: pointer;
+  background: #fff; color: #080f16; font: inherit;
+}
+.analytics-settings { display: block; margin: 1rem auto; }

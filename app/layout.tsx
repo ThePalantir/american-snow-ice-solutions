@@ -3,6 +3,7 @@ import "./design-tokens.css";
 import "./globals.css";
 import { SiteHeader } from "./components/SiteHeader";
 import { SiteFooter } from "./components/SiteFooter";
+import { Analytics } from "./components/Analytics";
 import { StructuredData } from "./components/StructuredData";
 import { brandLogoPath } from "./components/BrandLogo";
 import { absoluteUrl, defaultDescription, siteName, siteUrl } from "./seo";
@@ -125,6 +126,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteHeader />
         <div id="main-content">{children}</div>
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );
