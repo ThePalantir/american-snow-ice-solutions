@@ -41,7 +41,7 @@ cannot execute `POST /api/quote`. For self-hosting, `npm run build` produces
 `.next/standalone/server.js`. Copy `public/` into `.next/standalone/public/` and
 `.next/static/` into `.next/standalone/.next/static/`, then run that server with
 the host's `HOSTNAME`, `PORT`, and the two Resend variables. `GET /health` preserves
-the application's service identity for host monitoring. The legacy host's static
+the application's service identity for host monitoring and includes a non-secret `buildSha` captured at build time. Builds without a Git checkout should set `ASIS_BUILD_SHA` to the full 40-character source commit SHA before building; otherwise the endpoint reports `unknown`. The response is not cached. The legacy host's static
 export recipe needs a one-time switch to this server artifact before environment
 variables alone can enable email.
 
@@ -94,3 +94,9 @@ Every pushed feature branch and pull request can then receive an isolated Vercel
 ## Brand and media
 
 The selected American Snow & Ice Solutions logo is stored at `public/media/brand/asis-2026-logo-v2.png`. Approved source imagery and its retrieval manifest remain under `images/`; optimized site selections are under `public/media/`.
+
+## Migration acceptance
+
+The seven known legacy routes redirect permanently to their current equivalents. Tests cover both trailing-slash variants, working destinations, and preservation of campaign query parameters. This list remains a minimum inventory until historical URLs are exported from Search Console.
+
+The sitemap omits optional `lastmod` values rather than publishing a shared, unverified date. Add per-page dates only when they reflect verified material content changes. Do not substitute deployment or request timestamps.

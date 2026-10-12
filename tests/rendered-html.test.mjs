@@ -131,6 +131,8 @@ test("serves every primary website route", async () => {
 
 test("permanently redirects previous-site pages to their current equivalents", async () => {
   const redirects = [
+    ["/snow-ice-quote", "/quote"],
+    ["/sidewalks", "/services/sidewalks-walkways"],
     ["/where-we-serve", "/service-areas"],
     ["/weather-reporting", "/services/weather-reporting"],
     ["/risk-management", "/services/risk-management"],
@@ -148,13 +150,20 @@ test("permanently redirects previous-site pages to their current equivalents", a
       assert.equal(landed.status, 200, `${variant} should land on a working page`);
       assert.equal(new URL(landed.url).pathname, current, `${variant} should land on ${current}`);
     }
+    const withCampaign = await fetch(`${baseUrl}${legacy}/?utm_source=legacy`, { redirect: "manual" });
+    assert.equal(withCampaign.status, 308);
+    assert.equal(new URL(withCampaign.headers.get("location"), baseUrl).searchParams.get("utm_source"), "legacy");
   }
 });
 
 test("preserves the host health identity and exposes the server-side quote endpoint", async () => {
   const health = await fetch(`${baseUrl}/health`);
   assert.equal(health.status, 200);
-  assert.deepEqual(await health.json(), { service: "american-snow-ice-solutions", status: "ok" });
+  const identity = await health.json();
+  assert.equal(identity.service, "american-snow-ice-solutions");
+  assert.equal(identity.status, "ok");
+  assert.match(identity.buildSha, /^[a-f0-9]{40}$/i);
+  assert.equal(health.headers.get("cache-control"), "no-store");
   const response = await fetch(`${baseUrl}/api/quote`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -299,6 +308,7 @@ test("serves technical SEO and GEO discovery endpoints", async () => {
   const sitemapResponse = await fetch(`${baseUrl}/sitemap.xml`);
   assert.equal(sitemapResponse.status, 200);
   const sitemap = await sitemapResponse.text();
+  assert.doesNotMatch(sitemap, /<lastmod>/i, "omit modification dates until material page changes can be tracked accurately");
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/services\/commercial-plowing/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/service-areas/i);
   assert.match(sitemap, /https:\/\/americansnowandicesolutions\.com\/winter-risk-plan/i);
