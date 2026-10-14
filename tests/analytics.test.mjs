@@ -15,18 +15,19 @@ const enabled = {
 function setup(env = enabled, consent = "granted", pathname = "/quote") {
   const scripts = [];
   const commands = [];
+  let reloads = 0;
   const exports = {};
   const window = {
-    location: { origin: "https://americansnowandicesolutions.com", pathname, search: "?email=private@example.com" },
+    location: { origin: "https://americansnowandicesolutions.com", pathname, search: "?email=private@example.com", reload: () => reloads++ },
     gtag: (...args) => commands.push(args), dispatchEvent() {},
   };
   const context = {
-    exports, process: { env }, window,
-    localStorage: { getItem: () => consent, setItem() {} },
+    exports, process: { env }, window, Event: class {},
+    localStorage: { getItem: () => consent, setItem: (_key, value) => { consent = value; } },
     document: { getElementById: () => scripts[0], createElement: () => ({}), head: { appendChild: (s) => scripts.push(s) } },
   };
   runInNewContext(outputText, context);
-  return { api: exports, scripts, commands, window, context };
+  return { api: exports, scripts, commands, window, context, reloads: () => reloads };
 }
 
 test("analytics stays off until ID, explicit activation, privacy approval, and consent are present", () => {
@@ -44,6 +45,7 @@ test("consented initialization loads one tag and disables automatic page views a
   api.startAnalytics(); api.startAnalytics();
   assert.equal(scripts.length, 1);
   assert.equal(scripts[0].src, "https://www.googletagmanager.com/gtag/js?id=G-TEST123456");
+  assert.equal(Object.prototype.toString.call(window.dataLayer[0]), "[object Arguments]");
   const config = window.dataLayer.find((entry) => entry[0] === "config")[2];
   assert.equal(config.send_page_view, false);
   assert.equal(config.allow_google_signals, false);
@@ -51,6 +53,29 @@ test("consented initialization loads one tag and disables automatic page views a
   const consent = window.dataLayer.find((entry) => entry[0] === "consent")[2];
   assert.equal(consent.ad_storage, "denied");
   assert.equal(consent.ad_user_data, "denied");
+});
+
+test("withdrawal disables a loaded tag before reloading and suppresses further events", () => {
+  const fixture = setup();
+  fixture.api.startAnalytics();
+  fixture.api.saveConsent("denied");
+  assert.equal(fixture.window["ga-disable-G-TEST123456"], true);
+  assert.equal(fixture.reloads(), 1);
+  const count = fixture.window.dataLayer.length;
+  fixture.api.trackEvent("generate_lead");
+  assert.equal(fixture.window.dataLayer.length, count);
+});
+
+test("failed preference writes fail closed without reloading a stale grant", () => {
+  const fixture = setup();
+  fixture.api.startAnalytics();
+  fixture.context.localStorage.setItem = () => { throw new Error("Blocked write"); };
+  fixture.api.saveConsent("denied");
+  assert.equal(fixture.api.consentSnapshot(), "denied");
+  assert.equal(fixture.window["ga-disable-G-TEST123456"], true);
+  assert.equal(fixture.reloads(), 0);
+  fixture.api.saveConsent("granted");
+  assert.equal(fixture.api.consentSnapshot(), "denied");
 });
 
 test("custom events exclude query strings, referrer, arbitrary paths, and supplied extra fields", () => {

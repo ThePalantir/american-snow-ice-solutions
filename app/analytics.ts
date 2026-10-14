@@ -5,28 +5,44 @@ export const analyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED === "t
   && /^G-[A-Z0-9]+$/.test(measurementId);
 export const consentKey = "asis-analytics-consent-v1";
 export const consentEvent = "asis-analytics-consent-change";
+let deniedForVisit = false;
 
 declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    [key: `ga-disable-${string}`]: boolean | undefined;
   }
 }
 
 export function consentSnapshot(): string | null {
+  if (deniedForVisit) return "denied";
   try { return localStorage.getItem(consentKey); } catch { return null; }
 }
 
 export function saveConsent(value: "granted" | "denied") {
-  try { localStorage.setItem(consentKey, value); } catch { /* This visit only. */ }
+  let persisted = false;
+  try { localStorage.setItem(consentKey, value); persisted = true; } catch { /* Fail closed. */ }
+  deniedForVisit = !persisted;
+  if (value === "denied") stopAnalytics(persisted);
+  else if (persisted && window[`ga-disable-${measurementId}`]) window.location.reload();
   window.dispatchEvent(new Event(consentEvent));
+}
+
+export function stopAnalytics(reload = true) {
+  if (!analyticsEnabled || !document.getElementById("asis-ga4")) return;
+  // Disable collection immediately, including while a reload is pending.
+  window[`ga-disable-${measurementId}`] = true;
+  if (reload) window.location.reload();
 }
 
 export function startAnalytics() {
   if (!analyticsEnabled || consentSnapshot() !== "granted") return;
   if (document.getElementById("asis-ga4")) return;
   window.dataLayer = window.dataLayer ?? [];
-  window.gtag = (...args: unknown[]) => { window.dataLayer?.push(args); };
+  // Google consumes Arguments objects; plain arrays use a different dataLayer API.
+  // eslint-disable-next-line prefer-rest-params -- Required by Google's command queue.
+  window.gtag = function () { window.dataLayer?.push(arguments); };
   window.gtag("consent", "default", {
     analytics_storage: "granted", ad_storage: "denied",
     ad_user_data: "denied", ad_personalization: "denied",

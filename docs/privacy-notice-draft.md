@@ -24,7 +24,7 @@ The homepage embeds a third-party weather widget from WeatherWidget.io and links
 
 ### Optional analytics — include only if activated
 
-If enabled, Google Analytics measures website visits and actions such as accepted consultation requests and telephone/email link clicks after you allow analytics. You may decline analytics without affecting the form and later change your choice using the website controls. Consent preferences are stored in your browser. Withdrawal stops analytics on the reloaded page; previously stored analytics cookies may remain until expiry or browser deletion.
+If enabled, Google Analytics measures website visits and actions such as accepted consultation requests and telephone/email link clicks after you allow analytics. You may decline analytics without affecting the form and later change your choice using the website controls. Consent preferences are stored in your browser. Withdrawal disables collection immediately and normally reloads open pages to unload the tag. If the browser cannot save your choice, withdrawal applies to this visit and an old stored choice may apply on a future visit. Previously stored analytics cookies may remain until expiry or browser deletion.
 
 The custom event implementation excludes submitted contact details, property details, link destinations, and URL query strings. [Confirm Google property settings and actual network payloads, including automatic events, cookie lifespan, retention, connected destinations, and international processing before publication.]
 

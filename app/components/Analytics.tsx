@@ -2,14 +2,18 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-import { analyticsEnabled, consentEvent, consentSnapshot, saveConsent, startAnalytics, trackEvent } from "../analytics";
+import { analyticsEnabled, consentEvent, consentSnapshot, saveConsent, startAnalytics, stopAnalytics, trackEvent } from "../analytics";
 
 function subscribe(callback: () => void) {
+  function onStorage() {
+    if (consentSnapshot() !== "granted") stopAnalytics();
+    callback();
+  }
   window.addEventListener(consentEvent, callback);
-  window.addEventListener("storage", callback);
+  window.addEventListener("storage", onStorage);
   return () => {
     window.removeEventListener(consentEvent, callback);
-    window.removeEventListener("storage", callback);
+    window.removeEventListener("storage", onStorage);
   };
 }
 
@@ -36,9 +40,7 @@ export function Analytics() {
   if (!analyticsEnabled) return null;
   if (consent !== null) {
     return <button className="analytics-settings" type="button" onClick={() => {
-      // A full reload ensures the previously loaded Google tag stops running.
       saveConsent(consent === "granted" ? "denied" : "granted");
-      window.location.reload();
     }}>{consent === "granted" ? "Turn off analytics" : "Allow analytics"}</button>;
   }
   return (

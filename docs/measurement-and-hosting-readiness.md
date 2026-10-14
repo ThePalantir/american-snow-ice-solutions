@@ -16,7 +16,7 @@ Leave the two flags unset until the notice is published and approved. These are 
 
 Before activation, verify the Google tag has no additional linked destinations, disable enhanced measurement (including automatic history page views, form interactions, outbound clicks, and downloads), and disable advertising features/Google signals. The custom implementation owns page-view and conversion events; automatic measurement can duplicate events or transmit URLs independently of our sanitization. Confirm property retention and internal-traffic handling.
 
-No Google script is requested before analytics consent. Browser preference storage must be available for consent to persist; if unavailable, analytics stays off. Denial and withdrawal stop custom tracking. Withdrawal reloads the page to unload the tag; existing Google cookies are not automatically removed. The existing weather widget is independent of analytics consent.
+No Google script is requested before analytics consent. Browser preference storage must be available for consent to persist; if unavailable, analytics stays off. Withdrawal immediately disables Google collection and custom tracking, then reloads to unload the tag, including in other open tabs when their stored grant is removed. If saving withdrawal fails, collection remains disabled for this visit without reloading a stale stored grant; a future visit may read that old preference. Existing Google cookies are not automatically removed. The existing weather widget is independent of analytics consent.
 
 | Event | Trigger | Meaning |
 |---|---|---|
