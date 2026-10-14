@@ -49,7 +49,7 @@ test("sends through Resend using runtime settings, a fixed recipient, and the vi
   });
   const response = await handler()(request({ ...submission, to: "attacker@example.com" }));
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), { success: true });
+  assert.deepEqual(await response.json(), { success: true, providerAccepted: true });
   assert.equal(network.mock.callCount(), 1);
 });
 
@@ -58,7 +58,9 @@ test("missing configuration, invalid input, and honeypots never contact Resend",
   assert.equal((await handler({})(request())).status, 503);
   assert.equal((await handler({ RESEND_API_KEY: environment.RESEND_API_KEY })(request())).status, 503);
   assert.equal((await handler()(request({ ...submission, email: "invalid" }))).status, 400);
-  assert.equal((await handler()(request({ ...submission, _honey: "bot" }))).status, 200);
+  const honeypot = await handler()(request({ ...submission, _honey: "bot" }));
+  assert.equal(honeypot.status, 200);
+  assert.deepEqual(await honeypot.json(), { success: true });
   assert.equal(network.mock.callCount(), 0);
 });
 

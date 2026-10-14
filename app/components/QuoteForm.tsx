@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { trackEvent } from "../analytics";
 
 export function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -29,6 +30,10 @@ export function QuoteForm() {
       if (!response.ok) {
         throw new Error("The request could not be delivered.");
       }
+
+      const result = await response.json();
+      if (result.success !== true) throw new Error("The request was not accepted.");
+      if (result.providerAccepted === true) trackEvent("generate_lead");
 
       form.reset();
       setSubmitted(true);

@@ -95,6 +95,10 @@ Every pushed feature branch and pull request can then receive an isolated Vercel
 
 The selected American Snow & Ice Solutions logo is stored at `public/media/brand/asis-2026-logo-v2.png`. Approved source imagery and its retrieval manifest remain under `images/`; optimized site selections are under `public/media/`.
 
+## Optional measurement preparation
+
+Analytics is disabled by default. Activation requires an existing GA4 ID, explicit enablement, and privacy approval at build time, then visitor opt-in. See `docs/measurement-and-hosting-readiness.md` for the property settings and activation checklist. `docs/privacy-notice-draft.md` is an internal draft and is not a public notice. No hostname or host security configuration is changed by this preparation.
+
 ## Migration acceptance
 
 The seven known legacy routes redirect permanently to their current equivalents. Tests cover both trailing-slash variants, working destinations, and preservation of campaign query parameters. This list remains a minimum inventory until historical URLs are exported from Search Console.
