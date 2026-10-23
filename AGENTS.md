@@ -10,3 +10,5 @@
 - The approved public website quote workflow is intentionally email-only. A lead database or CRM backup is not an approved website deliverable. The separate inspection-app SOW, pre- and post-season surveys, authentication, object storage, and database are out of scope for this repository.
 - The quote endpoint's in-process limiter is acceptable for the current single-server deployment. If the application is ever scaled to multiple instances, add shared rate limiting at a verified edge layer or shared store as a separate infrastructure change; do not invent an unapproved database for it.
 - Run `npm run lint` and `npm test`. Email tests must mock the provider instead of sending messages.
+
+- Security dependency refresh (2026-10-23): pin Next/eslint-config-next 16.4.2, React/React DOM 19.3.1 and Sharp 0.35.5, with the tested Node 22 runtime floor at 22.23.4. The protected host recipe already uses these versions; retain its security overlays until an equivalent source-based release is verified. Do not restore the older host-only Next override. Security checks must continue to mock email rather than send live messages.
