@@ -10,6 +10,7 @@ export function SiteFooter() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <BrandLogo context="footer" />
+          <p className="commercial-scope"><strong>Commercial work only.</strong> We serve commercial properties exclusively. Residential snow and ice services are not available.</p>
           <p>Professional winter risk management built around site-specific planning, accountable operations, and a clearer event record.</p>
           <a className="footer-phone" href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
         </div>

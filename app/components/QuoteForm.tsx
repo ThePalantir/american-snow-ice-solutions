@@ -59,6 +59,7 @@ export function QuoteForm() {
 
   return (
     <form className="quote-form" onSubmit={handleSubmit}>
+      <p className="commercial-form-note"><strong>Commercial work only.</strong> Consultation requests are for commercial properties. We do not offer residential service.</p>
       <div className="field-grid">
         <label>
           <span>Company name</span>

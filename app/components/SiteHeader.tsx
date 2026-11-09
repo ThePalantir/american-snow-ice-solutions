@@ -14,7 +14,7 @@ export function SiteHeader() {
     <>
       <div className="ops-bar">
         <div className="container ops-bar__inner">
-          <span className="ops-bar__planning">Now planning for the <span className="ops-bar__season">2026–27 season</span></span>
+          <span className="ops-bar__planning">Commercial work only</span>
           <a href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
         </div>
       </div>
