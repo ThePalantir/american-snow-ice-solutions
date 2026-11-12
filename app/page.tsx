@@ -28,10 +28,6 @@ export default function Home() {
         <div className="hero__overlay" aria-hidden="true" />
         <div className="container hero__content">
           <div className="hero__copy">
-            <div className="commercial-signal">
-              <span className="commercial-signal__lamp" aria-hidden="true" />
-              <div><strong>Commercial work only</strong><span>Business properties. No residential service.</span></div>
-            </div>
             <p className="eyebrow eyebrow--light major-section-label">Professional snow &amp; ice management</p>
             <h1>We professionally manage <em>winter risk</em> for your property.</h1>
             <p className="hero__lede">Site-specific planning, professional weather intelligence, accountable field operations, and documented closeout, all built around how your property actually works.</p>

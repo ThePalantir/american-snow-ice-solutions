@@ -8,6 +8,7 @@ import { BrandLogo } from "./BrandLogo";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [tickerPaused, setTickerPaused] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -18,7 +19,22 @@ export function SiteHeader() {
           <a href={company.phoneHref} aria-label={`Call American Snow & Ice Solutions at ${company.phone}`}>{company.phone}</a>
         </div>
       </div>
-      <header className="site-header">
+      {pathname === "/" && (
+        <div className={`commercial-ticker${tickerPaused ? " is-paused" : ""}`}>
+          <p className="sr-only">Commercial properties exclusively. No residential service.</p>
+          <div className="commercial-ticker__track" aria-hidden="true">
+            {[0, 1].map((copy) => (
+              <div className="commercial-ticker__group" key={copy}>
+                {[0, 1, 2].map((item) => <span key={item}>Commercial properties exclusively <i>·</i> No residential service</span>)}
+              </div>
+            ))}
+          </div>
+          <button className="commercial-ticker__toggle" type="button" aria-label={tickerPaused ? "Resume announcement movement" : "Pause announcement movement"} aria-pressed={tickerPaused} onClick={() => setTickerPaused((value) => !value)}>
+            <span aria-hidden="true">{tickerPaused ? "▶" : "Ⅱ"}</span>
+          </button>
+        </div>
+      )}
+      <header className={`site-header${pathname === "/" ? " site-header--ticker" : ""}`}>
         <div className="container site-header__inner">
           <Link href="/" className="brand" aria-label="American Snow and Ice Solutions home">
             <BrandLogo priority />
