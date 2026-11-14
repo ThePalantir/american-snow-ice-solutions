@@ -60,6 +60,9 @@ Set the following runtime variables privately in the Ops Dashboard:
 | `RESEND_RECEIVING_API_KEY` | A dedicated key with access to the company's Resend Receiving API |
 | `RESEND_INBOX_RECIPIENTS` | Comma-separated company recipient addresses appearing in the To, Cc or Bcc metadata returned by Resend |
 
+The public site can deploy before these four inbox values are entered. Owner
+sign-in shows its setup message until the username and password are configured.
+
 Resend lists received mail at the team level. Prefer a company-owned team for the
 receiving key. Confirm an example received message in Resend and use the exact
 company recipient address shown there. Mail that continues to arrive only in an

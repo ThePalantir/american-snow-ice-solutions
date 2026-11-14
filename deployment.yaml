@@ -106,16 +106,12 @@ environment:
     required: true
     description: Existing verified sender for consultation email.
   - key: DASHBOARD_USERNAME
-    required: true
     description: Owner sign-in username. Enter admin.
   - key: DASHBOARD_PASSWORD
-    required: true
     description: Strong owner sign-in password of 16 to 256 characters. Enter privately.
   - key: RESEND_RECEIVING_API_KEY
-    required: true
     description: Dedicated server-only Resend key with access to the Receiving API.
   - key: RESEND_INBOX_RECIPIENTS
-    required: true
     description: Comma-separated company recipient addresses as shown on received Resend email, including the company address for forwarded mail if applicable.
   - key: NEXT_PUBLIC_ANALYTICS_ENABLED
     build: true
