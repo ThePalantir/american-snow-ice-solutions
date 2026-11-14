@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { quoteInboxAddress, quoteSubjectPrefix } from "../../quote-email";
 
 export const runtime = "nodejs";
 
@@ -131,14 +132,14 @@ export async function POST(request: NextRequest) {
   const text = rows.map(([label, value]) => `${label}: ${value}`).join("\n\n");
 
   const resend = new Resend(apiKey);
-  const { error } = await resend.emails.send({
+  const message = {
     from,
-    to: [recipient],
     replyTo: submission.email,
-    subject: `New ASIS consultation request — ${submission.company}`,
+    subject: `${quoteSubjectPrefix}${submission.company}`,
     html: `<h1>New risk consultation request</h1><table style="border-collapse:collapse">${htmlRows}</table>`,
     text,
-  });
+  };
+  const { data, error } = await resend.emails.send({ ...message, to: [recipient] });
 
   if (error) {
     console.error("Resend rejected a quote submission:", error);
@@ -146,6 +147,22 @@ export async function POST(request: NextRequest) {
       { error: "The request could not be delivered." },
       { status: 502 },
     );
+  }
+
+  const inboxAddress = quoteInboxAddress(process.env.RESEND_QUOTE_INBOX_ADDRESS);
+  if (inboxAddress) {
+    // Keep the owner's main mailbox independent of the dashboard copy. The
+    // copy has its own To header for Resend Receiving's recipient filter.
+    try {
+      const copyOptions = {
+        idempotencyKey: data?.id ? `website-quote-copy/${data.id}` : undefined,
+        signal: AbortSignal.timeout(5_000),
+      };
+      const copy = await resend.emails.send({ ...message, to: [inboxAddress] }, copyOptions);
+      if (copy.error) console.error("Resend did not accept the website inquiry copy:", copy.error.name);
+    } catch {
+      console.error("The website inquiry copy could not reach Resend.");
+    }
   }
 
   return NextResponse.json({ success: true, providerAccepted: true });

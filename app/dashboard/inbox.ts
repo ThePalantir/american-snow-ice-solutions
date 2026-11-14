@@ -1,6 +1,7 @@
 import "server-only";
 
 import { compile } from "html-to-text";
+import { quoteInboxAddress, quoteSubjectPrefix } from "../quote-email";
 
 type ReceivedEmail = {
   id: string;
@@ -18,7 +19,6 @@ type ReceivedEmailList = { data: ReceivedEmail[]; has_more: boolean };
 
 const receivingUrl = "https://api.resend.com/emails/receiving";
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
-const emailAddress = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
 const bodyLimit = 250_000;
 const responseLimit = 8 * 1024 * 1024;
 const htmlToText = compile({
@@ -34,10 +34,8 @@ const htmlToText = compile({
 
 export function inboxConfiguration() {
   const key = process.env.RESEND_RECEIVING_API_KEY?.trim();
-  const recipients = (process.env.RESEND_INBOX_RECIPIENTS ?? "").split(",")
-    .map((address) => address.trim().toLowerCase()).filter(Boolean);
-  if (!key || !recipients.length || recipients.some((address) => !emailAddress.test(address))) return null;
-  return { key, recipients: new Set(recipients) };
+  const address = quoteInboxAddress(process.env.RESEND_QUOTE_INBOX_ADDRESS);
+  return key && address ? { key, address } : null;
 }
 
 type Configuration = NonNullable<ReturnType<typeof inboxConfiguration>>;
@@ -69,9 +67,10 @@ async function receivingFetch<T>(key: string, url: string): Promise<T | null> {
 }
 
 function belongsToInbox(message: ReceivedEmail, config: Configuration) {
+  if (!message.subject?.startsWith(quoteSubjectPrefix)) return false;
   return [...message.to, ...(message.cc ?? []), ...(message.bcc ?? [])].some((recipient) => {
     const address = /<([^<>]+)>\s*$/.exec(recipient)?.[1] ?? recipient;
-    return config.recipients.has(address.trim().toLowerCase());
+    return config.address === address.trim().toLowerCase();
   });
 }
 

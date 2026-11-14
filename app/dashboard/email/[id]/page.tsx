@@ -43,7 +43,7 @@ export default async function EmailPage({ params, searchParams }: {
         ) : (
           <div className={styles.readerHead}>
             <h1>Message unavailable</h1>
-            <p>{email === undefined ? "Resend could not load this message. Try again in a moment." : "The message could not be found in the company inbox."}</p>
+            <p>{email === undefined ? "Resend could not load this message. Try again in a moment." : "This message could not be found among the website inquiries."}</p>
           </div>
         )}
       </article>

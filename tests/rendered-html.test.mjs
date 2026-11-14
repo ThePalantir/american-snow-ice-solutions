@@ -54,7 +54,8 @@ before(async () => {
     env: {
       ...process.env, NODE_ENV: "production", HOSTNAME: "127.0.0.1", PORT: String(port),
       DASHBOARD_USERNAME: "admin", DASHBOARD_PASSWORD: "fixture-owner-password",
-      RESEND_RECEIVING_API_KEY: "re_fixture_receiving_key", RESEND_INBOX_RECIPIENTS: "inbox@company.example",
+      RESEND_API_KEY: "re_fixture_sending_key", RESEND_FROM_EMAIL: "website@example.com",
+      RESEND_RECEIVING_API_KEY: "re_fixture_receiving_key", RESEND_QUOTE_INBOX_ADDRESS: "website-quotes@company.resend.app",
     },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
@@ -115,13 +116,19 @@ test("owner inbox authorizes every read, filters recipients, and revokes session
   }
   const cookie = setCookie.split(";")[0];
   const options = { headers: { Cookie: cookie } };
+  const quote = await fetch(`${baseUrl}/api/quote`, {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ company: "Inbox Pipeline Test", name: "Test Contact", email: "customer@example.com", phone: "610-555-0100", location: "Commercial test property" }),
+  });
+  assert.deepEqual(await quote.json(), { success: true, providerAccepted: true });
   const inbox = await fetch(`${baseUrl}/dashboard`, options);
   assert.equal(inbox.status, 200);
   assert.match(inbox.headers.get("cache-control"), /no-store/);
   const listing = await inbox.text();
-  assert.match(listing, /Company inbox/);
+  assert.match(listing, /Website inquiries/);
+  assert.match(listing, /Inbox Pipeline Test/);
   assert.match(listing, /Sample company email/);
-  assert.doesNotMatch(listing, /Private to another business/);
+  assert.doesNotMatch(listing, /Private to another business|Unrelated mail at the quote address/);
   assert.doesNotMatch(listing, /analytics-consent|re_fixture_receiving_key|fixture-owner-password/);
 
   const older = await fetch(`${baseUrl}/dashboard?after=22222222-3333-4444-8555-666666666666`, options);
@@ -137,6 +144,10 @@ test("owner inbox authorizes every read, filters recipients, and revokes session
   const denied = await unrelated.text();
   assert.match(denied, /Message unavailable/);
   assert.doesNotMatch(denied, /Other business message body|Private to another business/);
+  const unrelatedAtAddress = await fetch(`${baseUrl}/dashboard/email/55555555-6666-4777-8888-999999999999`, options);
+  assert.doesNotMatch(await unrelatedAtAddress.text(), /Unrelated message body|Unrelated mail at the quote address/);
+  const submitted = await fetch(`${baseUrl}/dashboard/email/66666666-7777-4888-8999-000000000000`, options);
+  assert.match(await submitted.text(), /customer@example\.com/);
   const failed = await fetch(`${baseUrl}/dashboard/email/44444444-5555-4666-8777-888888888888`, options);
   assert.match(await failed.text(), /Resend could not load this message/);
 

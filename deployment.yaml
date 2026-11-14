@@ -69,9 +69,8 @@
 # No !include, anchors, multiple YAML documents or secret values.
 #
 # This is the manifest for the existing website and its owner inbox.
-# Enter runtime values privately in the Ops Dashboard. Resend Receiving must be
-# enabled for the company mailbox or a copy forwarded to a company-only inbound
-# address already handled by Resend. Preserve any existing mailbox/MX setup.
+# Enter runtime values privately in the Ops Dashboard. Use the Resend-provided
+# Receiving address so quote copies need no change to existing mailbox or DNS.
 schemaVersion: 1
 kind: operations-project
 primary:
@@ -114,9 +113,9 @@ environment:
   - key: RESEND_RECEIVING_API_KEY
     required: true
     description: Dedicated server-only Resend key with access to the Receiving API.
-  - key: RESEND_INBOX_RECIPIENTS
+  - key: RESEND_QUOTE_INBOX_ADDRESS
     required: true
-    description: Comma-separated company recipient addresses as shown on received Resend email, including the company address for forwarded mail if applicable.
+    description: In the Resend team that issued the Receiving key, open Emails → Receiving → three-dot menu → Receiving address. Enter website-quotes followed by @ and the .resend.app domain shown there.
   - key: NEXT_PUBLIC_ANALYTICS_ENABLED
     build: true
     description: Optional public website analytics switch.

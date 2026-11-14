@@ -16,8 +16,7 @@ export default async function DashboardPage({ searchParams }: {
       <div className={styles.pageHeading}>
         <div>
           <p className={styles.eyebrow}>Owner dashboard</p>
-          <h1>Company inbox</h1>
-          <p>Incoming email received through Resend.</p>
+          <h1>Website inquiries</h1>
         </div>
         <div className={styles.actions}>
           <a className={styles.secondary} href={pageUrl}>Refresh</a>
@@ -42,10 +41,10 @@ export default async function DashboardPage({ searchParams }: {
           </ul>
         ) : (
           <p className={styles.notice} role={!inbox && config ? "alert" : undefined}>
-            {!config ? "The company inbox is awaiting Resend setup."
+            {!config ? "In Ops Dashboard, set RESEND_QUOTE_INBOX_ADDRESS to your dedicated Resend Receiving address and save the Receiving API key, then deploy."
               : !inbox ? "Resend is unavailable right now. Try refreshing the inbox."
-                : inbox.next ? "No company messages on this page. Older messages are available."
-                  : "No company messages were found on this page."}
+                : inbox.next ? "No website inquiries on this page. Older messages are available."
+                  : "No website inquiries have reached this inbox yet."}
           </p>
         )}
         {(inbox?.next || after) && (

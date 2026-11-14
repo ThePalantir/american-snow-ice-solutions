@@ -34,7 +34,10 @@ In the operations dashboard, paste the two lines into this project's environment
 variables, save, then **Deploy saved settings** so the running process receives
 them. These are runtime variables; they do not need build-time exposure or a
 `NEXT_PUBLIC_` prefix. The recipient is `Piechotagrpinc@gmail.com`, and
-Reply-To is the visitor's submitted email address.
+Reply-To is the visitor's submitted email address. After Resend accepts the Gmail
+notification, the handler sends an independent copy to `RESEND_QUOTE_INBOX_ADDRESS`
+when configured. An error sending the copy is logged separately and the visitor
+still receives confirmation for the accepted Gmail notification.
 
 For self-hosting, `npm run build:standalone` prepares the Next.js server and
 its public and static assets under `.next/standalone/`. Start that package's
@@ -46,10 +49,11 @@ variables alone can enable email.
 
 ## Owner inbox
 
-Use **Owner sign-in** in the website footer or open `/dashboard`. The inbox shows
-received messages, with sender, subject, Eastern time, message text and attachment
-names. It reads Resend on demand. Sessions expire after eight hours or when the
-standalone server restarts.
+Use **Owner sign-in** in the website footer or open `/dashboard`. **Website inquiries**
+shows quote form copies with subject, date and message text. It checks both the
+dedicated recipient and the quote subject, including when opening a message
+directly. It reads Resend on demand. Sessions expire after eight hours or when
+the standalone server restarts.
 
 Set the following runtime variables privately in the Ops Dashboard:
 
@@ -58,24 +62,23 @@ Set the following runtime variables privately in the Ops Dashboard:
 | `DASHBOARD_USERNAME` | `admin` |
 | `DASHBOARD_PASSWORD` | A strong password of 16 to 256 characters |
 | `RESEND_RECEIVING_API_KEY` | A dedicated key with access to the company's Resend Receiving API |
-| `RESEND_INBOX_RECIPIENTS` | Comma-separated company recipient addresses appearing in the To, Cc or Bcc metadata returned by Resend |
+| `RESEND_QUOTE_INBOX_ADDRESS` | One dedicated address, such as `website-quotes@<your-team-id>.resend.app`, from the same Resend team as the Receiving API key |
 
-The public site can deploy before these four inbox values are entered. Owner
-sign-in shows its setup message until the username and password are configured.
-
-Resend lists received mail at the team level. Prefer a company-owned team for the
-receiving key. Confirm an example received message in Resend and use the exact
-company recipient address shown there. Mail that continues to arrive only in an
-existing mailbox needs an approved forwarding route into Resend to appear in this
-inbox. Check the existing mail configuration before changing any routing or MX
-records. The outbound consultation form continues to use its existing settings.
+1. In the Resend team that issued the Receiving key, open **Emails → Receiving**,
+   open the three-dot menu and copy the **Receiving address** domain. Use
+   `website-quotes` before the `@`. Resend accepts any username at the team's
+   provided domain. No webhook or site DNS change is required.
+2. Enter the full address in **Ops Dashboard → Project details → Required to
+   deploy**, save and deploy. The manifest reuses the saved sign-in, sending,
+   and Receiving settings. The former `RESEND_INBOX_RECIPIENTS` is no longer
+   used by the application.
+3. Submit one clearly labeled test from `/quote`. Confirm the usual Gmail
+   message and a copy in **Resend → Emails → Receiving**, then sign in and
+   refresh `/dashboard`. The new setup captures new form submissions. Mail sent
+   directly to Gmail and existing Gmail threads remain in Gmail.
 
 The repository-root [deployment.yaml](deployment.yaml) declares the standalone
-server and the required runtime keys. New-project onboarding can discover it
-from the selected branch. For an existing Ops Dashboard project without manifest
-updates enabled, keep its saved standalone recipe, add the new runtime values
-in Project details and deploy the saved settings and current source through
-the existing project.
+server and the required runtime keys.
 
 ## Validation
 

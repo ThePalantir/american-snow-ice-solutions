@@ -18,7 +18,7 @@ export default async function LoginPage({ searchParams }: {
     <section className={styles.login} aria-labelledby="owner-sign-in">
       <p className={styles.eyebrow}>Owner dashboard</p>
       <h1 id="owner-sign-in">Owner sign-in</h1>
-      <p>Sign in to read company email received through Resend.</p>
+      <p>Sign in to view inquiries from the website’s quote form.</p>
       {configured ? (
         <form className={styles.loginForm} action="/dashboard/session" method="post">
           <input type="hidden" name="action" value="login" />
