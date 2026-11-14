@@ -98,6 +98,12 @@ primary:
       allowInternalSymlinks: true
   writableDirectories: [.next/standalone/.next/cache]
 services: []
+domains:
+  - hostname: dashboard.americansnowandicesolutions.com
+    service: primary
+    manageDns: true
+    redirectWww: true
+    rootRedirect: /dashboard
 environment:
   - key: RESEND_API_KEY
     required: true
