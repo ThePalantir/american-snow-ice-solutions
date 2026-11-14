@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { randomUUID } from "node:crypto";
-import { inquiryIdHeader, quoteInboxAddress, quoteSubjectPrefix } from "../../quote-email";
+import { quoteInboxAddress, quoteSubjectPrefix } from "../../quote-email";
 import { saveInquiry } from "../../inquiry-store";
 
 export const runtime = "nodejs";
@@ -151,11 +151,8 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let inquiryId: string | undefined;
   try {
-    const id = randomUUID();
-    saveInquiry({ id, contact: submission.email, subject: message.subject, receivedAt: new Date().toISOString(), text });
-    inquiryId = id;
+    saveInquiry({ id: randomUUID(), contact: submission.email, subject: message.subject, receivedAt: new Date().toISOString(), text });
   } catch {
     console.error("Could not archive the website inquiry in SQLite.");
   }
@@ -169,10 +166,7 @@ export async function POST(request: NextRequest) {
         idempotencyKey: data?.id ? `website-quote-copy/${data.id}` : undefined,
         signal: AbortSignal.timeout(5_000),
       };
-      const copy = await resend.emails.send({
-        ...message, to: [inboxAddress],
-        ...(inquiryId ? { headers: { [inquiryIdHeader]: inquiryId } } : {}),
-      }, copyOptions);
+      const copy = await resend.emails.send({ ...message, to: [inboxAddress] }, copyOptions);
       if (copy.error) console.error("Resend did not accept the website inquiry copy:", copy.error.name);
     } catch {
       console.error("The website inquiry copy could not reach Resend.");

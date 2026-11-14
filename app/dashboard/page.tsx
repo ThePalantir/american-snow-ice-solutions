@@ -1,16 +1,18 @@
 import { inquiryPage } from "../inquiry-store";
-import { formatReceivedAt, importOlderInquiries, messageId } from "./inbox";
+import { formatReceivedAt, inboxPath, messageId } from "./inbox-view";
 import { requireOwner } from "./session";
 import styles from "./dashboard.module.css";
 
 export default async function DashboardPage({ searchParams }: {
-  searchParams: Promise<{ after?: string | string[] }>;
+  searchParams: Promise<{ after?: string | string[]; view?: string | string[]; status?: string | string[] }>;
 }) {
   await requireOwner();
-  const after = messageId((await searchParams).after);
-  const pageUrl = after ? `/dashboard?after=${after}` : "/dashboard";
-  const importing = await importOlderInquiries().catch(() => null);
-  const inbox = readPage(after);
+  const query = await searchParams;
+  const after = messageId(query.after);
+  const archived = query.view === "archived";
+  const pageUrl = inboxPath(archived, after);
+  const viewQuery = pageUrl.slice("/dashboard".length);
+  const inbox = readPage(archived, after);
 
   return (
     <>
@@ -33,14 +35,17 @@ export default async function DashboardPage({ searchParams }: {
         </dl>
       )}
       <section className={styles.panel} aria-label="Received email">
-        <div className={styles.panelHead}><h2>{after ? "Older messages" : "Latest messages"}</h2></div>
-        {inbox && importing === true && <p className={styles.notice}>Refresh again to bring in more older inquiries from Resend.</p>}
-        {inbox && importing === null && <p className={styles.notice}>Resend history could not finish importing. Refresh to retry.</p>}
+        <nav className={styles.panelHead} aria-label="Inquiry folders">
+          <a className={styles.secondary} href="/dashboard" aria-current={!archived ? "page" : undefined}>Inbox</a>
+          <a className={styles.secondary} href={inboxPath(true)} aria-current={archived ? "page" : undefined}>Archived</a>
+        </nav>
+        {query.status === "archived" && <p className={styles.notice} role="status">Inquiry archived.</p>}
+        {query.status === "restored" && <p className={styles.notice} role="status">Inquiry restored to Inbox.</p>}
         {inbox?.messages.length ? (
           <ul className={styles.messages}>
             {inbox.messages.map((message) => (
               <li key={message.id}>
-                <a href={`/dashboard/email/${message.id}${after ? `?after=${after}` : ""}`} className={styles.message}>
+                <a href={`/dashboard/email/${message.id}${viewQuery}`} className={styles.message}>
                   <span className={styles.sender}>{message.contact}</span>
                   <span>{message.subject}</span>
                   <time dateTime={message.receivedAt}>{formatReceivedAt(message.receivedAt)}</time>
@@ -50,13 +55,14 @@ export default async function DashboardPage({ searchParams }: {
           </ul>
         ) : (
           <p className={styles.notice} role={!inbox ? "alert" : undefined}>
-            {inbox ? "No saved inquiries yet." : "The saved inquiry history is unavailable. Try refreshing."}
+            {!inbox ? "The saved inquiry history is unavailable. Try refreshing."
+              : archived ? "No archived inquiries." : "No inquiries in Inbox."}
           </p>
         )}
         {(inbox?.next || after) && (
           <nav className={styles.pagination} aria-label="Inbox pages">
-            {after && <a className={styles.secondary} href="/dashboard">Latest messages</a>}
-            {inbox?.next && <a className={styles.secondary} href={`/dashboard?after=${inbox.next}`}>Older messages <span aria-hidden="true">→</span></a>}
+            {after && <a className={styles.secondary} href={inboxPath(archived)}>Latest messages</a>}
+            {inbox?.next && <a className={styles.secondary} href={inboxPath(archived, inbox.next)}>Older messages <span aria-hidden="true">→</span></a>}
           </nav>
         )}
       </section>
@@ -64,7 +70,7 @@ export default async function DashboardPage({ searchParams }: {
   );
 }
 
-function readPage(after?: string) {
-  try { return inquiryPage(after); }
+function readPage(archived: boolean, after?: string) {
+  try { return inquiryPage(archived, after); }
   catch { return null; }
 }

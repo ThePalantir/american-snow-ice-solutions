@@ -1,5 +1,4 @@
 export const quoteSubjectPrefix = "New ASIS consultation request — ";
-export const inquiryIdHeader = "X-ASIS-Inquiry-ID";
 
 // Accept the team's Resend-provided receiving address. A dedicated address
 // serves as both the copy destination and the owner inbox filter.

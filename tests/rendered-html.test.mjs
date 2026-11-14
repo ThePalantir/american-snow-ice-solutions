@@ -4,6 +4,7 @@ import { access, mkdtemp, readFile, rm } from "node:fs/promises";
 import net from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { DatabaseSync } from "node:sqlite";
 import { after, before, test } from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
@@ -45,11 +46,11 @@ async function waitForServer(url) {
   throw new Error(`Timed out waiting for Next.js.\n${serverOutput}`);
 }
 
-async function startServer(receivingOffline = false) {
+async function startServer() {
   const port = await findOpenPort();
   baseUrl = `http://127.0.0.1:${port}`;
   server = spawn(process.execPath, [
-    "--require", path.join(projectRoot, "tests", "fixtures", "receiving.cjs"),
+    "--require", path.join(projectRoot, "tests", "fixtures", "resend.cjs"),
     path.join(standaloneRoot, "server.js"),
   ], {
     cwd: projectRoot,
@@ -57,8 +58,8 @@ async function startServer(receivingOffline = false) {
       ...process.env, NODE_ENV: "production", HOSTNAME: "127.0.0.1", PORT: String(port),
       DASHBOARD_USERNAME: "admin", DASHBOARD_PASSWORD: "fixture-owner-password",
       RESEND_API_KEY: "re_fixture_sending_key", RESEND_FROM_EMAIL: "website@example.com",
-      RESEND_RECEIVING_API_KEY: "re_fixture_receiving_key", RESEND_QUOTE_INBOX_ADDRESS: "website-quotes@company.resend.app",
-      ASIS_INQUIRY_DATA_DIR: inquiryDirectory, FIXTURE_RECEIVING_OFFLINE: receivingOffline ? "1" : "0",
+      RESEND_QUOTE_INBOX_ADDRESS: "website-quotes@company.resend.app",
+      ASIS_INQUIRY_DATA_DIR: inquiryDirectory,
     },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
@@ -75,10 +76,20 @@ async function stopServer() {
   }
 }
 
-before(async () => { inquiryDirectory = await mkdtemp(path.join(tmpdir(), "asis-inquiries-")); await startServer(); });
+before(async () => {
+  inquiryDirectory = await mkdtemp(path.join(tmpdir(), "asis-inquiries-"));
+  const db = new DatabaseSync(path.join(inquiryDirectory, "inquiries.sqlite"));
+  db.exec(`CREATE TABLE inquiries (id TEXT PRIMARY KEY, subject TEXT, contact TEXT, receivedAt TEXT, text TEXT, attachments TEXT, truncated INTEGER)`);
+  db.prepare("INSERT INTO inquiries VALUES (?, ?, ?, ?, ?, ?, ?)").run(
+    "11111111-2222-4333-8444-555555555555", "New ASIS consultation request — Forged inquiry",
+    "website@example.com", new Date().toISOString(), "Unverified email", "[]", 0,
+  );
+  db.close();
+  await startServer();
+});
 after(async () => { await stopServer(); if (inquiryDirectory) await rm(inquiryDirectory, { recursive: true, force: true }); });
 
-const companyMessagePath = "/dashboard/email/11111111-2222-4333-8444-555555555555";
+let companyMessagePath = "/dashboard/email/11111111-2222-4333-8444-555555555555";
 
 function dashboardForm(fields, { cookie, origin = baseUrl, forwardedFor } = {}) {
   return fetch(`${baseUrl}/dashboard/session`, {
@@ -93,7 +104,7 @@ function dashboardForm(fields, { cookie, origin = baseUrl, forwardedFor } = {}) 
   });
 }
 
-test("owner inbox authorizes every read, filters recipients, and revokes sessions", async () => {
+test("owner inbox admits only website submissions and requires authentication to archive and restore", async () => {
   for (const route of ["/dashboard", companyMessagePath]) {
     const locked = await fetch(`${baseUrl}${route}`, { redirect: "manual" });
     assert.equal(locked.status, 307);
@@ -132,36 +143,34 @@ test("owner inbox authorizes every read, filters recipients, and revokes session
   assert.match(inbox.headers.get("cache-control"), /no-store/);
   const listing = await inbox.text();
   assert.match(listing, /Website inquiries/);
-  assert.match(listing, /Last 7 days<\/dt><dd>2<\/dd>/);
-  assert.match(listing, /Last 30 days<\/dt><dd>2<\/dd>/);
+  assert.match(listing, /Last 7 days<\/dt><dd>1<\/dd>/);
+  assert.match(listing, /Last 30 days<\/dt><dd>1<\/dd>/);
   assert.equal(listing.match(/>New ASIS consultation request — Inbox Pipeline Test<\//g)?.length, 1);
   assert.match(listing, /Inbox Pipeline Test/);
-  assert.match(listing, /Sample company email/);
-  assert.doesNotMatch(listing, /Private to another business|Unrelated mail at the quote address/);
+  assert.doesNotMatch(listing, /Forged inquiry|Unverified email/);
   assert.doesNotMatch(listing, /analytics-consent|re_fixture_receiving_key|fixture-owner-password/);
 
-  const older = await fetch(`${baseUrl}/dashboard`, options);
-  const olderListing = await older.text();
-  assert.match(olderListing, /Earlier company email/);
-  assert.match(olderListing, /Last 7 days<\/dt><dd>2<\/dd>/);
-  assert.match(olderListing, /Last 30 days<\/dt><dd>3<\/dd>/);
+  const forgedMessage = await fetch(`${baseUrl}${companyMessagePath}`, options);
+  assert.match(await forgedMessage.text(), /Message unavailable/);
+  companyMessagePath = listing.match(/href="(\/dashboard\/email\/[0-9a-f-]{36})"/)?.[1];
+  assert.ok(companyMessagePath);
   const message = await fetch(`${baseUrl}${companyMessagePath}`, options);
   const rendered = await message.text();
-  assert.match(rendered, /Message &amp; details/);
-  assert.match(rendered, /Link label/);
-  assert.match(rendered, /estimate\.pdf/);
-  assert.doesNotMatch(rendered, /maliciousScript|example\.com\/(?:pixel|unsafe)/);
-
-  const unrelated = await fetch(`${baseUrl}/dashboard/email/22222222-3333-4444-8555-666666666666`, options);
-  const denied = await unrelated.text();
-  assert.match(denied, /Message unavailable/);
-  assert.doesNotMatch(denied, /Other business message body|Private to another business/);
-  const unrelatedAtAddress = await fetch(`${baseUrl}/dashboard/email/55555555-6666-4777-8888-999999999999`, options);
-  assert.doesNotMatch(await unrelatedAtAddress.text(), /Unrelated message body|Unrelated mail at the quote address/);
-  const submitted = await fetch(`${baseUrl}/dashboard/email/66666666-7777-4888-8999-000000000000`, options);
-  assert.match(await submitted.text(), /customer@example\.com/);
-  const failed = await fetch(`${baseUrl}/dashboard/email/44444444-5555-4666-8777-888888888888`, options);
-  assert.match(await failed.text(), /This inquiry could not be loaded/);
+  assert.match(rendered, /customer@example\.com/);
+  assert.match(rendered, /value="archive"/);
+  const inquiry = { action: "archive", id: companyMessagePath.split("/").at(-1) };
+  assert.equal((await dashboardForm(inquiry)).headers.get("location"), "/dashboard/login");
+  assert.equal((await dashboardForm(inquiry, { cookie, origin: "https://unrelated.example" })).status, 403);
+  assert.equal((await dashboardForm(inquiry, { cookie })).headers.get("location"), "/dashboard?status=archived");
+  const active = await fetch(`${baseUrl}/dashboard`, options).then((response) => response.text());
+  assert.doesNotMatch(active, /Inbox Pipeline Test/);
+  assert.match(active, /Last 30 days<\/dt><dd>1<\/dd>/);
+  const archived = await fetch(`${baseUrl}/dashboard?view=archived`, options).then((response) => response.text());
+  assert.match(archived, /Inbox Pipeline Test/);
+  const archivedMessage = await fetch(`${baseUrl}${companyMessagePath}?view=archived`, options);
+  assert.match(await archivedMessage.text(), /Restore to Inbox/);
+  assert.equal((await dashboardForm({ ...inquiry, action: "restore" }, { cookie })).headers.get("location"), "/dashboard?view=archived&status=restored");
+  assert.match(await fetch(`${baseUrl}/dashboard`, options).then((response) => response.text()), /Inbox Pipeline Test/);
 
   const logout = await dashboardForm({ action: "logout" }, { cookie });
   assert.equal(logout.status, 303);
@@ -179,19 +188,22 @@ test("owner login limits attempts using the trusted final forwarded address", as
   assert.equal(limited.headers.get("location"), "/dashboard/login?status=limited");
 });
 
-test("saved inquiries and their counts survive a server restart with Resend Receiving unavailable", async () => {
+test("saved website inquiries and their counts survive a server restart without Resend Receiving credentials", async () => {
+  const beforeRestart = await dashboardForm({ action: "login", username: "admin", password: "fixture-owner-password" });
+  const id = companyMessagePath.split("/").at(-1);
+  const archived = await dashboardForm({ action: "archive", id }, { cookie: beforeRestart.headers.get("set-cookie").split(";")[0] });
+  assert.equal(archived.headers.get("location"), "/dashboard?status=archived");
   await stopServer();
-  await startServer(true);
+  await startServer();
   const login = await dashboardForm({ action: "login", username: "admin", password: "fixture-owner-password" });
   const cookie = login.headers.get("set-cookie").split(";")[0];
   const options = { headers: { Cookie: cookie } };
-  const dashboard = await fetch(`${baseUrl}/dashboard`, options).then((response) => response.text());
+  const dashboard = await fetch(`${baseUrl}/dashboard?view=archived`, options).then((response) => response.text());
   assert.match(dashboard, /Inbox Pipeline Test/);
-  assert.match(dashboard, /Earlier company email/);
-  assert.match(dashboard, /Last 7 days<\/dt><dd>2<\/dd>/);
-  assert.match(dashboard, /Last 30 days<\/dt><dd>3<\/dd>/);
+  assert.match(dashboard, /Last 7 days<\/dt><dd>1<\/dd>/);
+  assert.match(dashboard, /Last 30 days<\/dt><dd>1<\/dd>/);
   const message = await fetch(`${baseUrl}${companyMessagePath}`, options);
-  assert.match(await message.text(), /Message &amp; details/);
+  assert.match(await message.text(), /Commercial test property/);
 });
 
 test("uses the standard Next.js pipeline without legacy hosting dependencies", async () => {

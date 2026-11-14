@@ -10,8 +10,7 @@ export type Inquiry = {
   contact: string;
   receivedAt: string;
   text: string;
-  attachments?: string[];
-  truncated?: boolean;
+  archived: number;
 };
 
 let database: DatabaseSync | undefined;
@@ -27,20 +26,16 @@ function db() {
   const connection = new DatabaseSync(path, { timeout: 1_000 });
   try {
     connection.exec(`
-      CREATE TABLE IF NOT EXISTS inquiries (
+      CREATE TABLE IF NOT EXISTS website_inquiries (
         id TEXT PRIMARY KEY,
         subject TEXT NOT NULL,
         contact TEXT NOT NULL,
         receivedAt TEXT NOT NULL,
         text TEXT NOT NULL,
-        attachments TEXT NOT NULL,
-        truncated INTEGER NOT NULL
+        archived INTEGER NOT NULL DEFAULT 0 CHECK (archived IN (0, 1))
       ) STRICT;
-      CREATE INDEX IF NOT EXISTS inquiries_recent ON inquiries (receivedAt DESC, id DESC);
-      CREATE TABLE IF NOT EXISTS inquiry_imports (
-        address TEXT PRIMARY KEY,
-        cursor TEXT
-      ) STRICT;
+      CREATE INDEX IF NOT EXISTS website_inquiries_inbox ON website_inquiries (archived, receivedAt DESC, id DESC);
+      CREATE INDEX IF NOT EXISTS website_inquiries_recent ON website_inquiries (receivedAt DESC);
     `);
     database = connection;
     return connection;
@@ -50,42 +45,35 @@ function db() {
   }
 }
 
-export function saveInquiry(inquiry: Inquiry) {
+export function saveInquiry(inquiry: Omit<Inquiry, "archived">) {
   return db().prepare(`
-    INSERT INTO inquiries (id, subject, contact, receivedAt, text, attachments, truncated) VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO website_inquiries (id, subject, contact, receivedAt, text) VALUES (?, ?, ?, ?, ?)
     ON CONFLICT(id) DO NOTHING
-  `).run(inquiry.id, inquiry.subject, inquiry.contact, inquiry.receivedAt, inquiry.text,
-    JSON.stringify(inquiry.attachments ?? []), Number(inquiry.truncated ?? false));
+  `).run(inquiry.id, inquiry.subject, inquiry.contact, inquiry.receivedAt, inquiry.text);
 }
 
 export function findInquiry(id: string) {
-  const row = db().prepare("SELECT * FROM inquiries WHERE id = ?").get(id) as (Omit<Inquiry, "attachments" | "truncated"> & { attachments: string; truncated: number }) | undefined;
-  return row && { ...row, attachments: JSON.parse(row.attachments) as string[], truncated: row.truncated === 1 };
+  return db().prepare("SELECT id, subject, contact, receivedAt, text, archived FROM website_inquiries WHERE id = ?").get(id) as Inquiry | undefined;
 }
 
-export function inquiryPage(after?: string, now = Date.now()) {
+export function inquiryPage(archived: boolean, after?: string, now = Date.now()) {
   const connection = db();
-  const cursor = after ? connection.prepare("SELECT id, receivedAt FROM inquiries WHERE id = ?").get(after) : undefined;
+  const state = Number(archived);
+  const cursor = after ? connection.prepare("SELECT id, receivedAt FROM website_inquiries WHERE id = ?").get(after) : undefined;
   const summary = cursor
-    ? connection.prepare(`SELECT id, subject, contact, receivedAt FROM inquiries
-      WHERE (receivedAt, id) < (?, ?) ORDER BY receivedAt DESC, id DESC LIMIT ?`).all(cursor.receivedAt, cursor.id, pageSize + 1)
-    : connection.prepare(`SELECT id, subject, contact, receivedAt FROM inquiries
-      ORDER BY receivedAt DESC, id DESC LIMIT ?`).all(pageSize + 1);
+    ? connection.prepare(`SELECT id, subject, contact, receivedAt FROM website_inquiries
+      WHERE archived = ? AND (receivedAt, id) < (?, ?) ORDER BY receivedAt DESC, id DESC LIMIT ?`).all(state, cursor.receivedAt, cursor.id, pageSize + 1)
+    : connection.prepare(`SELECT id, subject, contact, receivedAt FROM website_inquiries
+      WHERE archived = ? ORDER BY receivedAt DESC, id DESC LIMIT ?`).all(state, pageSize + 1);
   const messages = summary.slice(0, pageSize) as Pick<Inquiry, "id" | "subject" | "contact" | "receivedAt">[];
   const counts = connection.prepare(`SELECT
     COUNT(CASE WHEN receivedAt >= ? THEN 1 END) AS week,
-    COUNT(*) AS month FROM inquiries WHERE receivedAt >= ?`).get(
+    COUNT(*) AS month FROM website_inquiries WHERE receivedAt >= ?`).get(
     new Date(now - 7 * day).toISOString(), new Date(now - 30 * day).toISOString(),
   ) as { week: number; month: number };
   return { messages, counts, next: summary.length > pageSize ? messages.at(-1)?.id : undefined };
 }
 
-export function importCursor(address: string) {
-  const row = db().prepare("SELECT cursor FROM inquiry_imports WHERE address = ?").get(address);
-  return row?.cursor as string | null | undefined;
-}
-
-export function saveImportCursor(address: string, cursor: string | null) {
-  db().prepare(`INSERT INTO inquiry_imports (address, cursor) VALUES (?, ?)
-    ON CONFLICT(address) DO UPDATE SET cursor = excluded.cursor`).run(address, cursor);
+export function setInquiryArchived(id: string, archived: boolean) {
+  return db().prepare("UPDATE website_inquiries SET archived = ? WHERE id = ?").run(Number(archived), id).changes !== 0;
 }

@@ -1,8 +1,10 @@
 import { isIP } from "node:net";
 import { NextRequest, NextResponse } from "next/server";
+import { setInquiryArchived } from "../../inquiry-store";
+import { messageId } from "../inbox-view";
 import {
   checkCredentials, clearLoginAttempts, createSession, loginConfigured, reserveLoginAttempt,
-  revokeSession, sessionCookie, sessionSeconds,
+  revokeSession, sessionCookie, sessionSeconds, signedIn,
 } from "../session";
 
 export const runtime = "nodejs";
@@ -55,11 +57,23 @@ export async function POST(request: NextRequest) {
   if (!form) return new NextResponse("Invalid form", { status: 400 });
 
   const previous = request.cookies.get(sessionCookie)?.value;
-  if (form.get("action") === "logout") {
+  const action = form.get("action");
+  if (action === "logout") {
     revokeSession(previous);
     return setSession(seeOther("/dashboard/login"), "", 0);
   }
-  if (form.get("action") !== "login") return new NextResponse("Invalid form", { status: 400 });
+  if (action === "archive" || action === "restore") {
+    if (!await signedIn()) return seeOther("/dashboard/login");
+    const id = messageId(form.get("id"));
+    if (!id) return new NextResponse("Invalid inquiry", { status: 400 });
+    try {
+      if (!setInquiryArchived(id, action === "archive")) return new NextResponse("Inquiry not found", { status: 404 });
+    } catch {
+      return new NextResponse("Could not update the inquiry. Please try again.", { status: 503 });
+    }
+    return seeOther(action === "archive" ? "/dashboard?status=archived" : "/dashboard?view=archived&status=restored");
+  }
+  if (action !== "login") return new NextResponse("Invalid form", { status: 400 });
   if (!loginConfigured()) return seeOther("/dashboard/login?status=disabled");
 
   // The loopback application trusts only the final hop set by its public edge.

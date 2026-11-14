@@ -132,7 +132,8 @@
 .actions, .pagination { flex-wrap: wrap; }
 .panelHead, .notice, .pagination { padding: 18px clamp(16px, 3vw, 24px); }
 .notice { margin: 0; }
-.panelHead { border-bottom: 1px solid var(--border-subtle); }
+.panelHead { display: flex; gap: 8px; border-bottom: 1px solid var(--border-subtle); }
+.panelHead a[aria-current="page"] { background: var(--ink-900); border-color: var(--ink-900); color: white; }
 .messages { margin: 0; padding: 0; list-style: none; }
 .messages li + li, .pagination { border-top: 1px solid var(--border-subtle); }
 
@@ -150,14 +151,12 @@
 .message:focus-visible { outline-offset: -3px; }
 .sender { font-weight: 700; }
 .reader { margin-top: 18px; }
-.readerHead, .body, .attachments { padding: clamp(16px, 4vw, 34px); overflow-wrap: anywhere; }
+.readerHead, .body { padding: clamp(16px, 4vw, 34px); overflow-wrap: anywhere; }
 .readerHead { border-bottom: 1px solid var(--border-subtle); }
 .readerHead dl, .readerHead p:last-child { margin-bottom: 0; }
 .readerHead dl div { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 10px; }
 .readerHead dt { color: var(--text-muted); font-weight: 700; }
 .body { white-space: pre-wrap; }
-.attachments { border-top: 1px solid var(--border-subtle); }
-.attachments ul { margin: 8px 0 0; padding-left: 1.25rem; list-style: disc; }
 
 @media (max-width: 620px) {
   .topbarInner, .content { width: calc(100% - 28px); }

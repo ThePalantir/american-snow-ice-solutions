@@ -55,11 +55,11 @@ server saves new inquiries in SQLite after Resend accepts the Gmail notification
 If writing the archive fails, the existing email delivery continues. Sessions
 expire after eight hours or when the standalone server restarts.
 
-The first dashboard visits import older quote copies still available in Resend.
-Refresh to continue when another batch is available. Imports verify the recipient
-and subject and preserve the original message date. Already-saved copies remain
-readable during provider outages and after Resend expires them. This reads
-plain-text inquiry content. Gmail retains the original messages independently.
+Only submissions recorded directly by the website's quote form appear in this
+history. Older mail stays in Gmail and in Resend for its normal retention period.
+Open a saved inquiry and select **Archive** to move it out of the Inbox. Find it
+under **Archived** and select **Restore to Inbox** to bring it back. Archive status
+does not affect inquiry counts or either delivered email copy.
 
 SQLite uses `inquiries.sqlite` in the private writable directory
 `data/inquiries` relative to the running standalone server by default. The
@@ -75,17 +75,16 @@ Set the following runtime variables privately in the Ops Dashboard:
 | --- | --- |
 | `DASHBOARD_USERNAME` | `admin` |
 | `DASHBOARD_PASSWORD` | A strong password of 16 to 256 characters |
-| `RESEND_RECEIVING_API_KEY` | A dedicated key with access to the company's Resend Receiving API |
-| `RESEND_QUOTE_INBOX_ADDRESS` | One dedicated address, such as `website-quotes@<your-team-id>.resend.app`, from the same Resend team as the Receiving API key |
+| `RESEND_QUOTE_INBOX_ADDRESS` | One dedicated address, such as `website-quotes@<your-team-id>.resend.app`, from the company's Resend team |
 
-1. In the Resend team that issued the Receiving key, open **Emails → Receiving**,
+1. In the company's Resend team, open **Emails → Receiving**,
    open the three-dot menu and copy the **Receiving address** domain. Use
    `website-quotes` before the `@`. Resend accepts any username at the team's
    provided domain. No webhook or site DNS change is required.
 2. Enter the full address in **Ops Dashboard → Project details → Required to
-   deploy**, save and deploy. The manifest reuses the saved sign-in, sending,
-   and Receiving settings. The former `RESEND_INBOX_RECIPIENTS` is no longer
-   used by the application.
+   deploy**, save and deploy. The manifest reuses the saved sign-in and sending
+   settings. The application no longer uses `RESEND_INBOX_RECIPIENTS` or
+   `RESEND_RECEIVING_API_KEY`.
 3. Submit one clearly labeled test from `/quote`. Confirm the usual Gmail
    message and a copy in **Resend → Emails → Receiving**, then sign in and
    refresh `/dashboard`. The new setup captures new form submissions. Mail sent
