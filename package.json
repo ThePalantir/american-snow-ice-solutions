@@ -8,12 +8,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:standalone": "npm run build && node scripts/stage-standalone.mjs",
     "start": "next start",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "test": "npm run build:standalone && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern .next"
   },
   "dependencies": {
-    "next": "16.4.2",
+    "html-to-text": "10.0.1",
+    "next": "16.4.6",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "resend": "^6.28.1",
@@ -21,11 +23,12 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.2.1",
+    "@types/html-to-text": "9.0.4",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.4.2",
+    "eslint-config-next": "16.4.6",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3"
   },

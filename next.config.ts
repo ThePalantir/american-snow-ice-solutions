@@ -30,6 +30,17 @@ const nextConfig: NextConfig = {
   async redirects() {
     return legacyRedirects.map((redirect) => ({ ...redirect, permanent: true }));
   },
+  async headers() {
+    return [{
+      source: "/dashboard/:path*",
+      headers: [
+        { key: "Cache-Control", value: "private, no-store, max-age=0, must-revalidate" },
+        { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        { key: "Referrer-Policy", value: "same-origin" },
+        { key: "X-Frame-Options", value: "DENY" },
+      ],
+    }];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85, 90],

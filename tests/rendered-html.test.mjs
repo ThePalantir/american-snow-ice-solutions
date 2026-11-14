@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { access, cp, readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import net from "node:net";
 import path from "node:path";
 import { after, before, test } from "node:test";
@@ -46,11 +46,16 @@ async function waitForServer(url) {
 before(async () => {
   const port = await findOpenPort();
   baseUrl = `http://127.0.0.1:${port}`;
-  await cp(path.join(projectRoot, "public"), path.join(standaloneRoot, "public"), { recursive: true });
-  await cp(path.join(projectRoot, ".next", "static"), path.join(standaloneRoot, ".next", "static"), { recursive: true });
-  server = spawn(process.execPath, [path.join(standaloneRoot, "server.js")], {
+  server = spawn(process.execPath, [
+    "--require", path.join(projectRoot, "tests", "fixtures", "receiving.cjs"),
+    path.join(standaloneRoot, "server.js"),
+  ], {
     cwd: projectRoot,
-    env: { ...process.env, NODE_ENV: "production", HOSTNAME: "127.0.0.1", PORT: String(port) },
+    env: {
+      ...process.env, NODE_ENV: "production", HOSTNAME: "127.0.0.1", PORT: String(port),
+      DASHBOARD_USERNAME: "admin", DASHBOARD_PASSWORD: "fixture-owner-password",
+      RESEND_RECEIVING_API_KEY: "re_fixture_receiving_key", RESEND_INBOX_RECIPIENTS: "inbox@company.example",
+    },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
   });
@@ -64,6 +69,91 @@ after(async () => {
     server.kill();
     await Promise.race([new Promise((resolve) => server.once("exit", resolve)), delay(5_000)]);
   }
+});
+
+const companyMessagePath = "/dashboard/email/11111111-2222-4333-8444-555555555555";
+
+function dashboardForm(fields, { cookie, origin = baseUrl, forwardedFor } = {}) {
+  return fetch(`${baseUrl}/dashboard/session`, {
+    method: "POST",
+    redirect: "manual",
+    headers: {
+      Origin: origin,
+      ...(cookie ? { Cookie: cookie } : {}),
+      ...(forwardedFor ? { "X-Forwarded-For": forwardedFor } : {}),
+    },
+    body: new URLSearchParams(fields),
+  });
+}
+
+test("owner inbox authorizes every read, filters recipients, and revokes sessions", async () => {
+  for (const route of ["/dashboard", companyMessagePath]) {
+    const locked = await fetch(`${baseUrl}${route}`, { redirect: "manual" });
+    assert.equal(locked.status, 307);
+    assert.equal(locked.headers.get("location"), "/dashboard/login");
+    assert.doesNotMatch(await locked.text(), /Sample company email|Message &amp; details/);
+  }
+
+  const login = await fetch(`${baseUrl}/dashboard/login`);
+  assert.equal(login.status, 200);
+  assert.match(login.headers.get("cache-control"), /no-store/);
+  assert.match(login.headers.get("x-robots-tag"), /noindex/);
+  assert.match(await login.text(), /Owner sign-in/);
+
+  const credentials = { action: "login", username: "admin", password: "fixture-owner-password" };
+  assert.equal((await dashboardForm(credentials, { origin: "https://unrelated.example" })).status, 403);
+  const rejected = await dashboardForm({ ...credentials, password: "incorrect" });
+  assert.equal(rejected.headers.get("location"), "/dashboard/login?status=invalid");
+  assert.equal(rejected.headers.get("set-cookie"), null);
+
+  const authenticated = await dashboardForm(credentials);
+  assert.equal(authenticated.status, 303);
+  assert.equal(authenticated.headers.get("location"), "/dashboard");
+  const setCookie = authenticated.headers.get("set-cookie");
+  for (const attribute of ["__Host-asis_owner=", "HttpOnly", "Secure", "SameSite=strict", "Path=/"]) {
+    assert.match(setCookie, new RegExp(attribute, "i"));
+  }
+  const cookie = setCookie.split(";")[0];
+  const options = { headers: { Cookie: cookie } };
+  const inbox = await fetch(`${baseUrl}/dashboard`, options);
+  assert.equal(inbox.status, 200);
+  assert.match(inbox.headers.get("cache-control"), /no-store/);
+  const listing = await inbox.text();
+  assert.match(listing, /Company inbox/);
+  assert.match(listing, /Sample company email/);
+  assert.doesNotMatch(listing, /Private to another business/);
+  assert.doesNotMatch(listing, /analytics-consent|re_fixture_receiving_key|fixture-owner-password/);
+
+  const older = await fetch(`${baseUrl}/dashboard?after=22222222-3333-4444-8555-666666666666`, options);
+  assert.match(await older.text(), /Earlier company email/);
+  const message = await fetch(`${baseUrl}${companyMessagePath}`, options);
+  const rendered = await message.text();
+  assert.match(rendered, /Message &amp; details/);
+  assert.match(rendered, /Link label/);
+  assert.match(rendered, /estimate\.pdf/);
+  assert.doesNotMatch(rendered, /maliciousScript|example\.com\/(?:pixel|unsafe)/);
+
+  const unrelated = await fetch(`${baseUrl}/dashboard/email/22222222-3333-4444-8555-666666666666`, options);
+  const denied = await unrelated.text();
+  assert.match(denied, /Message unavailable/);
+  assert.doesNotMatch(denied, /Other business message body|Private to another business/);
+  const failed = await fetch(`${baseUrl}/dashboard/email/44444444-5555-4666-8777-888888888888`, options);
+  assert.match(await failed.text(), /Resend could not load this message/);
+
+  const logout = await dashboardForm({ action: "logout" }, { cookie });
+  assert.equal(logout.status, 303);
+  assert.match(logout.headers.get("set-cookie"), /Max-Age=0/i);
+  const replay = await fetch(`${baseUrl}${companyMessagePath}`, { ...options, redirect: "manual" });
+  assert.equal(replay.headers.get("location"), "/dashboard/login");
+});
+
+test("owner login limits attempts using the trusted final forwarded address", async () => {
+  for (let index = 0; index < 8; index++) {
+    const attempt = await dashboardForm({ action: "login" }, { forwardedFor: `192.0.2.${index + 1}, 198.51.100.30` });
+    assert.equal(attempt.headers.get("location"), "/dashboard/login?status=invalid");
+  }
+  const limited = await dashboardForm({ action: "login" }, { forwardedFor: "203.0.113.2, 198.51.100.30" });
+  assert.equal(limited.headers.get("location"), "/dashboard/login?status=limited");
 });
 
 test("uses the standard Next.js pipeline without legacy hosting dependencies", async () => {

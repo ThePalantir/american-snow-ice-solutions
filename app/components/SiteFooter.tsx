@@ -32,6 +32,7 @@ export function SiteFooter() {
           <Link href="/service-areas">Service areas</Link>
           <Link href="/partner-network">Partner network</Link>
           <Link href="/contact">Contact</Link>
+          <a href="/dashboard/login" rel="nofollow">Owner sign-in</a>
         </div>
       </div>
       <div className="container footer-base">

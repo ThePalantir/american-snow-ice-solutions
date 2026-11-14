@@ -3,6 +3,7 @@ import "./design-tokens.css";
 import "./globals.css";
 import { SiteHeader } from "./components/SiteHeader";
 import { SiteFooter } from "./components/SiteFooter";
+import { PublicSiteOnly } from "./components/PublicSiteOnly";
 import { Analytics } from "./components/Analytics";
 import { StructuredData } from "./components/StructuredData";
 import { brandLogoPath } from "./components/BrandLogo";
@@ -68,7 +69,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-design-direction="midnight-operations">
       <body>
-        <StructuredData
+        <PublicSiteOnly><StructuredData
           data={[
             {
               "@context": "https://schema.org",
@@ -121,12 +122,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               inLanguage: "en-US",
             },
           ]}
-        />
+        /></PublicSiteOnly>
         <a className="skip-link" href="#main-content">Skip to content</a>
-        <SiteHeader />
+        <PublicSiteOnly><SiteHeader /></PublicSiteOnly>
         <div id="main-content">{children}</div>
-        <SiteFooter />
-        <Analytics />
+        <PublicSiteOnly><SiteFooter /><Analytics /></PublicSiteOnly>
       </body>
     </html>
   );

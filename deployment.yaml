@@ -1,0 +1,128 @@
+# SERVER WEBSITE: SINGLE-FILE HANDOFF TO THE PROJECT-BUILDING AGENT
+#
+# Read these comments before building. Complete the YAML below for the actual
+# project and return this same file as its deployment manifest. Keep these
+# instructions with it. Commit the file with any .yaml/.yml name, or give the
+# finished file to the user for separate upload. No second config or guide is needed.
+#
+# Describe the actual architecture; do not force every app into the same layout.
+# A server can serve its own frontend. A separate static frontend and API can use
+# primary plus services below, in THIS file. Do not create a second manifest.
+# Standard host profiles: node-web, rust-web and vite-static. Other runtimes need
+# an installed protected host preset. Docker, PostgreSQL/Redis provisioning,
+# background workers, root package installation, cloud resources and GPUs are not
+# automatically provided. External services may be used through declared env keys.
+# Identify unsupported needs before presenting the project as deployable.
+#
+# For Node, name the actual packaged JavaScript entry point in primary.start.
+# Use a production server, not a dev/preview command. Install locked dependencies
+# and build all frontend/server assets. rootDirectory is repository-relative.
+# Keep every runtime dependency and public asset in the published artifacts.
+# Bind the server to 127.0.0.1 and the host-provided PORT. Use "{port}" in start
+# arguments when needed; there is no shell or $VARIABLE expansion in these arrays.
+# Implement healthPath with a stable application-specific JSON service identity
+# or distinctive HTML page title, so another app's response cannot pass health.
+#
+# Code is read-only. Declare real writable runtime paths for uploads, embedded
+# databases and framework caches in writableDirectories. The host gives them
+# private persistent storage. For Next.js this includes the correct .next/cache
+# path. Test runtime paths against the PACKAGE layout, not just the source tree.
+#
+# Environment entries contain NAMES, required, build and description only. Private
+# values are entered separately in the dashboard. Never include values, passwords,
+# tokens, secret defaults or private URLs in this file, its comments or commands.
+# Only keys marked build: true reach builds. Runtime-only secrets stay private.
+# Public frontend build variables are browser-visible. PORT/HOST/HOSTNAME are
+# assigned by the host and must not be declared. Do not hardcode host paths,
+# public IPs, OS accounts, systemd units, Caddy config or privileged commands.
+#
+# Test a clean locked build and the exact packaged production startup. Check every
+# web service's health, frontend/API connection, required variables, asset filename
+# casing, cache writes and realistic phone layouts. Explain external prerequisites.
+# A successful build alone does not prove the server starts or the site works.
+#
+# Optional additional server example (uses that installed preset's build/start):
+# services:
+#   - id: api
+#     name: API
+#     profile: rust-web
+#     rootDirectory: backend
+#     binaryName: server
+#     healthPath: /health
+#     healthText: my-application-api
+#     listenVariable: LISTEN_ADDR
+#     dataDirectory: data
+#     runtimeDirectories: []
+#
+# Rust primary example: profile: rust-web; start: {runtime: binary,
+# entrypoint: server, arguments: []}; artifacts: [{source: target/release/server,
+# destination: server, kind: file, executable: true}]. Choose the real binary name.
+# Replace the Node build steps with the approved cargo tool for Rust, for example
+# [{tool: cargo, arguments: [test, --locked]},
+#  {tool: cargo, arguments: [build, --release, --locked]}]. Do not retain npm steps.
+# For a Node server needing no compilation, keep npm ci and remove run build.
+# A primary artifact accepts source, destination, kind: file|directory,
+# executable and allowInternalSymlinks. Paths are relative. Omit artifacts to keep
+# the selected preset's packaging. Build tools must already be approved by it.
+#
+# Finish this one file: replace placeholders and do not invent schema fields.
+# No !include, anchors, multiple YAML documents or secret values.
+#
+# This is the manifest for the existing website and its owner inbox.
+# Enter runtime values privately in the Ops Dashboard. Resend Receiving must be
+# enabled for the company mailbox or a copy forwarded to a company-only inbound
+# address already handled by Resend. Preserve any existing mailbox/MX setup.
+schemaVersion: 1
+kind: operations-project
+primary:
+  profile: node-web
+  rootDirectory: .
+  healthPath: /health
+  healthText: american-snow-ice-solutions
+  build:
+    - tool: npm
+      arguments: [ci]
+    - tool: npm
+      arguments: [run, lint]
+    - tool: npm
+      arguments: [test]
+  start:
+    runtime: node
+    entrypoint: .next/standalone/server.js
+    arguments: []
+  artifacts:
+    # npm test builds and stages public/ and .next/static/ in the standalone package.
+    - source: .next/standalone
+      destination: .next/standalone
+      kind: directory
+      allowInternalSymlinks: true
+  writableDirectories: [.next/standalone/.next/cache]
+services: []
+environment:
+  - key: RESEND_API_KEY
+    required: true
+    description: Existing outbound Resend key for consultation email.
+  - key: RESEND_FROM_EMAIL
+    required: true
+    description: Existing verified sender for consultation email.
+  - key: DASHBOARD_USERNAME
+    required: true
+    description: Owner sign-in username. Enter admin.
+  - key: DASHBOARD_PASSWORD
+    required: true
+    description: Strong owner sign-in password of 16 to 256 characters. Enter privately.
+  - key: RESEND_RECEIVING_API_KEY
+    required: true
+    description: Dedicated server-only Resend key with access to the Receiving API.
+  - key: RESEND_INBOX_RECIPIENTS
+    required: true
+    description: Comma-separated company recipient addresses as shown on received Resend email, including the company address for forwarded mail if applicable.
+  - key: NEXT_PUBLIC_ANALYTICS_ENABLED
+    build: true
+    description: Optional public website analytics switch.
+  - key: NEXT_PUBLIC_GA4_MEASUREMENT_ID
+    build: true
+    description: Optional public website GA4 measurement ID.
+  - key: NEXT_PUBLIC_PRIVACY_NOTICE_APPROVED
+    build: true
+    description: Optional public website switch for the approved analytics notice.

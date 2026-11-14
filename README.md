@@ -4,7 +4,7 @@ Premium multi-page website for American Snow & Ice Solutions, built with the sta
 
 ## Requirements
 
-- Node.js 22.13 or newer
+- Node.js 22.23.4 or a later Node 22 release
 - npm
 
 ## Local development
@@ -36,14 +36,43 @@ them. These are runtime variables; they do not need build-time exposure or a
 `NEXT_PUBLIC_` prefix. The recipient is `Piechotagrpinc@gmail.com`, and
 Reply-To is the visitor's submitted email address.
 
-The host must run the Next.js server, not a static `out/` export: static hosting
-cannot execute `POST /api/quote`. For self-hosting, `npm run build` produces
-`.next/standalone/server.js`. Copy `public/` into `.next/standalone/public/` and
-`.next/static/` into `.next/standalone/.next/static/`, then run that server with
-the host's `HOSTNAME`, `PORT`, and the two Resend variables. `GET /health` preserves
+For self-hosting, `npm run build:standalone` prepares the Next.js server and
+its public and static assets under `.next/standalone/`. Start that package's
+`server.js` with the host's `HOSTNAME`, `PORT`, and runtime variables for the
+consultation form and owner inbox. `GET /health` preserves
 the application's service identity for host monitoring and includes a non-secret `buildSha` captured at build time. Builds without a Git checkout should set `ASIS_BUILD_SHA` to the full 40-character source commit SHA before building; otherwise the endpoint reports `unknown`. The response is not cached. The legacy host's static
 export recipe needs a one-time switch to this server artifact before environment
 variables alone can enable email.
+
+## Owner inbox
+
+Use **Owner sign-in** in the website footer or open `/dashboard`. The inbox shows
+received messages, with sender, subject, Eastern time, message text and attachment
+names. It reads Resend on demand. Sessions expire after eight hours or when the
+standalone server restarts.
+
+Set the following runtime variables privately in the Ops Dashboard:
+
+| Variable | Value |
+| --- | --- |
+| `DASHBOARD_USERNAME` | `admin` |
+| `DASHBOARD_PASSWORD` | A strong password of 16 to 256 characters |
+| `RESEND_RECEIVING_API_KEY` | A dedicated key with access to the company's Resend Receiving API |
+| `RESEND_INBOX_RECIPIENTS` | Comma-separated company recipient addresses appearing in the To, Cc or Bcc metadata returned by Resend |
+
+Resend lists received mail at the team level. Prefer a company-owned team for the
+receiving key. Confirm an example received message in Resend and use the exact
+company recipient address shown there. Mail that continues to arrive only in an
+existing mailbox needs an approved forwarding route into Resend to appear in this
+inbox. Check the existing mail configuration before changing any routing or MX
+records. The outbound consultation form continues to use its existing settings.
+
+The repository-root [deployment.yaml](deployment.yaml) declares the standalone
+server and the required runtime keys. New-project onboarding can discover it
+from the selected branch. For an existing Ops Dashboard project without manifest
+updates enabled, keep its saved standalone recipe, add the new runtime values
+in Project details and deploy the saved settings and current source through
+the existing project.
 
 ## Validation
 
