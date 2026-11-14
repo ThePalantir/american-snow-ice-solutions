@@ -1,4 +1,5 @@
-import { formatReceivedAt, inboxConfiguration, listMessages, messageId } from "./inbox";
+import { inquiryPage } from "../inquiry-store";
+import { formatReceivedAt, importOlderInquiries, messageId } from "./inbox";
 import { requireOwner } from "./session";
 import styles from "./dashboard.module.css";
 
@@ -8,8 +9,8 @@ export default async function DashboardPage({ searchParams }: {
   await requireOwner();
   const after = messageId((await searchParams).after);
   const pageUrl = after ? `/dashboard?after=${after}` : "/dashboard";
-  const config = inboxConfiguration();
-  const inbox = config ? await listMessages(config, after).catch(() => null) : null;
+  const importing = await importOlderInquiries().catch(() => null);
+  const inbox = readPage(after);
 
   return (
     <>
@@ -25,14 +26,22 @@ export default async function DashboardPage({ searchParams }: {
           </form>
         </div>
       </div>
+      {inbox && (
+        <dl className={styles.counts} aria-label="Inquiry volume">
+          <div><dt>Last 7 days</dt><dd>{inbox.counts.week}</dd></div>
+          <div><dt>Last 30 days</dt><dd>{inbox.counts.month}</dd></div>
+        </dl>
+      )}
       <section className={styles.panel} aria-label="Received email">
         <div className={styles.panelHead}><h2>{after ? "Older messages" : "Latest messages"}</h2></div>
+        {inbox && importing === true && <p className={styles.notice}>Refresh again to bring in more older inquiries from Resend.</p>}
+        {inbox && importing === null && <p className={styles.notice}>Resend history could not finish importing. Refresh to retry.</p>}
         {inbox?.messages.length ? (
           <ul className={styles.messages}>
             {inbox.messages.map((message) => (
               <li key={message.id}>
                 <a href={`/dashboard/email/${message.id}${after ? `?after=${after}` : ""}`} className={styles.message}>
-                  <span className={styles.sender}>{message.from}</span>
+                  <span className={styles.sender}>{message.contact}</span>
                   <span>{message.subject}</span>
                   <time dateTime={message.receivedAt}>{formatReceivedAt(message.receivedAt)}</time>
                 </a>
@@ -40,11 +49,8 @@ export default async function DashboardPage({ searchParams }: {
             ))}
           </ul>
         ) : (
-          <p className={styles.notice} role={!inbox && config ? "alert" : undefined}>
-            {!config ? "In Ops Dashboard, set RESEND_QUOTE_INBOX_ADDRESS to your dedicated Resend Receiving address and save the Receiving API key, then deploy."
-              : !inbox ? "Resend is unavailable right now. Try refreshing the inbox."
-                : inbox.next ? "No website inquiries on this page. Older messages are available."
-                  : "No website inquiries have reached this inbox yet."}
+          <p className={styles.notice} role={!inbox ? "alert" : undefined}>
+            {inbox ? "No saved inquiries yet." : "The saved inquiry history is unavailable. Try refreshing."}
           </p>
         )}
         {(inbox?.next || after) && (
@@ -56,4 +62,9 @@ export default async function DashboardPage({ searchParams }: {
       </section>
     </>
   );
+}
+
+function readPage(after?: string) {
+  try { return inquiryPage(after); }
+  catch { return null; }
 }

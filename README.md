@@ -50,10 +50,24 @@ variables alone can enable email.
 ## Owner inbox
 
 Use **Owner sign-in** in the website footer or open `/dashboard`. **Website inquiries**
-shows quote form copies with subject, date and message text. It checks both the
-dedicated recipient and the quote subject, including when opening a message
-directly. It reads Resend on demand. Sessions expire after eight hours or when
-the standalone server restarts.
+shows locally saved messages and counts over the last 7 and 30 days. The quote
+server saves new inquiries in SQLite after Resend accepts the Gmail notification.
+If writing the archive fails, the existing email delivery continues. Sessions
+expire after eight hours or when the standalone server restarts.
+
+The first dashboard visits import older quote copies still available in Resend.
+Refresh to continue when another batch is available. Imports verify the recipient
+and subject and preserve the original message date. Already-saved copies remain
+readable during provider outages and after Resend expires them. This reads
+plain-text inquiry content. Gmail retains the original messages independently.
+
+SQLite uses `inquiries.sqlite` in the private writable directory
+`data/inquiries` relative to the running standalone server by default. The
+deployment manifest provisions that directory outside the release for YAML-managed
+hosts. For imported/custom host recipes, set `ASIS_INQUIRY_DATA_DIR` to a stable,
+absolute directory writable by the website service. Keep the database private
+and back it up with SQLite's backup tooling if inquiry history must survive
+host or storage loss. The application does not automatically purge saved inquiries.
 
 Set the following runtime variables privately in the Ops Dashboard:
 

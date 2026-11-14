@@ -9,7 +9,7 @@ const submittedId = "66666666-7777-4888-8999-000000000000";
 let submitted;
 const companyEmail = {
   id: companyId, from: "Sender <sender@example.com>", to: [`Company <${company.toUpperCase()}>`],
-  subject: "New ASIS consultation request — Sample company email", created_at: "2026-11-14T13:30:00Z",
+  subject: "New ASIS consultation request — Sample company email", created_at: new Date(Date.now()-86400000).toISOString(),
 };
 const otherEmail = {
   id: otherId, from: "other@example.com", to: ["another-business@example.com"],
@@ -22,15 +22,16 @@ globalThis.fetch = async function fetchWithReceivingFixture(input, init) {
   if (url.host !== "api.resend.com") return actualFetch(input, init);
   if (url.pathname === "/emails" && init?.method === "POST"
     && new Headers(init.headers).get("authorization") === "Bearer re_fixture_sending_key") {
-    const { from, to, subject, text, html } = JSON.parse(init.body);
+    const { from, to, subject, text, html, headers } = JSON.parse(init.body);
     if (to[0] !== company) return Response.json({ id: "fixture-primary-send" });
-    submitted = { id: submittedId, created_at: "2026-11-14T16:00:00Z", from, to, subject, text, html };
+    submitted = { id: submittedId, created_at: new Date().toISOString(), from, to, subject, text, html, headers };
     return Response.json({ id: "fixture-copy-send" });
   }
   if ((init?.method ?? "GET") !== "GET"
     || new Headers(init?.headers).get("authorization") !== "Bearer re_fixture_receiving_key") {
     return Response.json({}, { status: 403 });
   }
+  if (process.env.FIXTURE_RECEIVING_OFFLINE === "1") return Response.json({}, { status: 503 });
   if (url.pathname === "/emails/receiving") {
     const after = url.searchParams.get("after");
     const data = after ? [{ ...companyEmail, id: olderId, subject: "New ASIS consultation request — Earlier company email" }]
@@ -47,6 +48,7 @@ globalThis.fetch = async function fetchWithReceivingFixture(input, init) {
   }
   if (url.pathname === `/emails/receiving/${otherId}`) return Response.json({ ...otherEmail, text: "Other business message body" });
   if (url.pathname === `/emails/receiving/${unrelatedId}`) return Response.json({ ...unrelated, text: "Unrelated message body" });
+  if (url.pathname === `/emails/receiving/${olderId}`) return Response.json({ ...companyEmail, id: olderId, subject: "New ASIS consultation request — Earlier company email", created_at: new Date(Date.now()-10*86400000).toISOString(), text: "Saved older inquiry" });
   if (url.pathname === `/emails/receiving/${submittedId}` && submitted) return Response.json(submitted);
   if (url.pathname === `/emails/receiving/${unavailableId}`) return Response.json({}, { status: 503 });
   return Response.json({}, { status: 404 });

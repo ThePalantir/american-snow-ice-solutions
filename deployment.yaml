@@ -95,7 +95,7 @@ primary:
       destination: .next/standalone
       kind: directory
       allowInternalSymlinks: true
-  writableDirectories: [.next/standalone/.next/cache]
+  writableDirectories: [.next/standalone/.next/cache, .next/standalone/data/inquiries]
 services: []
 environment:
   - key: RESEND_API_KEY
@@ -116,6 +116,8 @@ environment:
   - key: RESEND_QUOTE_INBOX_ADDRESS
     required: true
     description: In the Resend team that issued the Receiving key, open Emails → Receiving → three-dot menu → Receiving address. Enter website-quotes followed by @ and the .resend.app domain shown there.
+  - key: ASIS_INQUIRY_DATA_DIR
+    description: Optional absolute path to private persistent storage for custom host recipes. The default standalone data/inquiries directory is provisioned by this manifest on YAML-managed hosts.
   - key: NEXT_PUBLIC_ANALYTICS_ENABLED
     build: true
     description: Optional public website analytics switch.

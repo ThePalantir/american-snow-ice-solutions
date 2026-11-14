@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { access, readFile } from "node:fs/promises";
+import { access, mkdtemp, readFile, rm } from "node:fs/promises";
 import net from "node:net";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { after, before, test } from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
@@ -12,6 +13,7 @@ const standaloneRoot = path.join(projectRoot, ".next", "standalone");
 let server;
 let baseUrl;
 let serverOutput = "";
+let inquiryDirectory;
 
 async function findOpenPort() {
   return new Promise((resolve, reject) => {
@@ -43,7 +45,7 @@ async function waitForServer(url) {
   throw new Error(`Timed out waiting for Next.js.\n${serverOutput}`);
 }
 
-before(async () => {
+async function startServer(receivingOffline = false) {
   const port = await findOpenPort();
   baseUrl = `http://127.0.0.1:${port}`;
   server = spawn(process.execPath, [
@@ -56,6 +58,7 @@ before(async () => {
       DASHBOARD_USERNAME: "admin", DASHBOARD_PASSWORD: "fixture-owner-password",
       RESEND_API_KEY: "re_fixture_sending_key", RESEND_FROM_EMAIL: "website@example.com",
       RESEND_RECEIVING_API_KEY: "re_fixture_receiving_key", RESEND_QUOTE_INBOX_ADDRESS: "website-quotes@company.resend.app",
+      ASIS_INQUIRY_DATA_DIR: inquiryDirectory, FIXTURE_RECEIVING_OFFLINE: receivingOffline ? "1" : "0",
     },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
@@ -63,14 +66,17 @@ before(async () => {
   server.stdout.on("data", (chunk) => { serverOutput += chunk.toString(); });
   server.stderr.on("data", (chunk) => { serverOutput += chunk.toString(); });
   await waitForServer(baseUrl);
-});
+}
 
-after(async () => {
+async function stopServer() {
   if (server && server.exitCode === null) {
     server.kill();
     await Promise.race([new Promise((resolve) => server.once("exit", resolve)), delay(5_000)]);
   }
-});
+}
+
+before(async () => { inquiryDirectory = await mkdtemp(path.join(tmpdir(), "asis-inquiries-")); await startServer(); });
+after(async () => { await stopServer(); if (inquiryDirectory) await rm(inquiryDirectory, { recursive: true, force: true }); });
 
 const companyMessagePath = "/dashboard/email/11111111-2222-4333-8444-555555555555";
 
@@ -126,13 +132,19 @@ test("owner inbox authorizes every read, filters recipients, and revokes session
   assert.match(inbox.headers.get("cache-control"), /no-store/);
   const listing = await inbox.text();
   assert.match(listing, /Website inquiries/);
+  assert.match(listing, /Last 7 days<\/dt><dd>2<\/dd>/);
+  assert.match(listing, /Last 30 days<\/dt><dd>2<\/dd>/);
+  assert.equal(listing.match(/>New ASIS consultation request — Inbox Pipeline Test<\//g)?.length, 1);
   assert.match(listing, /Inbox Pipeline Test/);
   assert.match(listing, /Sample company email/);
   assert.doesNotMatch(listing, /Private to another business|Unrelated mail at the quote address/);
   assert.doesNotMatch(listing, /analytics-consent|re_fixture_receiving_key|fixture-owner-password/);
 
-  const older = await fetch(`${baseUrl}/dashboard?after=22222222-3333-4444-8555-666666666666`, options);
-  assert.match(await older.text(), /Earlier company email/);
+  const older = await fetch(`${baseUrl}/dashboard`, options);
+  const olderListing = await older.text();
+  assert.match(olderListing, /Earlier company email/);
+  assert.match(olderListing, /Last 7 days<\/dt><dd>2<\/dd>/);
+  assert.match(olderListing, /Last 30 days<\/dt><dd>3<\/dd>/);
   const message = await fetch(`${baseUrl}${companyMessagePath}`, options);
   const rendered = await message.text();
   assert.match(rendered, /Message &amp; details/);
@@ -149,7 +161,7 @@ test("owner inbox authorizes every read, filters recipients, and revokes session
   const submitted = await fetch(`${baseUrl}/dashboard/email/66666666-7777-4888-8999-000000000000`, options);
   assert.match(await submitted.text(), /customer@example\.com/);
   const failed = await fetch(`${baseUrl}/dashboard/email/44444444-5555-4666-8777-888888888888`, options);
-  assert.match(await failed.text(), /Resend could not load this message/);
+  assert.match(await failed.text(), /This inquiry could not be loaded/);
 
   const logout = await dashboardForm({ action: "logout" }, { cookie });
   assert.equal(logout.status, 303);
@@ -165,6 +177,21 @@ test("owner login limits attempts using the trusted final forwarded address", as
   }
   const limited = await dashboardForm({ action: "login" }, { forwardedFor: "203.0.113.2, 198.51.100.30" });
   assert.equal(limited.headers.get("location"), "/dashboard/login?status=limited");
+});
+
+test("saved inquiries and their counts survive a server restart with Resend Receiving unavailable", async () => {
+  await stopServer();
+  await startServer(true);
+  const login = await dashboardForm({ action: "login", username: "admin", password: "fixture-owner-password" });
+  const cookie = login.headers.get("set-cookie").split(";")[0];
+  const options = { headers: { Cookie: cookie } };
+  const dashboard = await fetch(`${baseUrl}/dashboard`, options).then((response) => response.text());
+  assert.match(dashboard, /Inbox Pipeline Test/);
+  assert.match(dashboard, /Earlier company email/);
+  assert.match(dashboard, /Last 7 days<\/dt><dd>2<\/dd>/);
+  assert.match(dashboard, /Last 30 days<\/dt><dd>3<\/dd>/);
+  const message = await fetch(`${baseUrl}${companyMessagePath}`, options);
+  assert.match(await message.text(), /Message &amp; details/);
 });
 
 test("uses the standard Next.js pipeline without legacy hosting dependencies", async () => {

@@ -27,7 +27,11 @@ function handler(env = environment) {
   const exports = {};
   const load = createRequire(routeUrl);
   runInNewContext(outputText, {
-    exports, require: (id) => id === "../../quote-email" ? helperExports : load(id),
+    exports, require: (id) => {
+      if (id === "../../quote-email") return helperExports;
+      if (id === "../../inquiry-store") return { saveInquiry() {} };
+      return load(id);
+    },
     process: { env }, console: { error() {} }, AbortSignal,
   });
   return exports.POST;
@@ -95,7 +99,9 @@ test("copies an accepted quote to the configured Resend address and preserves Gm
   assert.deepEqual(await response.json(), { success: true, providerAccepted: true });
   const emails = network.mock.calls.map(({ arguments: [, options] }) => JSON.parse(options.body));
   assert.deepEqual(emails.map((email) => email.to), [["Piechotagrpinc@gmail.com"], [inbound]]);
-  assert.deepEqual({ ...emails[1], to: emails[0].to }, emails[0]);
+  const { headers, ...copy } = emails[1];
+  assert.match(headers["X-ASIS-Inquiry-ID"], /^[a-f0-9-]{36}$/);
+  assert.deepEqual({ ...copy, to: emails[0].to }, emails[0]);
 });
 
 test("the old Gmail setting and address lists never redirect a quote copy", async (t) => {

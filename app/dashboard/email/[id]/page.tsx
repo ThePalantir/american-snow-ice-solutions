@@ -1,4 +1,4 @@
-import { formatReceivedAt, getMessage, inboxConfiguration, messageId } from "../../inbox";
+import { formatReceivedAt, getInquiry, messageId } from "../../inbox";
 import { requireOwner } from "../../session";
 import styles from "../../dashboard.module.css";
 
@@ -9,8 +9,7 @@ export default async function EmailPage({ params, searchParams }: {
   await requireOwner();
   const id = messageId((await params).id);
   const after = messageId((await searchParams).after);
-  const config = inboxConfiguration();
-  const email = config && id ? await getMessage(config, id).catch(() => undefined) : null;
+  const email = id ? await getInquiry(id).catch(() => undefined) : null;
 
   return (
     <>
@@ -26,24 +25,23 @@ export default async function EmailPage({ params, searchParams }: {
             <header className={styles.readerHead}>
               <h1>{email.subject}</h1>
               <dl>
-                <div><dt>From</dt><dd>{email.from}</dd></div>
-                <div><dt>To</dt><dd>{email.to.join(", ") || "Undisclosed recipients"}</dd></div>
+                <div><dt>Contact</dt><dd>{email.contact}</dd></div>
                 <div><dt>Received</dt><dd><time dateTime={email.receivedAt}>{formatReceivedAt(email.receivedAt)}</time></dd></div>
               </dl>
             </header>
             <div className={styles.body}>{email.text || "This email has no readable text."}</div>
             {email.truncated && <p className={styles.notice}>This preview shows the beginning of a long message.</p>}
-            {email.attachments.length > 0 && (
+            {!!email.attachments?.length && (
               <section className={styles.attachments} aria-label="Attachment names">
                 <h2>Attachments</h2>
-                <ul>{email.attachments.map(({ id, filename }) => <li key={id}>{filename || "Unnamed attachment"}</li>)}</ul>
+                <ul>{email.attachments.map((name, index) => <li key={index}>{name}</li>)}</ul>
               </section>
             )}
           </>
         ) : (
           <div className={styles.readerHead}>
             <h1>Message unavailable</h1>
-            <p>{email === undefined ? "Resend could not load this message. Try again in a moment." : "This message could not be found among the website inquiries."}</p>
+            <p>{email === undefined ? "This inquiry could not be loaded. Try again in a moment." : "This message could not be found among the website inquiries."}</p>
           </div>
         )}
       </article>
