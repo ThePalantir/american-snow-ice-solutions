@@ -3,12 +3,15 @@
 * { box-sizing: border-box; }
 html { overflow-x: clip; scroll-behavior: smooth; }
 body { margin: 0; background: var(--surface-page); color: var(--text-main); font-family: var(--font-body); line-height: 1.65; -webkit-font-smoothing: antialiased; }
-body, button, input, textarea, select { font: inherit; }
+button, input, textarea, select { font: inherit; }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--ice-500); outline-offset: 3px; }
+/* Tailwind resets block margins; give shared copy a consistent vertical rhythm. */
 h1, h2, h3, p { margin-top: 0; }
+h1, h2, p { margin-bottom: 24px; }
+h3 { margin-bottom: 16px; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 900; line-height: .98; letter-spacing: -.045em; text-wrap: balance; }
 h1 { font-size: clamp(3.6rem, 8vw, 7.8rem); }
 h2 { font-size: clamp(2.45rem, 4.2vw, 4.4rem); }
@@ -51,7 +54,8 @@ p { color: var(--text-muted); text-wrap: pretty; }
 .eyebrow--light { color: var(--brand-primary-soft) !important; }
 .eyebrow--center { text-align: center; }
 .supporting-proof { font-weight: var(--weight-supporting-proof); line-height: 1.35; }
-.button { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 18px; padding: 0 22px; border: 1px solid transparent; border-radius: var(--radius-sm); font-size: .74rem; font-weight: 800; letter-spacing: .075em; text-transform: uppercase; transition: transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.button { display: inline-flex; max-width: 100%; min-height: 52px; align-items: center; justify-content: center; gap: 18px; padding: 14px 22px; border: 1px solid transparent; border-radius: var(--radius-sm); font-size: .74rem; font-weight: 800; line-height: 1.5; letter-spacing: .075em; text-align: center; text-transform: uppercase; transition: transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.button > span { flex-shrink: 0; }
 .button:hover { transform: translateY(-2px); }
 .button--signal { background: var(--brand-accent); color: white; box-shadow: 0 10px 26px rgba(239,68,46,.2); }
 .button--signal:hover { background: var(--signal-400); }
@@ -222,7 +226,7 @@ textarea { resize:vertical; }
 .page-hero--map { background:repeating-radial-gradient(circle at 80% 45%,transparent 0 55px,rgba(92,200,243,.08) 56px 57px),radial-gradient(circle at 80% 45%,rgba(92,200,243,.2),transparent 3%,transparent 30%),var(--ink-950); }
 
 .service-intro .check-list { margin-top:34px; }
-.check-list { display:grid; grid-template-columns:repeat(2,1fr); gap:10px 28px; }
+.check-list { display:grid; grid-template-columns:repeat(2,1fr); gap:10px 28px; margin-block:28px; }
 .check-list span { position:relative; padding:12px 0 12px 28px; border-top:1px solid var(--border-subtle); color:#314956; font-size:.85rem; }
 .check-list span::before { content:"+"; position:absolute; left:0; color:#1689b8; font-weight:900; }
 .outcome-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-block:1px solid rgba(255,255,255,.16); }
@@ -313,7 +317,7 @@ textarea { resize:vertical; }
 .footer-grid > div:not(.footer-brand) > a:not(.button) { display:block; margin:11px 0; color:#d6e0e6; font-size:.8rem; }
 .footer-contact p { color:#94a8b5; font-size:.82rem; }
 .footer-contact .button { margin-top:12px; }
-.footer-base { display:flex; justify-content:space-between; gap:25px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12); color:#657b89; font-family:var(--font-mono); font-size:.56rem; letter-spacing:.07em; text-transform:uppercase; }
+.footer-base { display:flex; justify-content:space-between; gap:25px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12); color:#bdccd5; font-family:var(--font-body); font-size:.875rem; line-height:1.7; letter-spacing:.015em; }
 
 @media (max-width: 1050px) {
   .site-header { background:rgba(2,10,18,.9); backdrop-filter:blur(12px); }
@@ -532,6 +536,7 @@ textarea { resize:vertical; }
   .credential-row--focused img:last-child { grid-column:auto; }
   .process-line--dark { grid-template-columns:1fr; }
   .partner-evidence article,.partner-evidence article + article { padding:28px 0; border-right:0; border-bottom:1px solid var(--border-subtle); }
+  .partner-evidence h2 { font-size:clamp(2rem,8vw,3rem); }
   .yeti-logo { width:96px; height:96px; margin-bottom:22px; }
   .comparison-stack article { grid-template-columns:1fr; gap:8px; }
   .footer-grid { grid-template-columns:1fr 1fr; gap:45px 25px; }
@@ -783,6 +788,10 @@ textarea { resize:vertical; }
     font-size: clamp(.92rem, 3.8vw, 1.02rem);
   }
 }
+@media (max-width:380px) {
+  .subhero h1,.page-hero h1,.form-hero h1 { font-size:clamp(2.1rem,11vw,2.6rem); }
+}
+
 /* Optional analytics UI is rendered only after explicit build-time activation. */
 .analytics-consent {
   position: fixed; bottom: 1rem; left: 1rem; right: 1rem; z-index: 100;
