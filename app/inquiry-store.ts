@@ -16,6 +16,18 @@ export type Inquiry = {
 let database: DatabaseSync | undefined;
 const pageSize = 30;
 const day = 24 * 60 * 60 * 1000;
+// The maintenance agreement keeps dashboard submissions for 12 months. Older rows are deleted, archived or not.
+const retentionMonths = 12;
+
+function retentionCutoff(now = Date.now()) {
+  const cutoff = new Date(now);
+  cutoff.setUTCMonth(cutoff.getUTCMonth() - retentionMonths);
+  return cutoff.toISOString();
+}
+
+function purgeExpired(connection: DatabaseSync) {
+  connection.prepare("DELETE FROM website_inquiries WHERE receivedAt < ?").run(retentionCutoff());
+}
 
 function db() {
   if (database) return database;
@@ -37,6 +49,7 @@ function db() {
       CREATE INDEX IF NOT EXISTS website_inquiries_inbox ON website_inquiries (archived, receivedAt DESC, id DESC);
       CREATE INDEX IF NOT EXISTS website_inquiries_recent ON website_inquiries (receivedAt DESC);
     `);
+    purgeExpired(connection);
     database = connection;
     return connection;
   } catch (error) {
@@ -46,6 +59,8 @@ function db() {
 }
 
 export function saveInquiry(inquiry: Omit<Inquiry, "archived">) {
+  // Each new submission also clears anything past the retention period, so a long-running server stays current.
+  purgeExpired(db());
   return db().prepare(`
     INSERT INTO website_inquiries (id, subject, contact, receivedAt, text) VALUES (?, ?, ?, ?, ?)
     ON CONFLICT(id) DO NOTHING

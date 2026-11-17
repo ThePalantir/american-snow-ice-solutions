@@ -194,6 +194,12 @@ test("saved website inquiries and their counts survive a server restart without 
   const archived = await dashboardForm({ action: "archive", id }, { cookie: beforeRestart.headers.get("set-cookie").split(";")[0] });
   assert.equal(archived.headers.get("location"), "/dashboard?status=archived");
   await stopServer();
+  const monthsAgo = (months) => { const d = new Date(); d.setUTCMonth(d.getUTCMonth() - months); return d.toISOString(); };
+  const seed = new DatabaseSync(path.join(inquiryDirectory, "inquiries.sqlite"));
+  const insert = seed.prepare("INSERT INTO website_inquiries (id, subject, contact, receivedAt, text, archived) VALUES (?, ?, ?, ?, ?, ?)");
+  insert.run("retention-expired", "Expired fixture", "old@example.com", monthsAgo(13), "Older than twelve months", 1);
+  insert.run("retention-kept", "Kept fixture", "recent@example.com", monthsAgo(11), "Within twelve months", 0);
+  seed.close();
   await startServer();
   const login = await dashboardForm({ action: "login", username: "admin", password: "fixture-owner-password" });
   const cookie = login.headers.get("set-cookie").split(";")[0];
@@ -204,6 +210,11 @@ test("saved website inquiries and their counts survive a server restart without 
   assert.match(dashboard, /Last 30 days<\/dt><dd>1<\/dd>/);
   const message = await fetch(`${baseUrl}${companyMessagePath}`, options);
   assert.match(await message.text(), /Commercial test property/);
+  const stored = new DatabaseSync(path.join(inquiryDirectory, "inquiries.sqlite"), { readOnly: true });
+  const ids = stored.prepare("SELECT id FROM website_inquiries").all().map((row) => row.id);
+  stored.close();
+  assert.equal(ids.includes("retention-expired"), false, "submissions older than 12 months are deleted");
+  assert.equal(ids.includes("retention-kept"), true, "submissions inside 12 months are kept");
 });
 
 test("uses the standard Next.js pipeline without legacy hosting dependencies", async () => {
