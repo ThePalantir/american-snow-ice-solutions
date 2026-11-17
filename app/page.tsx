@@ -6,7 +6,7 @@ import { makeMetadata } from "./seo";
 
 export const metadata = makeMetadata({
   title: "Commercial Snow & Ice Management, Eastern PA",
-  description: "Commercial snow and ice management with site-specific planning, weather intelligence and documented operations across eastern Pennsylvania. Commercial properties only.",
+  description: "Commercial snow and ice management with site-specific planning, weather intelligence and documented operations in eastern Pennsylvania. Commercial only.",
   path: "/",
 });
 
