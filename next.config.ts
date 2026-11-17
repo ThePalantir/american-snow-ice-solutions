@@ -28,10 +28,23 @@ const nextConfig: NextConfig = {
   output: "standalone",
   env: { ASIS_BUILD_SHA: buildSha() },
   async redirects() {
-    return legacyRedirects.map((redirect) => ({ ...redirect, permanent: true }));
+    // The www address served a duplicate copy of the site; send it to the main address (PG-07).
+    // Only the exact production www host matches, so preview hosts and localhost are untouched.
+    const wwwToMain = {
+      source: "/:path*",
+      has: [{ type: "host" as const, value: "www.americansnowandicesolutions.com" }],
+      destination: "https://americansnowandicesolutions.com/:path*",
+      permanent: true,
+    };
+    return [wwwToMain, ...legacyRedirects.map((redirect) => ({ ...redirect, permanent: true }))];
   },
   async headers() {
     return [{
+      // HSTS on the production host only, no includeSubDomains or preload. One day to start; raise after a clean week (PG-08).
+      source: "/:path*",
+      has: [{ type: "host" as const, value: "americansnowandicesolutions.com" }],
+      headers: [{ key: "Strict-Transport-Security", value: "max-age=86400" }],
+    }, {
       source: "/dashboard/:path*",
       headers: [
         { key: "Cache-Control", value: "private, no-store, max-age=0, must-revalidate" },

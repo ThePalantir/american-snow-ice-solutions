@@ -269,6 +269,24 @@ test("serves every primary website route", async () => {
   }
 });
 
+test("redirects the www host to the main address and sends HSTS only on the main host", async () => {
+  const { request } = await import("node:http");
+  const get = (host, pathname) => new Promise((resolve, reject) => {
+    const req = request(`${baseUrl}${pathname}`, { headers: { host } }, (res) => { res.resume(); resolve(res); });
+    req.on("error", reject);
+    req.end();
+  });
+  const www = await get("www.americansnowandicesolutions.com", "/services?x=1");
+  assert.equal(www.statusCode, 308);
+  assert.equal(www.headers.location, "https://americansnowandicesolutions.com/services?x=1");
+  const main = await get("americansnowandicesolutions.com", "/");
+  assert.equal(main.statusCode, 200);
+  assert.match(main.headers["strict-transport-security"] ?? "", /max-age=\d+/);
+  const local = await get(new URL(baseUrl).host, "/");
+  assert.equal(local.statusCode, 200);
+  assert.equal(local.headers["strict-transport-security"], undefined);
+});
+
 test("permanently redirects previous-site pages to their current equivalents", async () => {
   const redirects = [
     ["/snow-ice-quote", "/quote"],
