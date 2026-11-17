@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { makeMetadata } from "../seo";
 
-export const metadata = makeMetadata({ title: "Our Company", description: "Three generations and more than four decades of snow and ice operations experience.", path: "/about" });
+export const metadata = makeMetadata({ title: "Our Company", description: "A three-generation family operation with more than four decades of snow and ice experience, serving commercial properties only across eastern Pennsylvania.", path: "/about" });
 
 export default function AboutPage() {
   return (

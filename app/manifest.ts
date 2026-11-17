@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "American Snow & Ice Solutions",
-    short_name: "ASAI",
+    short_name: "ASIS",
     description: "Commercial snow and ice management for demanding properties across the region.",
     start_url: "/",
     display: "standalone",

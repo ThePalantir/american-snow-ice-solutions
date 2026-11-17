@@ -5,8 +5,8 @@ import { company, servicesForDisplay } from "./site-data";
 import { makeMetadata } from "./seo";
 
 export const metadata = makeMetadata({
-  title: "Professional Winter Risk Management",
-  description: "Site-specific commercial snow and ice management planning, weather intelligence, documented operations, and winter risk support across Eastern Pennsylvania and surrounding regions.",
+  title: "Commercial Snow & Ice Management, Eastern PA",
+  description: "Commercial snow and ice management with site-specific planning, weather intelligence and documented operations across eastern Pennsylvania. Commercial properties only.",
   path: "/",
 });
 
