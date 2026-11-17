@@ -284,6 +284,10 @@ test("redirects the www host to the main address and sends HSTS only on the main
   assert.match(main.headers["strict-transport-security"] ?? "", /max-age=\d+/);
   const local = await get(new URL(baseUrl).host, "/");
   assert.equal(local.statusCode, 200);
+  assert.match(local.headers["content-security-policy"] ?? "", /frame-ancestors 'self'/);
+  const owner = await get(new URL(baseUrl).host, "/dashboard/login");
+  assert.match(owner.headers["content-security-policy"] ?? "", /frame-ancestors 'none'/);
+  assert.doesNotMatch(owner.headers["content-security-policy"] ?? "", /frame-ancestors 'self'/);
   assert.equal(local.headers["strict-transport-security"], undefined);
 });
 

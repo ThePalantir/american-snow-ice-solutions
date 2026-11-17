@@ -45,8 +45,14 @@ const nextConfig: NextConfig = {
       has: [{ type: "host" as const, value: "americansnowandicesolutions.com" }],
       headers: [{ key: "Strict-Transport-Security", value: "max-age=86400" }],
     }, {
+      // Baseline Content-Security-Policy (PG-08): only directives that cannot break page scripts or styles.
+      // A script-src policy still needs testing against the weather widget and optional analytics.
+      source: "/:path*",
+      headers: [{ key: "Content-Security-Policy", value: "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self'" }],
+    }, {
       source: "/dashboard/:path*",
       headers: [
+        { key: "Content-Security-Policy", value: "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'" },
         { key: "Cache-Control", value: "private, no-store, max-age=0, must-revalidate" },
         { key: "X-Robots-Tag", value: "noindex, nofollow" },
         { key: "Referrer-Policy", value: "same-origin" },

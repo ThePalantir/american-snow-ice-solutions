@@ -83,11 +83,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               image: absoluteUrl("/og.png"),
               telephone: "+1-610-760-0600",
               email: "piechotagrpinc@gmail.com",
+              // Regions as the site itself describes them (service-areas page, llms.txt), not whole states.
               areaServed: [
-                { "@type": "State", name: "Pennsylvania" },
-                { "@type": "State", name: "New Jersey" },
-                { "@type": "State", name: "New York" },
-                { "@type": "State", name: "Delaware" },
+                { "@type": "AdministrativeArea", name: "Eastern Pennsylvania", containedInPlace: { "@type": "State", name: "Pennsylvania" } },
+                { "@type": "AdministrativeArea", name: "Western New Jersey", containedInPlace: { "@type": "State", name: "New Jersey" } },
+                { "@type": "AdministrativeArea", name: "Southern New York", containedInPlace: { "@type": "State", name: "New York" } },
+                { "@type": "AdministrativeArea", name: "Northern Delaware", containedInPlace: { "@type": "State", name: "Delaware" } },
               ],
               knowsAbout: [
                 "Commercial snow plowing",

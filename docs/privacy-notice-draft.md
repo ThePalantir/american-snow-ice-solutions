@@ -12,7 +12,7 @@ Effective date: [publication date]
 
 Our consultation form requests company name, primary contact name, work email, telephone number, and property address or portfolio area. You may also provide property type, services needed, and property details. Please avoid submitting sensitive personal information in free-text fields.
 
-We use consultation information to review your request, contact you, and discuss potential services. The website sends this information through Resend to the operations mailbox at piechotagrpinc@gmail.com. The application does not create a separate lead database. Information remains in email systems and may also exist in service-provider records.
+We use consultation information to review your request, contact you, and discuss potential services. The website sends this information through Resend to the operations mailbox at piechotagrpinc@gmail.com. The website also saves each form submission in a private database on the web server, shown to authorized company staff on a password-protected owner page as a backup record. Saved submissions are deleted after 12 months [confirm once the retention change is deployed]. A second copy is emailed through Resend to a dedicated company inbox address. Information also remains in email systems and may exist in service-provider records.
 
 ### Technical information and service providers
 
@@ -39,6 +39,8 @@ For questions or requests concerning information submitted through the website, 
 We may update this notice when website information handling changes. The effective date will identify the current notice.
 
 ## Publication checklist
+
+- Updated November 16, 2026: the notice now describes the saved-submission database and owner page added in November 2026. The earlier draft said no separate database existed.
 
 - Confirm legal operator, contact, retention, and actual downstream handling.
 - Verify hosting, Gmail/mailbox, Resend, and weather-widget practices.
