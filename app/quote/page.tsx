@@ -4,8 +4,8 @@ import { company } from "../site-data";
 import { makeMetadata } from "../seo";
 
 export const metadata = makeMetadata({
-  title: "Request a Winter Risk Consultation",
-  description: "Request a conversation about a site-specific commercial snow and ice management plan.",
+  title: "Request a Commercial Quote",
+  description: "Request a conversation about a site-specific commercial snow and ice plan. We serve commercial properties only; no residential service.",
   path: "/quote",
 });
 

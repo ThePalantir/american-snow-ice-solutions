@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { makeMetadata } from "../seo";
 
-export const metadata = makeMetadata({ title: "Service Partner Network", description: "Join the American Snow & Ice Solutions regional service partner network.", path: "/partner-network" });
+export const metadata = makeMetadata({ title: "Service Partner Network", description: "Join the American Snow & Ice Solutions regional service partner network of capable commercial snow and ice operators.", path: "/partner-network" });
 
 export default function PartnerNetworkPage() {
   return (

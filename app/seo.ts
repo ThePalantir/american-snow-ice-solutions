@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const siteUrl = "https://americansnowandicesolutions.com";
 export const siteName = "American Snow & Ice Solutions";
 export const defaultDescription =
-  "Professional commercial snow and ice management built around site-specific planning, weather intelligence, accountable operations, and documented closeout across eastern Pennsylvania and surrounding regions.";
+  "Professional commercial snow and ice management built around site-specific planning, weather intelligence, accountable operations, and documented closeout across eastern Pennsylvania and surrounding regions. Commercial properties only.";
 
 export function absoluteUrl(path = "/") {
   return new URL(path, siteUrl).toString();

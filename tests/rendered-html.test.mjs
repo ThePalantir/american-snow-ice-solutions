@@ -316,7 +316,7 @@ test("preserves the host health identity and exposes the server-side quote endpo
 test("renders the selected brand and premium homepage content", async () => {
   const response = await fetch(baseUrl);
   const html = await response.text();
-  assert.match(html, /Professional Winter Risk Management \| American Snow &amp; Ice Solutions/i);
+  assert.match(html, /Commercial Snow &amp; Ice Management, Eastern PA/i);
   assert.match(html, /We professionally manage/i);
   assert.match(html, /winter risk/i);
   assert.match(html, /weatherwidget-io/i);

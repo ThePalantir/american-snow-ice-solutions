@@ -3,7 +3,7 @@ import Link from "next/link";
 import { makeMetadata } from "../seo";
 
 export const metadata = makeMetadata({
-  title: "Snow & Ice Science, Brine, and Responsible Materials",
+  title: "Snow & Ice Science",
   description: "A practical explanation of pavement temperature, rock salt performance, brine and anti-icing, mechanical removal, and responsible commercial material application.",
   path: "/snow-ice-science",
 });

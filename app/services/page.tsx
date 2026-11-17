@@ -3,7 +3,7 @@ import Image from "next/image";
 import { servicesForDisplay } from "../site-data";
 import { makeMetadata } from "../seo";
 
-export const metadata = makeMetadata({ title: "Commercial Snow & Ice Services", description: "Coordinated commercial plowing, de-icing, sidewalk clearing, weather reporting, and winter risk management.", path: "/services" });
+export const metadata = makeMetadata({ title: "Commercial Snow Services", description: "Coordinated commercial plowing, de-icing, sidewalk clearing, weather reporting, and winter risk management for commercial properties only.", path: "/services" });
 
 export default function ServicesPage() {
   return (

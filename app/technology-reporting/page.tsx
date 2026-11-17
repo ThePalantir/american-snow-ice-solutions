@@ -3,7 +3,7 @@ import Link from "next/link";
 import { makeMetadata } from "../seo";
 
 export const metadata = makeMetadata({
-  title: "Snow Operations Technology & Reporting",
+  title: "Snow Operations Reporting",
   description: "How YETI Snow Management, professional winter forecasting, field documentation, and third-party post-event reporting support commercial snow operations.",
   path: "/technology-reporting",
 });

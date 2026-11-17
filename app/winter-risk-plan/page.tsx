@@ -3,7 +3,7 @@ import Link from "next/link";
 import { makeMetadata } from "../seo";
 
 export const metadata = makeMetadata({
-  title: "Site-Specific Winter Risk Planning",
+  title: "Winter Risk Planning",
   description: "Build a commercial snow and ice plan around property access, operating hours, shift changes, deliveries, priority zones, and communication requirements.",
   path: "/winter-risk-plan",
 });

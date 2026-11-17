@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return makeMetadata({
     title: service.title,
-    description: service.summary,
+    description: `${service.summary} For commercial properties only.`,
     path: `/services/${service.slug}`,
   });
 }
